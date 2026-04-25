@@ -1,8 +1,19 @@
-# 🌿 Envejecer con Bienestar — Prototipo .NET MAUI
+# 🌿 Envejecer con Bienestar
 
-App móvil para adultos mayores. iOS + Android desde un solo codebase en .NET 10 MAUI.
+![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
+
+**Envejecer con Bienestar** es una aplicación móvil desarrollada con **.NET MAUI** diseñada específicamente para mejorar la calidad de vida de los adultos mayores. Este proyecto combina tecnología de vanguardia con un diseño centrado en el usuario para facilitar la gestión de la salud y el bienestar diario.
 
 ---
+
+## ✨ Características Principales
+
+* **Gestión de Medicamentos:** Recordatorios visuales y sonoros para la toma de medicinas.
+* **Interfaz Adaptada:** Diseño con alto contraste, tipografía legible (Nunito) y elementos táctiles simplificados.
+* **Dashboard Personalizado:** Saludo dinámico y acceso rápido a las funciones más importantes.
+* **Multiplataforma:** Compilado inicialmente para Android, con capacidad de despliegue en Windows e iOS.
 
 ## 📋 Requisitos previos
 
@@ -18,8 +29,6 @@ App móvil para adultos mayores. iOS + Android desde un solo codebase en .NET 10
 ```bash
 dotnet workload install maui
 ```
-
----
 
 ## ⚡ Configuración inicial — Fuentes Nunito
 
@@ -111,57 +120,17 @@ EnvejecerConBienestar/
 
 ---
 
-## 🖼️ Íconos de la TabBar
+## 🛠️ Stack Tecnológico
 
-La app referencia estos archivos PNG en `Resources/Images/`:
-- `tab_inicio.png`
-- `tab_medicina.png`
-- `tab_juegos.png`
-- `tab_contactos.png`
+* **Framework:** .NET 9.0 (MAUI)
+* **Lenguaje:** C#
+* **Arquitectura:** MVVM (Model-View-ViewModel) para una separación clara de la lógica y la interfaz.
+* **UI/UX:** XAML con estilos personalizados para accesibilidad.
 
-**Para el prototipo del sábado**, puede usar cualquier PNG de 32×32px o simplemente
-eliminar el atributo `Icon="..."` de cada `<ShellContent>` en `AppShell.xaml`
-y la TabBar mostrará solo los títulos de texto.
+## 🚀 Instalación y Ejecución
 
----
-
-## 🏗️ División de trabajo sugerida (equipo de 3)
-
-| Desarrollador | Tarea para el sábado |
-|---|---|
-| **Dev 1** | Pantalla Inicio (pulir animaciones, clima real) + AppShell |
-| **Dev 2** | Pantalla Medicamentos (persistencia SQLite, notificaciones locales) |
-| **Dev 3** | Empezar Juegos (Memorama o Sudoku básico) + Contactos básicos |
+1. Clonar el repositorio:
+   ```bash
+   git clone [https://github.com/tu-usuario/EnvejecerConBienestar.git](https://github.com/tu-usuario/EnvejecerConBienestar.git)
 
 ---
-
-## 🔮 Próximos pasos (Fase 2)
-
-- [ ] Persistencia local con **SQLite-net-pcl**
-- [ ] Notificaciones locales con **Plugin.LocalNotification**
-- [ ] Integración **HealthKit** (iOS) / **Health Connect** (Android)
-- [ ] Pantalla Juegos: Sudoku, Sopa de letras, Memorama
-- [ ] Pantalla Contactos: llamada directa, envío GPS de emergencia
-- [ ] Pantalla Salud: gráficas de presión y glucosa
-- [ ] Sincronización en la nube (Azure / Firebase)
-
----
-
-## 🐛 Problemas comunes
-
-**Error: `MAUI workload not found`**
-```bash
-dotnet workload install maui --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet10/nuget/v3/index.json
-```
-
-**Error: fuentes no encontradas en runtime**
-→ Verificar que los `.ttf` estén en `Resources/Fonts/` y su Build Action sea `MauiFont`.
-En VS: click derecho sobre el archivo → Propiedades → Build Action = `MauiFont`.
-
-**Error: `BoolToColorConverter not found`**
-→ Asegurarse de que el namespace `xmlns:local` en `MedicamentosPage.xaml` apunte a
-`clr-namespace:EnvejecerConBienestar.Views`.
-
----
-
-*Generado para el equipo — prototipo funcional para demo del sábado 🚀*
