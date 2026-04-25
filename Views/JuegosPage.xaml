@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.JuegosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Juegos">
+
+    <VerticalStackLayout
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Spacing="20"
+        Padding="40">
+
+        <!-- Icono grande -->
+        <Label
+            Text="🧩"
+            FontSize="80"
+            HorizontalOptions="Center" />
+
+        <!-- Título -->
+        <Label
+            Text="Juegos Mentales"
+            FontFamily="NunitoBold"
+            FontSize="26"
+            TextColor="#1C1917"
+            HorizontalOptions="Center" />
+
+        <!-- Mensaje próximamente -->
+        <Frame
+            BackgroundColor="#F3F0FF"
+            BorderColor="#DDD6FE"
+            CornerRadius="16"
+            Padding="24,18"
+            HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="🚧 Próximamente"
+                    FontFamily="NunitoBold"
+                    FontSize="20"
+                    TextColor="#7C3AED"
+                    HorizontalOptions="Center" />
+                <Label
+                    Text="Aquí podrá jugar Sudoku, Sopa de Letras y Memorama para ejercitar su mente todos los días."
+                    FontFamily="NunitoRegular"
+                    FontSize="18"
+                    TextColor="#5B21B6"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Juegos a implementar -->
+        <VerticalStackLayout Spacing="10" HorizontalOptions="Fill">
+            <Label Text="📋 Lo que viene:" FontFamily="NunitoSemiBold" FontSize="18" TextColor="#78716C" />
+            <Label Text="   🔢  Sudoku (3 niveles)" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   🔤  Sopa de letras" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   🃏  Memorama de imágenes" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   ✏️  Crucigramas con pistas de voz" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

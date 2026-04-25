@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    x:DataType="vm:HomeViewModel"
+    Title="Inicio">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24,20,32" Spacing="0">
+
+            <!-- ===== ENCABEZADO DE SALUDO ===== -->
+            <Frame Style="{StaticResource TarjetaBase}" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="6">
+
+                    <!-- Icono del momento del día -->
+                    <Label
+                        Text="{Binding IconoSaludo}"
+                        FontSize="44"
+                        HorizontalOptions="Start" />
+
+                    <!-- Saludo personalizado -->
+                    <Label
+                        Text="{Binding Saludo}"
+                        Style="{StaticResource LabelTitulo}"
+                        LineBreakMode="WordWrap" />
+
+                    <!-- Fecha de hoy -->
+                    <Label
+                        Text="{Binding FechaHoy}"
+                        Style="{StaticResource LabelPequeno}"
+                        Margin="0,4,0,0" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== BOTÓN DE EMERGENCIA ===== -->
+            <!-- CRÍTICO: siempre visible, color rojo, texto claro -->
+            <Frame
+                BackgroundColor="#FEF2F2"
+                BorderColor="#FECACA"
+                CornerRadius="20"
+                Padding="20,18"
+                Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="🚨 Botón de Emergencia"
+                        Style="{StaticResource LabelSubtitulo}"
+                        TextColor="{StaticResource ColorEmergencia}"
+                        FontFamily="NunitoBold" />
+
+                    <Label
+                        Text="Presione si necesita ayuda urgente. Se avisará a su familiar y a emergencias."
+                        Style="{StaticResource LabelPequeno}"
+                        TextColor="#991B1B" />
+
+                    <Button
+                        Text="🚨  LLAMAR AYUDA AHORA"
+                        Style="{StaticResource BotonEmergencia}"
+                        Command="{Binding LlamarEmergenciaCommand}"
+                        HorizontalOptions="Fill"
+                        Margin="0,6,0,0" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== PRÓXIMO MEDICAMENTO ===== -->
+            <Frame Style="{StaticResource TarjetaBase}" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="8">
+
+                    <Label
+                        Text="💊 Próximo medicamento"
+                        Style="{StaticResource LabelSubtitulo}" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+
+                        <Label
+                            Grid.Row="0" Grid.Column="0"
+                            Text="{Binding ProximoMedicamento}"
+                            Style="{StaticResource LabelCuerpo}"
+                            FontFamily="NunitoBold"
+                            TextColor="{StaticResource ColorSalud}" />
+
+                        <Label
+                            Grid.Row="0" Grid.Column="1"
+                            Text="{Binding HoraProximoMedicamento}"
+                            Style="{StaticResource LabelCuerpo}"
+                            FontFamily="NunitoBold"
+                            TextColor="{StaticResource ColorPrimario}"
+                            HorizontalOptions="End" />
+
+                        <Label
+                            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                            Text="Recuerde tomarlo con un vaso de agua"
+                            Style="{StaticResource LabelPequeno}"
+                            Margin="0,4,0,0" />
+                    </Grid>
+
+                    <Button
+                        Text="Ver todos mis medicamentos →"
+                        Style="{StaticResource BotonSecundario}"
+                        Clicked="OnVerMedicamentosClicked"
+                        HorizontalOptions="Fill"
+                        Margin="0,8,0,0" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== TARJETA ACTIVIDAD DEL DÍA ===== -->
+            <Frame Style="{StaticResource TarjetaBase}" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="8">
+
+                    <Label
+                        Text="🚶 Actividad de hoy"
+                        Style="{StaticResource LabelSubtitulo}" />
+
+                    <Label
+                        Text="Meta: Caminar 20 minutos"
+                        Style="{StaticResource LabelCuerpo}"
+                        FontFamily="NunitoBold"
+                        TextColor="{StaticResource ColorSalud}" />
+
+                    <!-- Barra de progreso simulada -->
+                    <Grid ColumnDefinitions="*" RowDefinitions="Auto,Auto" Margin="0,6,0,0">
+                        <Label
+                            Grid.Row="0"
+                            Text="Progreso de hoy: 12 min / 20 min"
+                            Style="{StaticResource LabelPequeno}" />
+                        <ProgressBar
+                            Grid.Row="1"
+                            Progress="0.6"
+                            ProgressColor="{StaticResource ColorSalud}"
+                            BackgroundColor="{StaticResource ColorSaludClaro}"
+                            HeightRequest="14"
+                            Margin="0,8,0,0" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== FRASE MOTIVADORA ===== -->
+            <Frame
+                BackgroundColor="{StaticResource ColorFondoSecundario}"
+                BorderColor="{StaticResource ColorPrimarioClaro}"
+                CornerRadius="20"
+                Padding="20,16">
+                <VerticalStackLayout Spacing="4">
+                    <Label
+                        Text="💛 Frase del día"
+                        Style="{StaticResource LabelPequeno}"
+                        FontFamily="NunitoSemiBold" />
+                    <Label
+                        Text="&quot;Cada día trae la oportunidad de cuidarse un poco más.&quot;"
+                        Style="{StaticResource LabelCuerpo}"
+                        FontAttributes="Italic"
+                        TextColor="{StaticResource ColorPrimarioOscuro}" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

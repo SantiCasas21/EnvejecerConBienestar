@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.MedicamentosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    xmlns:models="clr-namespace:EnvejecerConBienestar.Models"
+    xmlns:local="clr-namespace:EnvejecerConBienestar.Views"
+    x:DataType="vm:MedicamentosViewModel"
+    x:Name="MedicamentosPageRoot"
+    Title="Mis Medicamentos">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <local:BoolToTextColorConverter x:Key="BoolToTextColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- ===== ENCABEZADO FIJO ===== -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            BackgroundColor="{StaticResource ColorFondoTarjeta}"
+            Padding="20,16,20,12"
+            Spacing="4">
+
+            <Label
+                Text="💊 Mis Medicamentos"
+                Style="{StaticResource LabelTitulo}" />
+
+            <Label
+                Text="{Binding FechaSeleccionada}"
+                Style="{StaticResource LabelPequeno}" />
+
+        </VerticalStackLayout>
+
+        <!-- ===== RESUMEN TOMADOS / PENDIENTES ===== -->
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            Padding="20,12"
+            ColumnSpacing="12"
+            BackgroundColor="{StaticResource ColorFondo}">
+
+            <!-- Tomados -->
+            <Frame
+                Grid.Column="0"
+                BackgroundColor="{StaticResource ColorCompletadoClaro}"
+                BorderColor="Transparent"
+                CornerRadius="14"
+                Padding="14,10"
+                HasShadow="False">
+                <VerticalStackLayout Spacing="2">
+                    <Label
+                        Text="{Binding TotalTomados, StringFormat='✓ {0} tomados'}"
+                        FontFamily="NunitoBold"
+                        FontSize="18"
+                        TextColor="{StaticResource ColorCompletado}" />
+                    <Label
+                        Text="Muy bien 🎉"
+                        FontSize="14"
+                        TextColor="{StaticResource ColorCompletado}"
+                        FontFamily="NunitoRegular" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Pendientes -->
+            <Frame
+                Grid.Column="1"
+                BackgroundColor="#FEF9C3"
+                BorderColor="Transparent"
+                CornerRadius="14"
+                Padding="14,10"
+                HasShadow="False">
+                <VerticalStackLayout Spacing="2">
+                    <Label
+                        Text="{Binding TotalPendientes, StringFormat='⏰ {0} pendientes'}"
+                        FontFamily="NunitoBold"
+                        FontSize="18"
+                        TextColor="#92400E" />
+                    <Label
+                        Text="No olvide tomarlos"
+                        FontSize="14"
+                        TextColor="#92400E"
+                        FontFamily="NunitoRegular" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </Grid>
+
+        <!-- ===== LISTA DE MEDICAMENTOS ===== -->
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding Medicamentos}"
+            Margin="20,0,20,24"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Medicamento">
+
+                    <!-- Tarjeta de medicamento -->
+                    <Frame Style="{StaticResource TarjetaMedicamento}">
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto"
+                            RowDefinitions="Auto,Auto"
+                            ColumnSpacing="14"
+                            RowSpacing="6">
+
+                            <!-- Icono del medicamento (fila 0-1, col 0) -->
+                            <Frame
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.RowSpan="2"
+                                BackgroundColor="{StaticResource ColorFondoSecundario}"
+                                BorderColor="Transparent"
+                                CornerRadius="16"
+                                Padding="0"
+                                WidthRequest="56"
+                                HeightRequest="56"
+                                HasShadow="False"
+                                VerticalOptions="Center">
+                                <Label
+                                    Text="{Binding Icono}"
+                                    FontSize="28"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Frame>
+
+                            <!-- Nombre del medicamento -->
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Nombre}"
+                                Style="{StaticResource LabelCuerpo}"
+                                FontFamily="NunitoBold"
+                                VerticalOptions="End" />
+
+                            <!-- Dosis y hora -->
+                            <VerticalStackLayout
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Spacing="2">
+                                <Label
+                                    Text="{Binding Dosis}"
+                                    Style="{StaticResource LabelPequeno}" />
+                                <Label
+                                    Text="{Binding Hora, StringFormat='⏰ {0}'}"
+                                    Style="{StaticResource LabelPequeno}"
+                                    FontFamily="NunitoSemiBold"
+                                    TextColor="{StaticResource ColorPrimario}" />
+                            </VerticalStackLayout>
+
+                            <!-- Botón tomado (fila 0-1, col 2) -->
+                            <Button
+                                x:DataType="{x:Null}"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Grid.RowSpan="2"
+                                Text="{Binding TextoBoton}"
+                                VerticalOptions="Center"
+                                Command="{Binding BindingContext.ToggleTomadoCommand, Source={x:Reference MedicamentosPageRoot}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="{Binding Tomado, Converter={StaticResource BoolToColorConverter}}"
+                                TextColor="{Binding Tomado, Converter={StaticResource BoolToTextColorConverter}}"
+                                FontFamily="NunitoSemiBold"
+                                FontSize="15"
+                                CornerRadius="12"
+                                HeightRequest="48"
+                                Padding="14,0"
+                                MinimumWidthRequest="110" />
+
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Estado vacío (por si no hay medicamentos) -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="12"
+                    Margin="0,60,0,0">
+                    <Label
+                        Text="🎉"
+                        FontSize="56"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="No tiene medicamentos para hoy"
+                        Style="{StaticResource LabelSubtitulo}"
+                        HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

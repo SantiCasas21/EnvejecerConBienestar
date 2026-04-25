@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="EnvejecerConBienestar.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

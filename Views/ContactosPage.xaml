@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.ContactosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Contactos">
+
+    <VerticalStackLayout
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Spacing="20"
+        Padding="40">
+
+        <Label
+            Text="👥"
+            FontSize="80"
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="Mis Contactos"
+            FontFamily="NunitoBold"
+            FontSize="26"
+            TextColor="#1C1917"
+            HorizontalOptions="Center" />
+
+        <Frame
+            BackgroundColor="#EFF6FF"
+            BorderColor="#BFDBFE"
+            CornerRadius="16"
+            Padding="24,18"
+            HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="🚧 Próximamente"
+                    FontFamily="NunitoBold"
+                    FontSize="20"
+                    TextColor="#1D4ED8"
+                    HorizontalOptions="Center" />
+                <Label
+                    Text="Aquí podrá ver a sus seres queridos, llamarlos con un solo toque y gestionar sus contactos de emergencia."
+                    FontFamily="NunitoRegular"
+                    FontSize="18"
+                    TextColor="#1E40AF"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <VerticalStackLayout Spacing="10" HorizontalOptions="Fill">
+            <Label Text="📋 Lo que viene:" FontFamily="NunitoSemiBold" FontSize="18" TextColor="#78716C" />
+            <Label Text="   🚨  Contactos de emergencia con llamada directa" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   👨‍👩‍👧  Red de familia y amigos" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   📍  Envío de ubicación GPS en emergencias" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+            <Label Text="   💬  Estado '¿Cómo estás hoy?'" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

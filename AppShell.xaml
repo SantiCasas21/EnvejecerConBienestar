@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="EnvejecerConBienestar.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:EnvejecerConBienestar.Views"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="{StaticResource ColorFondoTarjeta}"
+    Shell.TabBarForegroundColor="{StaticResource ColorPrimario}"
+    Shell.TabBarUnselectedColor="{StaticResource ColorTextoSecundario}"
+    Shell.TabBarTitleColor="{StaticResource ColorPrimario}">
+
+    <!-- =============================================
+         NAVEGACIÓN INFERIOR — 4 PESTAÑAS
+         Estilo: limpio, iconos grandes, etiquetas claras
+         ============================================= -->
+
+    <TabBar>
+
+        <!-- 1. INICIO -->
+        <ShellContent
+            Title="Inicio"
+            Icon="tab_inicio.png"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Route="home" />
+
+        <!-- 2. MEDICAMENTOS -->
+        <ShellContent
+            Title="Medicinas"
+            Icon="tab_medicina.png"
+            ContentTemplate="{DataTemplate views:MedicamentosPage}"
+            Route="medicamentos" />
+
+        <!-- 3. JUEGOS — Cascarón (expandir en Fase 2) -->
+        <ShellContent
+            Title="Juegos"
+            Icon="tab_juegos.png"
+            ContentTemplate="{DataTemplate views:JuegosPage}"
+            Route="juegos" />
+
+        <!-- 4. CONTACTOS — Cascarón (expandir en Fase 2) -->
+        <ShellContent
+            Title="Contactos"
+            Icon="tab_contactos.png"
+            ContentTemplate="{DataTemplate views:ContactosPage}"
+            Route="contactos" />
+
+    </TabBar>
+
+</Shell>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.microsoft.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="1.0"
+    package="com.equipo.envejecerconbienestar">
+
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+
+    <!--
+        android:label es OBLIGATORIO — su ausencia causa el error
+        "Missing name attribute" en el tooling de MAUI/Android.
+        El valor @string/app_name lo resuelve MAUI automáticamente
+        desde ApplicationTitle en el .csproj.
+    -->
+    <application
+        android:label="Envejecer Con Bienestar"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:theme="@style/Maui.MainTheme.NoActionBar">
+    </application>
+
+    <!--
+        PERMISOS DECLARADOS EN MainActivity.cs con [UsesPermission].
+        No declarar uses-permission aquí: el SDK 35.0.105 los mergea
+        sin el prefijo android: cuando vienen del XML, causando AMM0000.
+    -->
+
+</manifest>

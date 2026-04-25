@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- =============================================
+         ESTILOS GLOBALES — ENVEJECER CON BIENESTAR
+         Fuente mínima: 18sp | Botones mínimo: 56dp
+         ============================================= -->
+
+    <!-- Página base -->
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFondo}" />
+    </Style>
+
+    <!-- LABELS -->
+    <Style x:Key="LabelTitulo" TargetType="Label">
+        <Setter Property="FontFamily" Value="NunitoBold" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="LabelSubtitulo" TargetType="Label">
+        <Setter Property="FontFamily" Value="NunitoSemiBold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+    </Style>
+
+    <Style x:Key="LabelCuerpo" TargetType="Label">
+        <Setter Property="FontFamily" Value="NunitoRegular" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="LabelPequeno" TargetType="Label">
+        <Setter Property="FontFamily" Value="NunitoRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+    </Style>
+
+    <!-- BOTONES -->
+
+    <!-- Botón primario naranja -->
+    <Style x:Key="BotonPrimario" TargetType="Button">
+        <Setter Property="FontFamily" Value="NunitoBold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoInverso}" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="Padding" Value="24,0" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource ColorPrimario}" Offset="0,4" Radius="12" Opacity="0.3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Botón de emergencia rojo — grande y prominente -->
+    <Style x:Key="BotonEmergencia" TargetType="Button">
+        <Setter Property="FontFamily" Value="NunitoBold" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorEmergencia}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoInverso}" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="HeightRequest" Value="72" />
+        <Setter Property="Padding" Value="32,0" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource ColorEmergencia}" Offset="0,6" Radius="16" Opacity="0.4" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Botón secundario (contorno) -->
+    <Style x:Key="BotonSecundario" TargetType="Button">
+        <Setter Property="FontFamily" Value="NunitoSemiBold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="BorderColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Padding" Value="24,0" />
+    </Style>
+
+    <!-- Botón "Tomado" verde para medicamentos -->
+    <Style x:Key="BotonTomado" TargetType="Button">
+        <Setter Property="FontFamily" Value="NunitoSemiBold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorSalud}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTextoInverso}" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <!-- Botón "Tomado" estado completado -->
+    <Style x:Key="BotonTomadoCompletado" TargetType="Button">
+        <Setter Property="FontFamily" Value="NunitoSemiBold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletadoClaro}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorCompletado}" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <!-- TARJETAS / FRAMES -->
+    <Style x:Key="TarjetaBase" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoTarjeta}" />
+        <Setter Property="BorderColor" Value="{StaticResource ColorBorde}" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="HasShadow" Value="True" />
+    </Style>
+
+    <!-- Tarjeta de medicamento -->
+    <Style x:Key="TarjetaMedicamento" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoTarjeta}" />
+        <Setter Property="BorderColor" Value="{StaticResource ColorBorde}" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="Padding" Value="18,14" />
+        <Setter Property="Margin" Value="0,6" />
+        <Setter Property="HasShadow" Value="True" />
+    </Style>
+
+</ResourceDictionary>
