@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.MedicamentoDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
+    x:DataType="vm:MedicamentoDetailViewModel"
+    Title="Detalle de Medicamento">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Barra superior -->
+        <Grid BackgroundColor="{StaticResource ColorFondoTarjeta}" Padding="20,10" ColumnDefinitions="Auto, *, Auto">
+            <Button Text="←" Command="{Binding BackCommand}" Style="{StaticResource BotonSecundario}" WidthRequest="50" BorderColor="Transparent" />
+            <Label Grid.Column="1" Text="Detalles de Medicina" Style="{StaticResource LabelTitulo}" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button Grid.Column="2" 
+                    Command="{Binding ToggleEditCommand}" 
+                    Style="{StaticResource BotonSecundario}" 
+                    WidthRequest="50"
+                    BorderColor="Transparent">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="False">
+                        <Setter Property="Text" Value="✏️" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="True">
+                        <Setter Property="Text" Value="❌" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="25" Spacing="25">
+                
+                <Frame HeightRequest="100" WidthRequest="100" CornerRadius="50" HorizontalOptions="Center" BackgroundColor="{StaticResource ColorFondoSecundario}" Padding="0">
+                    <Label Text="{Binding Medicamento.Icono}" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Frame>
+
+                <!-- Campo: Nombre -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="NOMBRE" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Medicamento.Nombre}" FontSize="22" FontFamily="NunitoBold" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Medicamento.Nombre}" IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Dosis -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="DOSIS (mg)" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Medicamento.Miligramos, StringFormat='{0} miligramos'}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Medicamento.Miligramos}" IsVisible="{Binding IsEditing}" Keyboard="Numeric" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Notas/Detalles -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="NOTAS / DETALLES" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Medicamento.Notas}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Editor Text="{Binding Medicamento.Notas}" AutoSize="TextChanges" IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" MinimumHeightRequest="80" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Frecuencia -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="FRECUENCIA" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Medicamento.Frecuencia, StringFormat='Cada {0} horas'}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Medicamento.Frecuencia}" IsVisible="{Binding IsEditing}" Keyboard="Numeric" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Hora -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="HORA DE ALARMA" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Medicamento.HoraAlarma, StringFormat='{0:hh\\:mm}'}" FontSize="24" FontFamily="NunitoBold" TextColor="{StaticResource ColorPrimario}" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <TimePicker Time="{Binding Medicamento.HoraAlarma}" IsVisible="{Binding IsEditing}" HorizontalOptions="Start" />
+                </VerticalStackLayout>
+
+                <!-- Botones de Acción -->
+                <VerticalStackLayout Spacing="15" Margin="0,20">
+                    <Button Text="💾 GUARDAR CAMBIOS" 
+                            Command="{Binding SaveCommand}" 
+                            IsVisible="{Binding IsEditing}"
+                            Style="{StaticResource BotonPrimario}" 
+                            BackgroundColor="{StaticResource ColorCompletado}"
+                            HeightRequest="60" CornerRadius="15" />
+                    
+                    <Button Text="🗑️ ELIMINAR MEDICINA" 
+                            Command="{Binding DeleteCommand}" 
+                            IsVisible="{Binding IsEditing}"
+                            Style="{StaticResource BotonSecundario}" 
+                            TextColor="Red" BorderColor="Red"
+                            HeightRequest="60" CornerRadius="15" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

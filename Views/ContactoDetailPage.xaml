@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.ContactoDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
+    x:DataType="vm:ContactoDetailViewModel"
+    Title="Detalle del Contacto">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header con botón de edición -->
+        <Grid BackgroundColor="{StaticResource ColorFondoTarjeta}" Padding="20,10" ColumnDefinitions="Auto, *, Auto">
+            <Button Text="←" Command="{Binding BackCommand}" Style="{StaticResource BotonSecundario}" WidthRequest="50" BorderColor="Transparent" />
+            <Label Grid.Column="1" Text="Perfil del Contacto" Style="{StaticResource LabelTitulo}" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button Grid.Column="2" 
+                    Command="{Binding ToggleEditCommand}" 
+                    Style="{StaticResource BotonSecundario}" 
+                    WidthRequest="50"
+                    BorderColor="Transparent">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="False">
+                        <Setter Property="Text" Value="✏️" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="True">
+                        <Setter Property="Text" Value="❌" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="25" Spacing="20">
+                
+                <!-- Avatar Gigante -->
+                <Frame HeightRequest="120" WidthRequest="120" CornerRadius="60" HorizontalOptions="Center" BackgroundColor="{StaticResource ColorFondoSecundario}" Padding="0">
+                    <Label Text="{Binding Contacto.Icono}" FontSize="60" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Frame>
+
+                <!-- Campo: Nombre -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="NOMBRE COMPLETO" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Contacto.Nombre}" FontSize="22" FontFamily="NunitoBold" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Contacto.Nombre}" Placeholder="Ej. Juan Pérez" IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Teléfono -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="TELÉFONO" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Contacto.Telefono}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Contacto.Telefono}" Keyboard="Telephone" Placeholder="Ej. 310..." IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Campo: Ubicación -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="UBICACIÓN / DIRECCIÓN" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="{Binding Contacto.Ubicacion}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                    <Entry Text="{Binding Contacto.Ubicacion}" Placeholder="Ej. Calle 123..." IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                </VerticalStackLayout>
+
+                <!-- Favorito / Emergencia -->
+                <HorizontalStackLayout Spacing="20" HorizontalOptions="Center" Margin="0,10">
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Favorito" Style="{StaticResource LabelPequeno}" />
+                        <CheckBox IsChecked="{Binding Contacto.EsFavorito}" IsEnabled="{Binding IsEditing}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Label Text="SOS" Style="{StaticResource LabelPequeno}" />
+                        <CheckBox IsChecked="{Binding Contacto.EsEmergencia}" IsEnabled="{Binding IsEditing}" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                <!-- Botones de Acción -->
+                <VerticalStackLayout Spacing="15" Margin="0,20">
+                    <Button Text="📞 REALIZAR LLAMADA" 
+                            Command="{Binding CallCommand}" 
+                            Style="{StaticResource BotonPrimario}" 
+                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}"
+                            HeightRequest="60" CornerRadius="15" />
+                    
+                    <Button Text="💾 GUARDAR CAMBIOS" 
+                            Command="{Binding SaveCommand}" 
+                            Style="{StaticResource BotonPrimario}" 
+                            BackgroundColor="{StaticResource ColorCompletado}"
+                            IsVisible="{Binding IsEditing}"
+                            HeightRequest="60" CornerRadius="15" />
+
+                    <Button Text="🗑️ ELIMINAR CONTACTO" 
+                            Command="{Binding DeleteCommand}" 
+                            Style="{StaticResource BotonSecundario}" 
+                            TextColor="Red" BorderColor="Red"
+                            IsVisible="{Binding IsEditing}"
+                            HeightRequest="60" CornerRadius="15" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

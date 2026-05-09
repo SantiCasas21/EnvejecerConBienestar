@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           x:Class="EnvejecerConBienestar.Views.AddMedicamentoPopup"
+           Color="Transparent">
+
+    <Frame BackgroundColor="White" Padding="25" CornerRadius="20" WidthRequest="340" HasShadow="True">
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Agregar Medicina" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
+            
+            <!-- Sugerencias -->
+            <Label Text="Sugerencias rápidas:" Style="{StaticResource LabelPequeno}" />
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Acetaminofén" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="12" Padding="10,5" HeightRequest="40" />
+                <Button Text="Ibuprofeno" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="12" Padding="10,5" HeightRequest="40" />
+            </HorizontalStackLayout>
+
+            <!-- Formulario -->
+            <Entry x:Name="NombreEntry" Placeholder="Nombre del medicamento" FontSize="18" HeightRequest="50" />
+            <Entry x:Name="MgEntry" Placeholder="Miligramos (mg)" Keyboard="Numeric" FontSize="18" HeightRequest="50" />
+            <Entry x:Name="FrecuenciaEntry" Placeholder="Cada cuántas horas (ej. 8)" Keyboard="Numeric" FontSize="18" HeightRequest="50" />
+            
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Hora de la primera alarma:" Style="{StaticResource LabelPequeno}" />
+                <TimePicker x:Name="TimePicker" Time="08:00:00" FontSize="18" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
+                <Button Text="Cancelar" Clicked="OnCancelClicked" Style="{StaticResource BotonSecundario}" Grid.Column="0" />
+                <Button Text="Guardar" Clicked="OnSaveClicked" Style="{StaticResource BotonPrimario}" Grid.Column="1" BackgroundColor="{StaticResource ColorCompletado}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Frame>
+</mct:Popup>

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using EnvejecerConBienestar.ViewModels;
 using EnvejecerConBienestar.Views;
+using CommunityToolkit.Maui;
 
 namespace EnvejecerConBienestar;
 
@@ -12,6 +13,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Nunito-Regular.ttf", "NunitoRegular");
@@ -22,15 +24,26 @@ public static class MauiProgram
         // Registrar AppShell
         builder.Services.AddSingleton<AppShell>();
 
+        // Registrar Servicios
+        builder.Services.AddSingleton<Services.DatabaseService>();
+        builder.Services.AddSingleton<Services.AlarmService>();
+        builder.Services.AddSingleton<Services.ContactService>();
+
         // Registrar ViewModels
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<MedicamentosViewModel>();
+        builder.Services.AddSingleton<JuegosViewModel>();
+        builder.Services.AddSingleton<ContactosViewModel>();
+        builder.Services.AddTransient<ContactoDetailViewModel>();
+        builder.Services.AddTransient<MedicamentoDetailViewModel>();
 
         // Registrar Views
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<MedicamentosPage>();
-        builder.Services.AddSingleton<JuegosPage>();
-        builder.Services.AddSingleton<ContactosPage>();
+        builder.Services.AddTransient<JuegosPage>();
+        builder.Services.AddTransient<ContactosPage>();
+        builder.Services.AddTransient<ContactoDetailPage>();
+        builder.Services.AddTransient<MedicamentoDetailPage>();
 
 #if DEBUG
         //builder.Logging.AddDebug();

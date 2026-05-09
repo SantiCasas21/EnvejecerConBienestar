@@ -2,85 +2,125 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EnvejecerConBienestar.Models;
+using EnvejecerConBienestar.Services;
+using CommunityToolkit.Maui.Views;
 
 namespace EnvejecerConBienestar.ViewModels;
 
 public partial class MedicamentosViewModel : ObservableObject
 {
-    // ---- Lista reactiva de medicamentos ----
-    public ObservableCollection<Medicamento> Medicamentos { get; } = new();
+    private readonly DatabaseService _databaseService;
+    private readonly AlarmService _alarmService;
 
     [ObservableProperty]
-    private string _fechaSeleccionada;
+    private ObservableCollection<Medicamento> _medicamentos = new();
 
     [ObservableProperty]
-    private int _totalTomados;
+    private ObservableCollection<Medicamento> _sugerencias = new();
 
     [ObservableProperty]
-    private int _totalPendientes;
+    private bool _isBusy;
 
-    public MedicamentosViewModel()
+    public MedicamentosViewModel(DatabaseService databaseService, AlarmService alarmService)
     {
-        FechaSeleccionada = DateTime.Now.ToString("dddd d 'de' MMMM",
-            new System.Globalization.CultureInfo("es-CO"));
-
-        if (FechaSeleccionada.Length > 0)
-            FechaSeleccionada = char.ToUpper(FechaSeleccionada[0]) + FechaSeleccionada[1..];
-
-        CargarDatosEjemplo();
-        ActualizarContadores();
+        _databaseService = databaseService;
+        _alarmService = alarmService;
+        LoadSugerencias();
     }
 
-    // ---- Datos hardcoded para el prototipo ----
-
-    private void CargarDatosEjemplo()
+    private void LoadSugerencias()
     {
-        var datos = new List<Medicamento>
+        Sugerencias = new ObservableCollection<Medicamento>
         {
-            new() { Id = 1, Nombre = "Metformina",     Dosis = "500 mg",  Hora = "8:00 a.m.",  Icono = "💊", Tomado = true  },
-            new() { Id = 2, Nombre = "Losartán",       Dosis = "50 mg",   Hora = "8:00 a.m.",  Icono = "💙", Tomado = true  },
-            new() { Id = 3, Nombre = "Atorvastatina",  Dosis = "20 mg",   Hora = "12:00 p.m.", Icono = "💊", Tomado = false },
-            new() { Id = 4, Nombre = "Vitamina D",     Dosis = "1000 UI", Hora = "12:00 p.m.", Icono = "🟡", Tomado = false },
-            new() { Id = 5, Nombre = "Omeprazol",      Dosis = "20 mg",   Hora = "6:00 p.m.",  Icono = "💊", Tomado = false },
-            new() { Id = 6, Nombre = "Aspirina",       Dosis = "100 mg",  Hora = "8:00 p.m.",  Icono = "🔴", Tomado = false },
+            new() { Nombre = "Acetaminofén", Icono = "⚪", Miligramos = "500", Frecuencia = 6, Notas = "Para el dolor y la fiebre" },
+            new() { Nombre = "Ibuprofeno", Icono = "💊", Miligramos = "400", Frecuencia = 8, Notas = "Antiinflamatorio" },
+            new() { Nombre = "Vitamina C", Icono = "🍊", Miligramos = "500", Frecuencia = 24, Notas = "Suplemento diario" },
+            new() { Nombre = "Losartán", Icono = "💙", Miligramos = "50", Frecuencia = 24, Notas = "Presión arterial" },
+            new() { Nombre = "Metformina", Icono = "🤍", Miligramos = "850", Frecuencia = 12, Notas = "Control de azúcar" }
         };
-
-        foreach (var m in datos)
-            Medicamentos.Add(m);
     }
-
-    private void ActualizarContadores()
-    {
-        TotalTomados    = Medicamentos.Count(m => m.Tomado);
-        TotalPendientes = Medicamentos.Count(m => !m.Tomado);
-    }
-
-    // ---- Comando: marcar / desmarcar medicamento ----
 
     [RelayCommand]
-    private async Task ToggleTomado(Medicamento medicamento)
+    public async Task LoadMedicamentosAsync()
     {
-        if (medicamento is null) return;
-
-        medicamento.Tomado = !medicamento.Tomado;
-
-        // Refrescar el item en la colección para que la UI reaccione
-        var index = Medicamentos.IndexOf(medicamento);
-        if (index >= 0)
+        IsBusy = true;
+        var list = await _databaseService.GetMedicamentosAsync();
+        
+        if (!list.Any())
         {
-            Medicamentos.RemoveAt(index);
-            Medicamentos.Insert(index, medicamento);
+            var demo = new List<Medicamento>
+            {
+                new() { Nombre = "Metformina", Miligramos = "500", HoraAlarma = new TimeSpan(8,0,0), Icono = "🤍", Notas = "Tomar con el desayuno" },
+                new() { Nombre = "Losartán", Miligramos = "50", HoraAlarma = new TimeSpan(20,0,0), Icono = "💙", Notas = "Tomar antes de dormir" }
+            };
+            foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
+            list = await _databaseService.GetMedicamentosAsync();
         }
 
-        ActualizarContadores();
+        // Ordenar: No tomados primero, luego tomados
+        var sortedList = list.OrderBy(m => m.EstaTomado).ToList();
 
-        if (medicamento.Tomado)
+        Medicamentos.Clear();
+        foreach (var m in sortedList) Medicamentos.Add(m);
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task AddMedicamentoAsync()
+    {
+        var popup = new Views.AddMedicamentoPopup();
+        await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+        
+        var resultado = await popup.PopupResult.Task;
+        
+        if (resultado != null)
         {
-            // Feedback positivo breve
-            await Shell.Current.DisplayAlert(
-                "¡Muy bien! 🎉",
-                $"Anotado. Tomó su {medicamento.Nombre} a tiempo.\n¡Siga así!",
-                "Gracias");
+            await _databaseService.SaveMedicamentoAsync(resultado);
+            await _alarmService.ProgramarAlarma(resultado);
+            await LoadMedicamentosAsync();
         }
+    }
+
+    [RelayCommand]
+    private async Task ToggleTomadoAsync(Medicamento medicamento)
+    {
+        if (medicamento == null) return;
+        medicamento.EstaTomado = !medicamento.EstaTomado;
+        await _databaseService.SaveMedicamentoAsync(medicamento);
+        
+        // Volver a cargar para que se reordenen
+        await LoadMedicamentosAsync();
+    }
+
+    [RelayCommand]
+    private async Task AddSugerenciaAsync(Medicamento sugerencia)
+    {
+        if (sugerencia == null) return;
+        
+        bool confirm = await Shell.Current.DisplayAlert("Agregar Medicina", $"¿Desea agregar {sugerencia.Nombre} a su lista diaria?", "Sí, agregar", "Cancelar");
+        if (confirm)
+        {
+            var nuevo = new Medicamento
+            {
+                Nombre = sugerencia.Nombre,
+                Icono = sugerencia.Icono,
+                Miligramos = sugerencia.Miligramos,
+                Frecuencia = sugerencia.Frecuencia,
+                Notas = sugerencia.Notas,
+                HoraAlarma = DateTime.Now.TimeOfDay
+            };
+            await _databaseService.SaveMedicamentoAsync(nuevo);
+            await _alarmService.ProgramarAlarma(nuevo);
+            
+            await Shell.Current.DisplayAlert("Éxito", $"{sugerencia.Nombre} ha sido agregado.", "OK");
+            await LoadMedicamentosAsync();
+        }
+    }
+
+    [RelayCommand]
+    private async Task GoToDetailAsync(Medicamento medicamento)
+    {
+        if (medicamento == null) return;
+        await Shell.Current.GoToAsync($"{nameof(Views.MedicamentoDetailPage)}?Id={medicamento.Id}");
     }
 }

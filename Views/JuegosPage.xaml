@@ -3,61 +3,87 @@
     x:Class="EnvejecerConBienestar.Views.JuegosPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    xmlns:models="clr-namespace:EnvejecerConBienestar.Models"
+    x:DataType="vm:JuegosViewModel"
+    x:Name="juegosPage"
     Title="Juegos">
 
-    <VerticalStackLayout
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        Spacing="20"
-        Padding="40">
-
-        <!-- Icono grande -->
-        <Label
-            Text="🧩"
-            FontSize="80"
-            HorizontalOptions="Center" />
-
-        <!-- Título -->
-        <Label
-            Text="Juegos Mentales"
-            FontFamily="NunitoBold"
-            FontSize="26"
-            TextColor="#1C1917"
-            HorizontalOptions="Center" />
-
-        <!-- Mensaje próximamente -->
-        <Frame
-            BackgroundColor="#F3F0FF"
-            BorderColor="#DDD6FE"
-            CornerRadius="16"
-            Padding="24,18"
-            HorizontalOptions="Fill">
-            <VerticalStackLayout Spacing="10">
-                <Label
-                    Text="🚧 Próximamente"
-                    FontFamily="NunitoBold"
-                    FontSize="20"
-                    TextColor="#7C3AED"
-                    HorizontalOptions="Center" />
-                <Label
-                    Text="Aquí podrá jugar Sudoku, Sopa de Letras y Memorama para ejercitar su mente todos los días."
-                    FontFamily="NunitoRegular"
-                    FontSize="18"
-                    TextColor="#5B21B6"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    LineBreakMode="WordWrap" />
-            </VerticalStackLayout>
-        </Frame>
-
-        <!-- Juegos a implementar -->
-        <VerticalStackLayout Spacing="10" HorizontalOptions="Fill">
-            <Label Text="📋 Lo que viene:" FontFamily="NunitoSemiBold" FontSize="18" TextColor="#78716C" />
-            <Label Text="   🔢  Sudoku (3 niveles)" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
-            <Label Text="   🔤  Sopa de letras" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
-            <Label Text="   🃏  Memorama de imágenes" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
-            <Label Text="   ✏️  Crucigramas con pistas de voz" FontFamily="NunitoRegular" FontSize="17" TextColor="#44403C" />
+    <Grid RowDefinitions="Auto, Auto, *">
+        <!-- Header -->
+        <VerticalStackLayout Padding="20" Spacing="5">
+            <Label Text="Agilidad Mental" Style="{StaticResource LabelTitulo}" />
+            <Label Text="Encuentre las parejas de números" Style="{StaticResource LabelSubtitulo}" />
         </VerticalStackLayout>
 
-    </VerticalStackLayout>
+        <!-- Stats -->
+        <Frame Grid.Row="1" Margin="20,0,20,10" Padding="15" Style="{StaticResource TarjetaBase}">
+            <Grid ColumnDefinitions="*, *">
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Label Text="Intentos" Style="{StaticResource LabelPequeno}" HorizontalOptions="Center" />
+                    <Label Text="{Binding Intentos}" Style="{StaticResource LabelTitulo}" FontSize="24" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Label Text="Tiempo" Style="{StaticResource LabelPequeno}" HorizontalOptions="Center" />
+                    <Label Text="{Binding TiempoTranscurrido}" Style="{StaticResource LabelTitulo}" FontSize="24" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <!-- Game Board -->
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <CollectionView ItemsSource="{Binding Fichas}" 
+                                HorizontalOptions="Center">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="15" VerticalItemSpacing="15" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:JuegoFicha">
+                            <Frame HeightRequest="100" 
+                                   WidthRequest="100" 
+                                   Padding="0" 
+                                   CornerRadius="15"
+                                   BackgroundColor="{Binding ColorFondo}"
+                                   HasShadow="True">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.VoltearFichaCommand, Source={x:Reference juegosPage}}" 
+                                                          CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <!-- Back of card -->
+                                    <Label Text="?" 
+                                           FontSize="40" 
+                                           FontFamily="NunitoBold" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center" 
+                                           TextColor="#94A3B8"
+                                           IsVisible="{Binding EstaVolteada, Converter={StaticResource InverseBoolConverter}}" />
+                                    
+                                    <!-- Front of card -->
+                                    <Label Text="{Binding Valor}" 
+                                           FontSize="45" 
+                                           FontFamily="NunitoBold" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center" 
+                                           TextColor="{StaticResource ColorPrimario}"
+                                           IsVisible="{Binding EstaVolteada}" />
+
+                                    <!-- Matched Overlay -->
+                                    <BoxView BackgroundColor="#80FFFFFF" IsVisible="{Binding EstaEmparejada}" />
+                                    <Label Text="✔️" FontSize="30" HorizontalOptions="End" VerticalOptions="Start" Margin="5" IsVisible="{Binding EstaEmparejada}" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Reiniciar Juego" 
+                        Style="{StaticResource BotonSecundario}" 
+                        Command="{Binding IniciarJuegoCommand}" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="200" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

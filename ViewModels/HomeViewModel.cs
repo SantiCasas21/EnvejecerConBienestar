@@ -1,85 +1,104 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EnvejecerConBienestar.Models;
+using EnvejecerConBienestar.Services;
 
 namespace EnvejecerConBienestar.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
-    // ---- Propiedades ----
+    private readonly DatabaseService _databaseService;
 
     [ObservableProperty]
-    private string _nombreUsuario = "Rosa";
+    private ObservableCollection<Habito> _habitos = new();
 
     [ObservableProperty]
-    private string _saludo = string.Empty;
+    private string _saludo;
 
     [ObservableProperty]
-    private string _fechaHoy = string.Empty;
+    private bool _isBusy;
 
     [ObservableProperty]
-    private string _proximoMedicamento = "Metformina · 500mg";
+    private string _nombreUsuario = "Santiago"; // Estático por ahora
 
-    [ObservableProperty]
-    private string _horaProximoMedicamento = "8:00 a.m.";
+    private readonly ContactService _contactService;
 
-    [ObservableProperty]
-    private string _iconoSaludo = "☀️";
-
-    public HomeViewModel()
+    public HomeViewModel(DatabaseService databaseService, ContactService contactService)
     {
-        ActualizarSaludo();
+        _databaseService = databaseService;
+        _contactService = contactService;
+        
+        int hora = DateTime.Now.Hour;
+        string saludoBase = hora < 12 ? "¡Buenos días" : (hora < 18 ? "¡Buenas tardes" : "¡Buenas noches");
+        Saludo = $"{saludoBase}, {NombreUsuario}!";
     }
 
-    // ---- Lógica de saludo por hora del día ----
-
-    private void ActualizarSaludo()
+    [RelayCommand]
+    private async Task LlamadaEmergenciaAsync()
     {
-        var hora = DateTime.Now.Hour;
-
-        if (hora >= 6 && hora < 12)
+        var sos = await _databaseService.GetContactoEmergenciaAsync();
+        if (sos != null && !string.IsNullOrWhiteSpace(sos.Telefono))
         {
-            Saludo = $"¡Buenos días, {NombreUsuario}!";
-            IconoSaludo = "☀️";
-        }
-        else if (hora >= 12 && hora < 19)
-        {
-            Saludo = $"¡Buenas tardes, {NombreUsuario}!";
-            IconoSaludo = "🌤️";
+            await _contactService.RealizarLlamada(sos.Telefono);
         }
         else
         {
-            Saludo = $"¡Buenas noches, {NombreUsuario}!";
-            IconoSaludo = "🌙";
+            await Shell.Current.DisplayAlert("Configuración SOS", 
+                "No se encontró un contacto de emergencia marcado como SOS. Por favor, asigne uno en la sección de Contactos.", 
+                "Entendido");
         }
-
-        FechaHoy = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy",
-            new System.Globalization.CultureInfo("es-CO"));
-
-        // Capitalizar primera letra
-        if (FechaHoy.Length > 0)
-            FechaHoy = char.ToUpper(FechaHoy[0]) + FechaHoy[1..];
     }
 
-    // ---- Comando: Botón de emergencia ----
+    [RelayCommand]
+    public async Task LoadHabitosAsync()
+    {
+        IsBusy = true;
+        var list = await _databaseService.GetHabitosAsync(DateTime.Now);
+
+        if (!list.Any())
+        {
+            // Inicializar hábitos por defecto para el día si no existen
+            var iniciales = new List<Habito>
+            {
+                new Habito { Tipo = "Agua", Meta = 8, ProgresoActual = 0, Fecha = DateTime.Now.Date },
+                new Habito { Tipo = "Caminata", Meta = 30, ProgresoActual = 0, Fecha = DateTime.Now.Date },
+                new Habito { Tipo = "Ejercicio", Meta = 1, ProgresoActual = 0, Fecha = DateTime.Now.Date }
+            };
+
+            foreach (var h in iniciales)
+                await _databaseService.SaveHabitoAsync(h);
+            
+            list = await _databaseService.GetHabitosAsync(DateTime.Now);
+        }
+
+        Habitos.Clear();
+        foreach (var h in list) Habitos.Add(h);
+        IsBusy = false;
+    }
 
     [RelayCommand]
-    private async Task LlamarEmergencia()
+    private async Task ActualizarProgresoAsync(Habito habito)
     {
-        // En producción: PhoneDialer.Default.Open("112") o número configurado
-        bool confirmar = await Shell.Current.DisplayAlert(
-            "🚨 EMERGENCIA",
-            "¿Deseas llamar al número de emergencia?\n\n" +
-            "Se contactará a tu familiar de confianza y a los servicios de emergencia.",
-            "SÍ, LLAMAR AHORA",
-            "Cancelar");
+        if (habito == null) return;
 
-        if (confirmar)
+        string input = await Shell.Current.DisplayPromptAsync("Actualizar", $"¿Cuánto sumaste a {habito.Tipo}?", keyboard: Keyboard.Numeric);
+        
+        if (int.TryParse(input, out int valor))
         {
-            // Simulación para el prototipo
-            await Shell.Current.DisplayAlert(
-                "Llamando...",
-                "📞 Conectando con Carmen López (hija)...\n\nEn la versión final se marcará el número real.",
-                "OK");
+            habito.ProgresoActual += valor;
+            if (habito.ProgresoActual > habito.Meta && habito.Tipo != "Agua") 
+                habito.ProgresoActual = habito.Meta;
+
+            await _databaseService.SaveHabitoAsync(habito);
+            
+            // Refrescar UI (Truco para forzar actualización en el carrusel)
+            var index = Habitos.IndexOf(habito);
+            if (index >= 0)
+            {
+                Habitos.RemoveAt(index);
+                Habitos.Insert(index, habito);
+            }
         }
     }
 }

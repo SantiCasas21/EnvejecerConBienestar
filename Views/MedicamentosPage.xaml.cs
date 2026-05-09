@@ -7,7 +7,15 @@ public partial class MedicamentosPage : ContentPage
     public MedicamentosPage(MedicamentosViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = _viewModel = viewModel;
+    }
+
+    private readonly MedicamentosViewModel _viewModel;
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadMedicamentosAsync();
     }
 }
 

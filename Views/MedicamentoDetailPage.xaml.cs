@@ -2,9 +2,9 @@ using EnvejecerConBienestar.ViewModels;
 
 namespace EnvejecerConBienestar.Views;
 
-public partial class JuegosPage : ContentPage
+public partial class MedicamentoDetailPage : ContentPage
 {
-    public JuegosPage(JuegosViewModel viewModel)
+    public MedicamentoDetailPage(MedicamentoDetailViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
