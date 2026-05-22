@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EnvejecerConBienestar.Views.TriviaPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Crema}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,50,20,30" Spacing="16">
+
+            <!-- BOTÓN VOLVER -->
+            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
+                   HasShadow="False" BorderColor="#FEF3C7" HorizontalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolverTocado"/>
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="←" FontFamily="NunitoBold" FontSize="18"
+                           TextColor="{StaticResource Naranja}" VerticalOptions="Center"/>
+                    <Label Text="Volver a Juegos" FontFamily="NunitoSemiBold" FontSize="15"
+                           TextColor="{StaticResource Naranja}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- ENCABEZADO -->
+            <Label Text="🎯 Trivia de Salud"
+                   FontFamily="NunitoBold" FontSize="24"
+                   TextColor="{StaticResource Naranja}" HorizontalOptions="Center"/>
+            <Label Text="¿Cuánto sabes sobre hábitos saludables?"
+                   FontFamily="NunitoRegular" FontSize="14" TextColor="#888888"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+            <!-- PROGRESO Y PUNTAJE -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="16,12"
+                   HasShadow="False" BorderColor="#F3F4F6">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8">
+                    <Label Grid.Row="0" Grid.Column="0" x:Name="LblProgreso"
+                           Text="Pregunta 1 de 10" FontFamily="NunitoSemiBold"
+                           FontSize="14" TextColor="#1F2937"/>
+                    <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#FEF3C7"
+                           CornerRadius="10" Padding="10,4" HasShadow="False">
+                        <HorizontalStackLayout Spacing="4">
+                            <Label Text="⭐" FontSize="14"/>
+                            <Label x:Name="LblPuntaje" Text="0 pts"
+                                   FontFamily="NunitoBold" FontSize="14"
+                                   TextColor="{StaticResource Naranja}"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <ProgressBar Grid.Row="1" Grid.ColumnSpan="2"
+                                 x:Name="BarraProgreso" Progress="0.1"
+                                 ProgressColor="{StaticResource Naranja}"
+                                 BackgroundColor="#F3F4F6"/>
+                </Grid>
+            </Frame>
+
+            <!-- PREGUNTA -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="20"
+                   HasShadow="False" BorderColor="#FEF3C7" MinimumHeightRequest="110">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblEmojiPregunta" Text="❓" FontSize="36"
+                           HorizontalOptions="Center"/>
+                    <Label x:Name="LblPregunta" Text="Cargando..."
+                           FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- OPCIONES A B C D -->
+            <Frame x:Name="OpcionA" BackgroundColor="White" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="0"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="36,*">
+                    <Frame Grid.Column="0" x:Name="BadgeA" BackgroundColor="#F3F4F6"
+                           CornerRadius="10" Padding="0" HasShadow="False"
+                           HeightRequest="32" WidthRequest="32">
+                        <Label Text="A" FontFamily="NunitoBold" FontSize="14"
+                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label x:Name="LblOpcionA" Grid.Column="1" Text=""
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Frame>
+
+            <Frame x:Name="OpcionB" BackgroundColor="White" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="1"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="36,*">
+                    <Frame Grid.Column="0" x:Name="BadgeB" BackgroundColor="#F3F4F6"
+                           CornerRadius="10" Padding="0" HasShadow="False"
+                           HeightRequest="32" WidthRequest="32">
+                        <Label Text="B" FontFamily="NunitoBold" FontSize="14"
+                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label x:Name="LblOpcionB" Grid.Column="1" Text=""
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Frame>
+
+            <Frame x:Name="OpcionC" BackgroundColor="White" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="2"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="36,*">
+                    <Frame Grid.Column="0" x:Name="BadgeC" BackgroundColor="#F3F4F6"
+                           CornerRadius="10" Padding="0" HasShadow="False"
+                           HeightRequest="32" WidthRequest="32">
+                        <Label Text="C" FontFamily="NunitoBold" FontSize="14"
+                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label x:Name="LblOpcionC" Grid.Column="1" Text=""
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Frame>
+
+            <Frame x:Name="OpcionD" BackgroundColor="White" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="3"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="36,*">
+                    <Frame Grid.Column="0" x:Name="BadgeD" BackgroundColor="#F3F4F6"
+                           CornerRadius="10" Padding="0" HasShadow="False"
+                           HeightRequest="32" WidthRequest="32">
+                        <Label Text="D" FontFamily="NunitoBold" FontSize="14"
+                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label x:Name="LblOpcionD" Grid.Column="1" Text=""
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+            </Frame>
+
+            <!-- FEEDBACK CORRECTO / INCORRECTO -->
+            <Frame x:Name="BannerFeedback" CornerRadius="16" Padding="16,12"
+                   HasShadow="False" IsVisible="False">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label x:Name="LblFeedbackTitulo" Text=""
+                           FontFamily="NunitoBold" FontSize="17" HorizontalOptions="Center"/>
+                    <Label x:Name="LblFeedbackDetalle" Text=""
+                           FontFamily="NunitoRegular" FontSize="13"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- PANEL RESULTADO FINAL -->
+            <Frame x:Name="PanelFinal" BackgroundColor="White" CornerRadius="20"
+                   Padding="24,20" HasShadow="False" BorderColor="#FEF3C7"
+                   IsVisible="False">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label x:Name="LblEmojiFinal" Text="🏆" FontSize="52"
+                           HorizontalOptions="Center"/>
+                    <Label Text="¡Trivia completada!"
+                           FontFamily="NunitoBold" FontSize="22"
+                           TextColor="#1F2937" HorizontalOptions="Center"/>
+                    <Label x:Name="LblPuntajeFinal" Text=""
+                           FontFamily="NunitoRegular" FontSize="15" TextColor="#6B7280"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- BOTÓN SIGUIENTE / JUGAR DE NUEVO -->
+            <Button x:Name="BtnAccion" Text="Siguiente →"
+                    FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="{StaticResource Naranja}"
+                    TextColor="White" CornerRadius="16"
+                    HeightRequest="54" IsVisible="False"
+                    Clicked="OnAccionTocada"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

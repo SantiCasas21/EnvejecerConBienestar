@@ -1,89 +1,143 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-    x:Class="EnvejecerConBienestar.Views.JuegosPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
-    xmlns:models="clr-namespace:EnvejecerConBienestar.Models"
-    x:DataType="vm:JuegosViewModel"
-    x:Name="juegosPage"
-    Title="Juegos">
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EnvejecerConBienestar.Views.JuegosPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Crema}">
 
-    <Grid RowDefinitions="Auto, Auto, *">
-        <!-- Header -->
-        <VerticalStackLayout Padding="20" Spacing="5">
-            <Label Text="Agilidad Mental" Style="{StaticResource LabelTitulo}" />
-            <Label Text="Encuentre las parejas de números" Style="{StaticResource LabelSubtitulo}" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20,50,20,30" Spacing="0">
+
+            <!-- ENCABEZADO -->
+            <Label Text="🎮 Minijuegos"
+                   FontFamily="NunitoBold" FontSize="28"
+                   TextColor="{StaticResource Violeta}" Margin="0,0,0,4"/>
+            <Label Text="Ejercita tu mente con estos juegos"
+                   FontFamily="NunitoRegular" FontSize="15"
+                   TextColor="#888888" Margin="0,0,0,28"/>
+
+            <!-- ── BUSCAR LOS PARES ── -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#EDE9FE" Margin="0,0,0,14">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBuscarParesTocado"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
+                    <Frame Grid.Column="0" BackgroundColor="#EDE9FE" CornerRadius="16"
+                           Padding="0" HasShadow="False" HeightRequest="64"
+                           WidthRequest="64" VerticalOptions="Center">
+                        <Label Text="🃏" FontSize="32"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label Text="Buscar los pares"
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
+                        <Label Text="Voltea cartas y encuentra las parejas. Mejora tu memoria visual."
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#888888" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#EDE9FE" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible"
+                                   FontFamily="NunitoSemiBold" FontSize="11"
+                                   TextColor="{StaticResource Violeta}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="{StaticResource Violeta}"
+                           VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+            </Frame>
+
+            <!-- ── TRIVIA DE SALUD ── -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#FEF3C7" Margin="0,0,0,14">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTriviaTocado"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
+                    <Frame Grid.Column="0" BackgroundColor="#FEF3C7" CornerRadius="16"
+                           Padding="0" HasShadow="False" HeightRequest="64"
+                           WidthRequest="64" VerticalOptions="Center">
+                        <Label Text="🎯" FontSize="32"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label Text="Trivia de salud"
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
+                        <Label Text="Responde preguntas sobre hábitos saludables y suma puntos."
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#888888" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#FEF3C7" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible"
+                                   FontFamily="NunitoSemiBold" FontSize="11"
+                                   TextColor="{StaticResource Naranja}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="{StaticResource Naranja}"
+                           VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+            </Frame>
+
+            <!-- ── SOPA DE LETRAS (próximo) ── -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6"
+                   Opacity="0.5" Margin="0,0,0,14">
+                <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
+                    <Frame Grid.Column="0" BackgroundColor="#F3F4F6" CornerRadius="16"
+                           Padding="0" HasShadow="False" HeightRequest="64"
+                           WidthRequest="64" VerticalOptions="Center">
+                        <Label Text="🔤" FontSize="32"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label Text="Sopa de letras"
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
+                        <Label Text="Encuentra palabras escondidas sobre salud."
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#888888" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F3F4F6" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="🔒 Próximamente"
+                                   FontFamily="NunitoSemiBold" FontSize="11"
+                                   TextColor="#9CA3AF"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+            </Frame>
+
+            <!-- ── ORDENAR SECUENCIA (próximo) ── -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6" Opacity="0.5">
+                <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
+                    <Frame Grid.Column="0" BackgroundColor="#F3F4F6" CornerRadius="16"
+                           Padding="0" HasShadow="False" HeightRequest="64"
+                           WidthRequest="64" VerticalOptions="Center">
+                        <Label Text="🧩" FontSize="32"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label Text="Ordenar secuencia"
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
+                        <Label Text="Ordena los pasos de una rutina saludable."
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#888888" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F3F4F6" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="🔒 Próximamente"
+                                   FontFamily="NunitoSemiBold" FontSize="11"
+                                   TextColor="#9CA3AF"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+            </Frame>
+
         </VerticalStackLayout>
-
-        <!-- Stats -->
-        <Frame Grid.Row="1" Margin="20,0,20,10" Padding="15" Style="{StaticResource TarjetaBase}">
-            <Grid ColumnDefinitions="*, *">
-                <VerticalStackLayout HorizontalOptions="Center">
-                    <Label Text="Intentos" Style="{StaticResource LabelPequeno}" HorizontalOptions="Center" />
-                    <Label Text="{Binding Intentos}" Style="{StaticResource LabelTitulo}" FontSize="24" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <Label Text="Tiempo" Style="{StaticResource LabelPequeno}" HorizontalOptions="Center" />
-                    <Label Text="{Binding TiempoTranscurrido}" Style="{StaticResource LabelTitulo}" FontSize="24" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Grid>
-        </Frame>
-
-        <!-- Game Board -->
-        <ScrollView Grid.Row="2">
-            <VerticalStackLayout Padding="20" Spacing="20">
-                <CollectionView ItemsSource="{Binding Fichas}" 
-                                HorizontalOptions="Center">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="15" VerticalItemSpacing="15" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:JuegoFicha">
-                            <Frame HeightRequest="100" 
-                                   WidthRequest="100" 
-                                   Padding="0" 
-                                   CornerRadius="15"
-                                   BackgroundColor="{Binding ColorFondo}"
-                                   HasShadow="True">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BindingContext.VoltearFichaCommand, Source={x:Reference juegosPage}}" 
-                                                          CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>
-                                <Grid>
-                                    <!-- Back of card -->
-                                    <Label Text="?" 
-                                           FontSize="40" 
-                                           FontFamily="NunitoBold" 
-                                           HorizontalOptions="Center" 
-                                           VerticalOptions="Center" 
-                                           TextColor="#94A3B8"
-                                           IsVisible="{Binding EstaVolteada, Converter={StaticResource InverseBoolConverter}}" />
-                                    
-                                    <!-- Front of card -->
-                                    <Label Text="{Binding Valor}" 
-                                           FontSize="45" 
-                                           FontFamily="NunitoBold" 
-                                           HorizontalOptions="Center" 
-                                           VerticalOptions="Center" 
-                                           TextColor="{StaticResource ColorPrimario}"
-                                           IsVisible="{Binding EstaVolteada}" />
-
-                                    <!-- Matched Overlay -->
-                                    <BoxView BackgroundColor="#80FFFFFF" IsVisible="{Binding EstaEmparejada}" />
-                                    <Label Text="✔️" FontSize="30" HorizontalOptions="End" VerticalOptions="Start" Margin="5" IsVisible="{Binding EstaEmparejada}" />
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-                <Button Text="Reiniciar Juego" 
-                        Style="{StaticResource BotonSecundario}" 
-                        Command="{Binding IniciarJuegoCommand}" 
-                        HorizontalOptions="Center" 
-                        WidthRequest="200" />
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+    </ScrollView>
 </ContentPage>

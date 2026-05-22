@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EnvejecerConBienestar.Views.BuscarParesPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Crema}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,50,20,30" Spacing="14">
+
+            <!-- BOTÓN VOLVER AL MENÚ DE JUEGOS -->
+            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
+                   HasShadow="False" BorderColor="#EDE9FE" HorizontalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolverTocado"/>
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="←" FontFamily="NunitoBold" FontSize="18"
+                           TextColor="{StaticResource Violeta}" VerticalOptions="Center"/>
+                    <Label Text="Volver a Juegos" FontFamily="NunitoSemiBold" FontSize="15"
+                           TextColor="{StaticResource Violeta}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- ENCABEZADO -->
+            <Label Text="🃏 Buscar los pares" FontFamily="NunitoBold" FontSize="24"
+                   TextColor="{StaticResource Violeta}" HorizontalOptions="Center" Margin="0,4,0,0"/>
+            <Label Text="Toca dos cartas para encontrar la pareja"
+                   FontFamily="NunitoRegular" FontSize="14" TextColor="#888888"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+            <!-- SELECTOR DE DIFICULTAD -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="10"
+                   HasShadow="False" BorderColor="#EDE9FE">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <Frame x:Name="BtnFacil" Grid.Column="0" BackgroundColor="#EDE9FE"
+                           CornerRadius="12" Padding="0" HasShadow="False">
+                        <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
+                            <Label Text="😊" FontSize="18" HorizontalOptions="Center"/>
+                            <Label Text="Fácil"   FontFamily="NunitoBold"   FontSize="13" TextColor="{StaticResource Violeta}" HorizontalOptions="Center"/>
+                            <Label Text="8 pares" FontFamily="NunitoRegular" FontSize="11" TextColor="{StaticResource Violeta}" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDificultadFacil"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame x:Name="BtnMedio" Grid.Column="1" BackgroundColor="White"
+                           CornerRadius="12" Padding="0" HasShadow="False">
+                        <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
+                            <Label Text="🧠" FontSize="18" HorizontalOptions="Center"/>
+                            <Label Text="Medio"    FontFamily="NunitoBold"   FontSize="13" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                            <Label Text="12 pares" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDificultadMedio"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame x:Name="BtnDificil" Grid.Column="2" BackgroundColor="White"
+                           CornerRadius="12" Padding="0" HasShadow="False">
+                        <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
+                            <Label Text="🔥" FontSize="18" HorizontalOptions="Center"/>
+                            <Label Text="Difícil"  FontFamily="NunitoBold"   FontSize="13" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                            <Label Text="16 pares" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDificultadDificil"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+            </Frame>
+
+            <!-- ESTADÍSTICAS -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Frame Grid.Column="0" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="🎯" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Intentos" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        <Label x:Name="LblIntentos" Text="0" FontFamily="NunitoBold" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="✅" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Pares" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        <Label x:Name="LblPares" Text="0/0" FontFamily="NunitoBold" FontSize="20" TextColor="{StaticResource Verde}" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="2" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="⏱️" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Tiempo" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        <Label x:Name="LblTiempo" Text="0s" FontFamily="NunitoBold" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- BANNER VICTORIA -->
+            <Frame x:Name="BannerVictoria" BackgroundColor="#D1FAE5" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#6EE7B7" IsVisible="False">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <Label Text="🎉 ¡Felicidades, lo lograste!" FontFamily="NunitoBold"
+                           FontSize="18" TextColor="#065F46" HorizontalOptions="Center"/>
+                    <Label x:Name="LblResultado" Text="" FontFamily="NunitoRegular"
+                           FontSize="14" TextColor="#047857" HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- TABLERO (generado en código) -->
+            <Grid x:Name="Tablero" ColumnSpacing="8" RowSpacing="8"/>
+
+            <!-- BOTÓN NUEVA PARTIDA -->
+            <Button Text="🔄  Nueva partida" FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="{StaticResource Violeta}" TextColor="White"
+                    CornerRadius="16" HeightRequest="54" Margin="0,6,0,0"
+                    Clicked="OnNuevaPartida"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
