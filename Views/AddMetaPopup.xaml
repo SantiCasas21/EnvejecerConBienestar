@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           x:Class="EnvejecerConBienestar.Views.AddMetaPopup"
+           Color="Transparent">
+
+    <Frame Style="{StaticResource FramePopup}" WidthRequest="360" MaximumHeightRequest="600">
+        <ScrollView>
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Crear Nueva Meta" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
+
+                <!-- Sugerencias rápidas -->
+                <Label Text="Sugerencias:" Style="{StaticResource LabelPequeno}" />
+                <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center">
+                    <Button Text="💧 Agua"       Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="🚶 Caminata"   Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="💪 Ejercicio"   Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="📚 Lectura"    Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="🧘 Meditación" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="🤝 Socializar" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="💊 Medicinas"  Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                    <Button Text="😴 Sueño"      Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="14" Padding="10,5" HeightRequest="44" Margin="3" />
+                </FlexLayout>
+
+                <BoxView Style="{StaticResource Separador}" Margin="0,5" />
+
+                <!-- Formulario -->
+                <Label Text="O personaliza tu meta:" Style="{StaticResource LabelPequeno}" />
+                <Entry x:Name="NombreEntry" Placeholder="¿Qué deseas lograr?" Style="{StaticResource EntryForm}" />
+                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                    <Entry x:Name="ObjetivoEntry" Grid.Column="0" Placeholder="Cantidad (ej. 8)" Keyboard="Numeric" Style="{StaticResource EntryForm}" />
+                    <Entry x:Name="UnidadEntry" Grid.Column="1" Placeholder="vasos, min..." Style="{StaticResource EntryForm}" WidthRequest="120" />
+                </Grid>
+                <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="Diario" FontSize="12" HorizontalOptions="Center" />
+                        <RadioButton x:Name="RadioDiario" IsChecked="True" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="Semanal" FontSize="12" HorizontalOptions="Center" />
+                        <RadioButton x:Name="RadioSemanal" GroupName="frecuencia" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,5,0,0">
+                    <Button Text="Cancelar" Clicked="OnCancelClicked" Style="{StaticResource BotonSecundario}" Grid.Column="0" />
+                    <Button Text="Crear Meta" Clicked="OnSaveClicked" Style="{StaticResource BotonPrimario}" Grid.Column="1" BackgroundColor="{StaticResource ColorCompletado}" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Frame>
+</mct:Popup>

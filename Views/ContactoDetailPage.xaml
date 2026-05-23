@@ -39,29 +39,31 @@
             <VerticalStackLayout Padding="25" Spacing="20">
                 
                 <!-- Avatar Gigante -->
-                <Frame HeightRequest="120" WidthRequest="120" CornerRadius="60" HorizontalOptions="Center" BackgroundColor="{StaticResource ColorFondoSecundario}" Padding="0">
+                <Frame Style="{StaticResource FrameIcono}" HeightRequest="120" WidthRequest="120"
+                       CornerRadius="60" HorizontalOptions="Center"
+                       BackgroundColor="{StaticResource ColorFondoSecundario}">
                     <Label Text="{Binding Contacto.Icono}" FontSize="60" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Frame>
 
                 <!-- Campo: Nombre -->
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="NOMBRE COMPLETO" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="NOMBRE COMPLETO" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Contacto.Nombre}" FontSize="22" FontFamily="NunitoBold" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Nombre}" Placeholder="Ej. Juan Pérez" IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                    <Entry Text="{Binding Contacto.Nombre}" Placeholder="Ej. Juan Pérez" IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
                 </VerticalStackLayout>
 
                 <!-- Campo: Teléfono -->
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="TELÉFONO" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="TELÉFONO" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Contacto.Telefono}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Telefono}" Keyboard="Telephone" Placeholder="Ej. 310..." IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                    <Entry Text="{Binding Contacto.Telefono}" Keyboard="Telephone" Placeholder="Ej. 310..." IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
                 </VerticalStackLayout>
 
                 <!-- Campo: Ubicación -->
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="UBICACIÓN / DIRECCIÓN" Style="{StaticResource LabelPequeno}" TextColor="{StaticResource ColorPrimario}" />
+                    <Label Text="UBICACIÓN / DIRECCIÓN" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Contacto.Ubicacion}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Ubicacion}" Placeholder="Ej. Calle 123..." IsVisible="{Binding IsEditing}" BackgroundColor="#F1F5F9" />
+                    <Entry Text="{Binding Contacto.Ubicacion}" Placeholder="Ej. Calle 123..." IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
                 </VerticalStackLayout>
 
                 <!-- Favorito / Emergencia -->

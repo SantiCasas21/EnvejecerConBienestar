@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           x:Class="EnvejecerConBienestar.Views.BienvenidaPopup"
+           Color="Transparent"
+           CanBeDismissedByTappingOutsideOfPopup="False">
+
+    <Frame Style="{StaticResource FramePopup}" Padding="30" CornerRadius="24" WidthRequest="360">
+        <VerticalStackLayout Spacing="22" HorizontalOptions="Center">
+
+            <!-- Emoji de bienvenida -->
+            <Frame Style="{StaticResource FrameIcono}" BackgroundColor="#FFF7ED"
+                   CornerRadius="40" HeightRequest="80" WidthRequest="80"
+                   HorizontalOptions="Center">
+                <Label Text="🌿" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Frame>
+
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                <Label Text="¡Bienvenido!" FontSize="28" FontFamily="NunitoBold"
+                       TextColor="#1E293B" HorizontalOptions="Center" />
+                <Label Text="Estamos felices de acompañarte en tu camino hacia un envejecer con bienestar."
+                       FontSize="15" FontFamily="NunitoRegular" TextColor="#64748B"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap" MaximumWidthRequest="280" />
+            </VerticalStackLayout>
+
+            <BoxView Style="{StaticResource Separador}" Margin="0,5" Color="#E2E8F0" />
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="¿Cómo te llamas?" FontSize="18" FontFamily="NunitoSemiBold"
+                       TextColor="#1E293B" HorizontalOptions="Center" />
+                <Frame BackgroundColor="#F8FAFC" CornerRadius="14" Padding="4,0" HasShadow="False"
+                       BorderColor="#E2E8F0">
+                    <Entry x:Name="NombreEntry"
+                           Placeholder="Escribe tu nombre"
+                           FontSize="20"
+                           FontFamily="NunitoRegular"
+                           HorizontalOptions="Fill"
+                           HeightRequest="56"
+                           ClearButtonVisibility="WhileEditing"
+                           ReturnType="Done"
+                           Completed="OnNombreCompleted" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <Button Text="Comenzar →"
+                    Clicked="OnComenzarClicked"
+                    BackgroundColor="{StaticResource ColorPrimario}"
+                    TextColor="White"
+                    FontSize="20"
+                    FontFamily="NunitoBold"
+                    HeightRequest="60"
+                    CornerRadius="16"
+                    Margin="0,5,0,0" />
+
+            <Label Text="Puedes cambiarlo después cuando quieras"
+                   FontSize="12" FontFamily="NunitoRegular" TextColor="#94A3B8"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </Frame>
+</mct:Popup>

@@ -1,3 +1,4 @@
+using EnvejecerConBienestar.Models;
 using EnvejecerConBienestar.ViewModels;
 
 namespace EnvejecerConBienestar.Views;
@@ -16,5 +17,11 @@ public partial class ContactosPage : ContentPage
     {
         base.OnAppearing();
         await _viewModel.LoadDataAsync();
+    }
+
+    private void OnContactoTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Frame frame && frame.BindingContext is Contacto contacto)
+            _viewModel.GoToDetailCommand.Execute(contacto);
     }
 }

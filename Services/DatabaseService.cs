@@ -7,6 +7,7 @@ namespace EnvejecerConBienestar.Services;
 public class DatabaseService
 {
     private SQLiteAsyncConnection? _database;
+    private readonly SemaphoreSlim _semaphore = new(1, 1);
 
     public DatabaseService()
     {
@@ -17,12 +18,24 @@ public class DatabaseService
         if (_database is not null)
             return;
 
-        _database = new SQLiteAsyncConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags);
+        await _semaphore.WaitAsync();
+        try
+        {
+            if (_database is not null)
+                return;
 
-        await _database.CreateTableAsync<Medicamento>();
-        await _database.CreateTableAsync<Contacto>();
-        await _database.CreateTableAsync<ActividadCognitiva>();
-        await _database.CreateTableAsync<Habito>();
+            _database = new SQLiteAsyncConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags);
+
+            await _database.CreateTableAsync<Medicamento>();
+            await _database.CreateTableAsync<Contacto>();
+            await _database.CreateTableAsync<ActividadCognitiva>();
+            await _database.CreateTableAsync<Habito>();
+            await _database.CreateTableAsync<Meta>();
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
     }
 
     // Operaciones Genéricas
@@ -35,18 +48,7 @@ public class DatabaseService
     public async Task<int> SaveItemAsync<T>(T item) where T : new()
     {
         await Init();
-        var props = typeof(T).GetProperties();
-        var idProp = props.FirstOrDefault(p => p.Name == "Id");
-
-        if (idProp != null)
-        {
-            var idValue = (int)idProp.GetValue(item)!;
-            if (idValue != 0)
-            {
-                return await _database!.UpdateAsync(item);
-            }
-        }
-        return await _database!.InsertAsync(item);
+        return await _database!.InsertOrReplaceAsync(item);
     }
 
     public async Task<int> DeleteItemAsync<T>(T item) where T : new()
@@ -80,4 +82,43 @@ public class DatabaseService
                                .ToListAsync(); 
     }
     public async Task<int> SaveHabitoAsync(Habito habito) => await SaveItemAsync(habito);
+
+    // Métodos de Meta (nuevo sistema de metas)
+    public async Task<List<Meta>> GetMetasActivasAsync()
+    {
+        await Init();
+        var hoy = DateTime.Now.Date;
+        // Incluye metas activas (pendientes) y metas completadas hoy
+        return await _database!.Table<Meta>()
+                               .Where(m => m.FechaFin >= hoy)
+                               .ToListAsync();
+    }
+
+    public async Task<List<Meta>> GetMetasCompletadasHoyAsync()
+    {
+        await Init();
+        var hoy = DateTime.Now.Date;
+        return await _database!.Table<Meta>()
+                               .Where(m => m.Completada && m.FechaFin == hoy)
+                               .ToListAsync();
+    }
+
+    public async Task<List<Meta>> GetMetasPendientesAsync()
+    {
+        await Init();
+        var hoy = DateTime.Now.Date;
+        return await _database!.Table<Meta>()
+                               .Where(m => !m.Completada && m.FechaFin < hoy)
+                               .ToListAsync();
+    }
+
+    public async Task<Meta?> GetMetaAsync(int id)
+    {
+        await Init();
+        return await _database!.FindAsync<Meta>(id);
+    }
+
+    public async Task<int> SaveMetaAsync(Meta meta) => await SaveItemAsync(meta);
+
+    public async Task<int> DeleteMetaAsync(Meta meta) => await DeleteItemAsync(meta);
 }

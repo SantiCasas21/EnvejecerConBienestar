@@ -10,8 +10,8 @@
         <VerticalStackLayout Padding="20,50,20,30" Spacing="14">
 
             <!-- BOTÓN VOLVER AL MENÚ DE JUEGOS -->
-            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
-                   HasShadow="False" BorderColor="#EDE9FE" HorizontalOptions="Start">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="12,10"
+                   BorderColor="#EDE9FE" HorizontalOptions="Start">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnVolverTocado"/>
                 </Frame.GestureRecognizers>
@@ -31,11 +31,11 @@
                    HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
             <!-- SELECTOR DE DIFICULTAD -->
-            <Frame BackgroundColor="White" CornerRadius="16" Padding="10"
-                   HasShadow="False" BorderColor="#EDE9FE">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="16" Padding="10"
+                   BorderColor="#EDE9FE">
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
                     <Frame x:Name="BtnFacil" Grid.Column="0" BackgroundColor="#EDE9FE"
-                           CornerRadius="12" Padding="0" HasShadow="False">
+                           Style="{StaticResource FrameIcono}" CornerRadius="12">
                         <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
                             <Label Text="😊" FontSize="18" HorizontalOptions="Center"/>
                             <Label Text="Fácil"   FontFamily="NunitoBold"   FontSize="13" TextColor="{StaticResource Violeta}" HorizontalOptions="Center"/>
@@ -46,7 +46,7 @@
                         </Frame.GestureRecognizers>
                     </Frame>
                     <Frame x:Name="BtnMedio" Grid.Column="1" BackgroundColor="White"
-                           CornerRadius="12" Padding="0" HasShadow="False">
+                           Style="{StaticResource FrameIcono}" CornerRadius="12">
                         <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
                             <Label Text="🧠" FontSize="18" HorizontalOptions="Center"/>
                             <Label Text="Medio"    FontFamily="NunitoBold"   FontSize="13" TextColor="#9CA3AF" HorizontalOptions="Center"/>
@@ -57,7 +57,7 @@
                         </Frame.GestureRecognizers>
                     </Frame>
                     <Frame x:Name="BtnDificil" Grid.Column="2" BackgroundColor="White"
-                           CornerRadius="12" Padding="0" HasShadow="False">
+                           Style="{StaticResource FrameIcono}" CornerRadius="12">
                         <VerticalStackLayout Padding="4,8" HorizontalOptions="Center" Spacing="0">
                             <Label Text="🔥" FontSize="18" HorizontalOptions="Center"/>
                             <Label Text="Difícil"  FontFamily="NunitoBold"   FontSize="13" TextColor="#9CA3AF" HorizontalOptions="Center"/>
@@ -72,21 +72,21 @@
 
             <!-- ESTADÍSTICAS -->
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
-                <Frame Grid.Column="0" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame Grid.Column="0" Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="10,12" BorderColor="#F3F4F6">
                     <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                         <Label Text="🎯" FontSize="16" HorizontalOptions="Center"/>
                         <Label Text="Intentos" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
                         <Label x:Name="LblIntentos" Text="0" FontFamily="NunitoBold" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame Grid.Column="1" Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="10,12" BorderColor="#F3F4F6">
                     <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                         <Label Text="✅" FontSize="16" HorizontalOptions="Center"/>
                         <Label Text="Pares" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
                         <Label x:Name="LblPares" Text="0/0" FontFamily="NunitoBold" FontSize="20" TextColor="{StaticResource Verde}" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="White" CornerRadius="14" Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                <Frame Grid.Column="2" Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="10,12" BorderColor="#F3F4F6">
                     <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                         <Label Text="⏱️" FontSize="16" HorizontalOptions="Center"/>
                         <Label Text="Tiempo" FontFamily="NunitoRegular" FontSize="11" TextColor="#9CA3AF" HorizontalOptions="Center"/>
@@ -96,8 +96,9 @@
             </Grid>
 
             <!-- BANNER VICTORIA -->
-            <Frame x:Name="BannerVictoria" BackgroundColor="#D1FAE5" CornerRadius="16"
-                   Padding="16,14" HasShadow="False" BorderColor="#6EE7B7" IsVisible="False">
+            <Frame x:Name="BannerVictoria" Style="{StaticResource FrameTarjetaSimple}"
+                   BackgroundColor="#D1FAE5" CornerRadius="16" Padding="16,14"
+                   BorderColor="#6EE7B7" IsVisible="False">
                 <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                     <Label Text="🎉 ¡Felicidades, lo lograste!" FontFamily="NunitoBold"
                            FontSize="18" TextColor="#065F46" HorizontalOptions="Center"/>

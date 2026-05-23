@@ -10,8 +10,8 @@
         <VerticalStackLayout Padding="20,50,20,30" Spacing="16">
 
             <!-- BOTÓN VOLVER -->
-            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
-                   HasShadow="False" BorderColor="#FEF3C7" HorizontalOptions="Start">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="12,10"
+                   BorderColor="#FEF3C7" HorizontalOptions="Start">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnVolverTocado"/>
                 </Frame.GestureRecognizers>
@@ -32,14 +32,14 @@
                    HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
             <!-- PROGRESO Y PUNTAJE -->
-            <Frame BackgroundColor="White" CornerRadius="16" Padding="16,12"
-                   HasShadow="False" BorderColor="#F3F4F6">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="16" Padding="16,12"
+                   BorderColor="#F3F4F6">
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8">
                     <Label Grid.Row="0" Grid.Column="0" x:Name="LblProgreso"
                            Text="Pregunta 1 de 10" FontFamily="NunitoSemiBold"
                            FontSize="14" TextColor="#1F2937"/>
-                    <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#FEF3C7"
-                           CornerRadius="10" Padding="10,4" HasShadow="False">
+                    <Frame Grid.Row="0" Grid.Column="1" Style="{StaticResource FrameStatusChip}"
+                           BackgroundColor="#FEF3C7" Padding="10,4">
                         <HorizontalStackLayout Spacing="4">
                             <Label Text="⭐" FontSize="14"/>
                             <Label x:Name="LblPuntaje" Text="0 pts"
@@ -49,14 +49,14 @@
                     </Frame>
                     <ProgressBar Grid.Row="1" Grid.ColumnSpan="2"
                                  x:Name="BarraProgreso" Progress="0.1"
-                                 ProgressColor="{StaticResource Naranja}"
-                                 BackgroundColor="#F3F4F6"/>
+                                 Style="{StaticResource ProgressBarDefault}"
+                                 ProgressColor="{StaticResource Naranja}"/>
                 </Grid>
             </Frame>
 
             <!-- PREGUNTA -->
             <Frame BackgroundColor="White" CornerRadius="20" Padding="20"
-                   HasShadow="False" BorderColor="#FEF3C7" MinimumHeightRequest="110">
+                   Style="{StaticResource FrameTarjetaSimple}" BorderColor="#FEF3C7" MinimumHeightRequest="110">
                 <VerticalStackLayout Spacing="8">
                     <Label x:Name="LblEmojiPregunta" Text="❓" FontSize="36"
                            HorizontalOptions="Center"/>
@@ -69,13 +69,13 @@
 
             <!-- OPCIONES A B C D -->
             <Frame x:Name="OpcionA" BackgroundColor="White" CornerRadius="16"
-                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="0"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
                     <Frame Grid.Column="0" x:Name="BadgeA" BackgroundColor="#F3F4F6"
-                           CornerRadius="10" Padding="0" HasShadow="False"
+                           Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="A" FontFamily="NunitoBold" FontSize="14"
                                TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -87,13 +87,13 @@
             </Frame>
 
             <Frame x:Name="OpcionB" BackgroundColor="White" CornerRadius="16"
-                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="1"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
                     <Frame Grid.Column="0" x:Name="BadgeB" BackgroundColor="#F3F4F6"
-                           CornerRadius="10" Padding="0" HasShadow="False"
+                           Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="B" FontFamily="NunitoBold" FontSize="14"
                                TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -105,13 +105,13 @@
             </Frame>
 
             <Frame x:Name="OpcionC" BackgroundColor="White" CornerRadius="16"
-                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="2"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
                     <Frame Grid.Column="0" x:Name="BadgeC" BackgroundColor="#F3F4F6"
-                           CornerRadius="10" Padding="0" HasShadow="False"
+                           Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="C" FontFamily="NunitoBold" FontSize="14"
                                TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -123,13 +123,13 @@
             </Frame>
 
             <Frame x:Name="OpcionD" BackgroundColor="White" CornerRadius="16"
-                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="3"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
                     <Frame Grid.Column="0" x:Name="BadgeD" BackgroundColor="#F3F4F6"
-                           CornerRadius="10" Padding="0" HasShadow="False"
+                           Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="D" FontFamily="NunitoBold" FontSize="14"
                                TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -141,8 +141,8 @@
             </Frame>
 
             <!-- FEEDBACK CORRECTO / INCORRECTO -->
-            <Frame x:Name="BannerFeedback" CornerRadius="16" Padding="16,12"
-                   HasShadow="False" IsVisible="False">
+            <Frame x:Name="BannerFeedback" Style="{StaticResource FrameTarjetaSimple}"
+                   CornerRadius="16" Padding="16,12" IsVisible="False">
                 <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                     <Label x:Name="LblFeedbackTitulo" Text=""
                            FontFamily="NunitoBold" FontSize="17" HorizontalOptions="Center"/>
@@ -154,8 +154,8 @@
             </Frame>
 
             <!-- PANEL RESULTADO FINAL -->
-            <Frame x:Name="PanelFinal" BackgroundColor="White" CornerRadius="20"
-                   Padding="24,20" HasShadow="False" BorderColor="#FEF3C7"
+            <Frame x:Name="PanelFinal" Style="{StaticResource FrameTarjetaSimple}"
+                   CornerRadius="20" Padding="24,20" BorderColor="#FEF3C7"
                    IsVisible="False">
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label x:Name="LblEmojiFinal" Text="🏆" FontSize="52"

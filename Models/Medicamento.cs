@@ -26,4 +26,40 @@ public class Medicamento
 
     [Ignore]
     public string TextoBoton => EstaTomado ? "✓ Tomado" : "Marcar tomado";
+
+    [Ignore]
+    public string IndicadorEstado => EstaTomado ? "🟢" : "🔴";
+
+    [Ignore]
+    public List<TimeSpan> HorarioDiario => CalcularHorarioDiario();
+
+    [Ignore]
+    public string TextoHorario => ObtenerTextoHorario();
+
+    [Ignore]
+    public int TomasPorDia => HorarioDiario.Count;
+
+    private List<TimeSpan> CalcularHorarioDiario()
+    {
+        var horarios = new List<TimeSpan>();
+        if (Frecuencia <= 0) Frecuencia = 24;
+
+        var horaActual = HoraAlarma;
+        while (horaActual.TotalHours < 24)
+        {
+            horarios.Add(horaActual);
+            horaActual = horaActual.Add(TimeSpan.FromHours(Frecuencia));
+        }
+
+        return horarios;
+    }
+
+    private string ObtenerTextoHorario()
+    {
+        var horarios = HorarioDiario;
+        if (!horarios.Any()) return "Sin horario";
+
+        return string.Join("\n", horarios.Select((h, i) =>
+            $"  Toma {i + 1}: {h:hh\\:mm}"));
+    }
 }

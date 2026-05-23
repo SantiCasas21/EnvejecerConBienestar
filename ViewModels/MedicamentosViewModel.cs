@@ -50,8 +50,8 @@ public partial class MedicamentosViewModel : ObservableObject
         {
             var demo = new List<Medicamento>
             {
-                new() { Nombre = "Metformina", Miligramos = "500", HoraAlarma = new TimeSpan(8,0,0), Icono = "🤍", Notas = "Tomar con el desayuno" },
-                new() { Nombre = "Losartán", Miligramos = "50", HoraAlarma = new TimeSpan(20,0,0), Icono = "💙", Notas = "Tomar antes de dormir" }
+                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "🤍", Notas = "Tomar con el desayuno" },
+                new() { Nombre = "Losartán", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "💙", Notas = "Tomar antes de dormir" }
             };
             foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
             list = await _databaseService.GetMedicamentosAsync();
@@ -87,9 +87,26 @@ public partial class MedicamentosViewModel : ObservableObject
         if (medicamento == null) return;
         medicamento.EstaTomado = !medicamento.EstaTomado;
         await _databaseService.SaveMedicamentoAsync(medicamento);
-        
-        // Volver a cargar para que se reordenen
-        await LoadMedicamentosAsync();
+
+        // Reordenar en el lugar: remover de posición actual y reinsertar en la posición correcta
+        var index = Medicamentos.IndexOf(medicamento);
+        if (index < 0) return;
+
+        Medicamentos.RemoveAt(index);
+
+        // Si está tomado, va al final (después de todos los no tomados)
+        // Si no está tomado, va al principio (antes de todos los tomados)
+        if (medicamento.EstaTomado)
+        {
+            Medicamentos.Add(medicamento);
+        }
+        else
+        {
+            var insertIndex = 0;
+            while (insertIndex < Medicamentos.Count && !Medicamentos[insertIndex].EstaTomado)
+                insertIndex++;
+            Medicamentos.Insert(insertIndex, medicamento);
+        }
     }
 
     [RelayCommand]

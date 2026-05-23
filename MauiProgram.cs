@@ -44,6 +44,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ContactosPage>();
         builder.Services.AddTransient<ContactoDetailPage>();
         builder.Services.AddTransient<MedicamentoDetailPage>();
+        builder.Services.AddTransient<BuscarParesPage>();
+        builder.Services.AddTransient<TriviaPage>();
 
 #if DEBUG
         //builder.Logging.AddDebug();

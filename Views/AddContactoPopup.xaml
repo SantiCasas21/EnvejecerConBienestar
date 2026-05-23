@@ -5,13 +5,13 @@
            x:Class="EnvejecerConBienestar.Views.AddContactoPopup"
            Color="Transparent">
 
-    <Frame BackgroundColor="White" Padding="25" CornerRadius="20" WidthRequest="340" HasShadow="True">
+    <Frame Style="{StaticResource FramePopup}" WidthRequest="340">
         <VerticalStackLayout Spacing="15">
             <Label Text="Nuevo Contacto" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
             
-            <Entry x:Name="NombreEntry" Placeholder="Nombre completo" FontSize="18" HeightRequest="50" />
-            <Entry x:Name="TelefonoEntry" Placeholder="Teléfono" Keyboard="Telephone" FontSize="18" HeightRequest="50" />
-            <Entry x:Name="UbicacionEntry" Placeholder="Ubicación (Opcional)" FontSize="18" HeightRequest="50" />
+            <Entry x:Name="NombreEntry" Placeholder="Nombre completo" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="TelefonoEntry" Placeholder="Teléfono" Keyboard="Telephone" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="UbicacionEntry" Placeholder="Ubicación (Opcional)" Style="{StaticResource EntryForm}" />
 
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
                 <VerticalStackLayout Spacing="2" HorizontalOptions="Center">

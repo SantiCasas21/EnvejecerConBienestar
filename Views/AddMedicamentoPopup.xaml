@@ -5,7 +5,7 @@
            x:Class="EnvejecerConBienestar.Views.AddMedicamentoPopup"
            Color="Transparent">
 
-    <Frame BackgroundColor="White" Padding="25" CornerRadius="20" WidthRequest="340" HasShadow="True">
+    <Frame Style="{StaticResource FramePopup}" WidthRequest="340">
         <VerticalStackLayout Spacing="15">
             <Label Text="Agregar Medicina" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
             
@@ -17,9 +17,9 @@
             </HorizontalStackLayout>
 
             <!-- Formulario -->
-            <Entry x:Name="NombreEntry" Placeholder="Nombre del medicamento" FontSize="18" HeightRequest="50" />
-            <Entry x:Name="MgEntry" Placeholder="Miligramos (mg)" Keyboard="Numeric" FontSize="18" HeightRequest="50" />
-            <Entry x:Name="FrecuenciaEntry" Placeholder="Cada cuántas horas (ej. 8)" Keyboard="Numeric" FontSize="18" HeightRequest="50" />
+            <Entry x:Name="NombreEntry" Placeholder="Nombre del medicamento" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="MgEntry" Placeholder="Miligramos (mg)" Keyboard="Numeric" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="FrecuenciaEntry" Placeholder="Cada cuántas horas (ej. 8)" Keyboard="Numeric" Style="{StaticResource EntryForm}" />
             
             <VerticalStackLayout Spacing="5">
                 <Label Text="Hora de la primera alarma:" Style="{StaticResource LabelPequeno}" />

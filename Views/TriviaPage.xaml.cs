@@ -326,5 +326,5 @@ public partial class TriviaPage : ContentPage
     //                      EVENTOS DE UI
     // ═══════════════════════════════════════════════════════════════
     private async void OnVolverTocado(object sender, TappedEventArgs e)
-        => await Navigation.PopAsync();
+        => await Shell.Current.GoToAsync("..");
 }

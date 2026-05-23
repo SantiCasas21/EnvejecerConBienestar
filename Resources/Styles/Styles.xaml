@@ -13,7 +13,8 @@
         <Setter Property="BackgroundColor" Value="{StaticResource ColorFondo}" />
     </Style>
 
-    <!-- LABELS -->
+    <!-- ═══════════════ LABELS ═══════════════ -->
+
     <Style x:Key="LabelTitulo" TargetType="Label">
         <Setter Property="FontFamily" Value="NunitoBold" />
         <Setter Property="FontSize" Value="28" />
@@ -40,7 +41,14 @@
         <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
     </Style>
 
-    <!-- BOTONES -->
+    <Style x:Key="LabelSeccion" TargetType="Label">
+        <Setter Property="FontFamily" Value="NunitoSemiBold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="CharacterSpacing" Value="1" />
+    </Style>
+
+    <!-- ═══════════════ BOTONES ═══════════════ -->
 
     <!-- Botón primario naranja -->
     <Style x:Key="BotonPrimario" TargetType="Button">
@@ -109,12 +117,64 @@
         <Setter Property="Padding" Value="16,0" />
     </Style>
 
-    <!-- TARJETAS / FRAMES -->
+    <!-- FAB (Botón flotante de acción) -->
+    <Style x:Key="BotonFAB" TargetType="Button">
+        <Setter Property="Text" Value="+" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimario}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontFamily" Value="NunitoBold" />
+        <Setter Property="WidthRequest" Value="64" />
+        <Setter Property="HeightRequest" Value="64" />
+        <Setter Property="CornerRadius" Value="32" />
+    </Style>
+
+    <!-- ═══════════════ TARJETAS / FRAMES ═══════════════ -->
+
+    <!-- Tarjeta con sombra (original) -->
     <Style x:Key="TarjetaBase" TargetType="Frame">
         <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoTarjeta}" />
         <Setter Property="BorderColor" Value="{StaticResource ColorBorde}" />
         <Setter Property="CornerRadius" Value="20" />
         <Setter Property="Padding" Value="20" />
+        <Setter Property="HasShadow" Value="True" />
+    </Style>
+
+    <!-- Tarjeta blanca simple sin sombra (la más usada en la app) -->
+    <Style x:Key="FrameTarjetaSimple" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="#E2E8F0" />
+    </Style>
+
+    <!-- Contenedor de ícono sin padding ni sombra -->
+    <Style x:Key="FrameIcono" TargetType="Frame">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <!-- Chip indicador de estado -->
+    <Style x:Key="FrameStatusChip" TargetType="Frame">
+        <Setter Property="Padding" Value="8,3" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <!-- Estado vacío -->
+    <Style x:Key="FrameEmptyState" TargetType="Frame">
+        <Setter Property="Padding" Value="30" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="BorderColor" Value="#E2E8F0" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <!-- Frame para Popups -->
+    <Style x:Key="FramePopup" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Padding" Value="25" />
+        <Setter Property="CornerRadius" Value="20" />
         <Setter Property="HasShadow" Value="True" />
     </Style>
 
@@ -126,6 +186,25 @@
         <Setter Property="Padding" Value="18,14" />
         <Setter Property="Margin" Value="0,6" />
         <Setter Property="HasShadow" Value="True" />
+    </Style>
+
+    <!-- ═══════════════ ENTRYS ═══════════════ -->
+
+    <Style x:Key="EntryForm" TargetType="Entry">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="BackgroundColor" Value="#F8FAFC" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
+    <!-- ═══════════════ OTROS ═══════════════ -->
+
+    <Style x:Key="ProgressBarDefault" TargetType="ProgressBar">
+        <Setter Property="BackgroundColor" Value="#F1F5F9" />
+    </Style>
+
+    <Style x:Key="Separador" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{StaticResource ColorBorde}" />
     </Style>
 
 </ResourceDictionary>

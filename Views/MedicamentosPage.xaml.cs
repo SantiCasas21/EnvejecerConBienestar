@@ -1,3 +1,4 @@
+using EnvejecerConBienestar.Models;
 using EnvejecerConBienestar.ViewModels;
 
 namespace EnvejecerConBienestar.Views;
@@ -17,32 +18,22 @@ public partial class MedicamentosPage : ContentPage
         base.OnAppearing();
         await _viewModel.LoadMedicamentosAsync();
     }
-}
 
-// ---- Convertidor: bool → Color de fondo del botón ----
-public class BoolToColorConverter : IValueConverter
-{
-    public object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
+    private void OnMedicamentoTapped(object sender, TappedEventArgs e)
     {
-        if (value is bool tomado && tomado)
-            return Color.FromArgb("#DCFCE7"); // Verde claro si tomado
-        return Color.FromArgb("#0D9488");     // Verde oscuro (acción pendiente)
+        if (sender is Frame frame && frame.BindingContext is Medicamento medicamento)
+            _viewModel.GoToDetailCommand.Execute(medicamento);
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
-        => throw new NotImplementedException();
-}
-
-// ---- Convertidor: bool → Color de texto del botón ----
-public class BoolToTextColorConverter : IValueConverter
-{
-    public object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
+    private void OnAddSugerenciaClicked(object sender, EventArgs e)
     {
-        if (value is bool tomado && tomado)
-            return Color.FromArgb("#16A34A"); // Texto verde oscuro
-        return Colors.White;                  // Texto blanco sobre verde
+        if (sender is Button button && button.CommandParameter is Medicamento sugerencia)
+            _viewModel.AddSugerenciaCommand.Execute(sugerencia);
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
-        => throw new NotImplementedException();
+    private void OnToggleTomadoClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Medicamento medicamento)
+            _viewModel.ToggleTomadoCommand.Execute(medicamento);
+    }
 }

@@ -10,7 +10,7 @@
         <VerticalStackLayout Padding="20,50,20,30" Spacing="0">
 
             <!-- ENCABEZADO -->
-            <Label Text="🎮 Minijuegos"
+            <Label Text="🎮 Mini-juegos"
                    FontFamily="NunitoBold" FontSize="28"
                    TextColor="{StaticResource Violeta}" Margin="0,0,0,4"/>
             <Label Text="Ejercita tu mente con estos juegos"
@@ -18,14 +18,14 @@
                    TextColor="#888888" Margin="0,0,0,28"/>
 
             <!-- ── BUSCAR LOS PARES ── -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
-                   HasShadow="False" BorderColor="#EDE9FE" Margin="0,0,0,14">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16"
+                   BorderColor="#EDE9FE" Margin="0,0,0,14">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBuscarParesTocado"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
-                    <Frame Grid.Column="0" BackgroundColor="#EDE9FE" CornerRadius="16"
-                           Padding="0" HasShadow="False" HeightRequest="64"
+                    <Frame Grid.Column="0" Style="{StaticResource FrameIcono}" BackgroundColor="#EDE9FE" CornerRadius="16"
+                           HeightRequest="64"
                            WidthRequest="64" VerticalOptions="Center">
                         <Label Text="🃏" FontSize="32"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -36,8 +36,8 @@
                         <Label Text="Voltea cartas y encuentra las parejas. Mejora tu memoria visual."
                                FontFamily="NunitoRegular" FontSize="13"
                                TextColor="#888888" LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#EDE9FE" CornerRadius="8" Padding="8,3"
-                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                        <Frame Style="{StaticResource FrameStatusChip}" BackgroundColor="#EDE9FE"
+                               HorizontalOptions="Start" Margin="0,2,0,0">
                             <Label Text="✅ Disponible"
                                    FontFamily="NunitoSemiBold" FontSize="11"
                                    TextColor="{StaticResource Violeta}"/>
@@ -50,14 +50,14 @@
             </Frame>
 
             <!-- ── TRIVIA DE SALUD ── -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
-                   HasShadow="False" BorderColor="#FEF3C7" Margin="0,0,0,14">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16"
+                   BorderColor="#FEF3C7" Margin="0,0,0,14">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTriviaTocado"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
-                    <Frame Grid.Column="0" BackgroundColor="#FEF3C7" CornerRadius="16"
-                           Padding="0" HasShadow="False" HeightRequest="64"
+                    <Frame Grid.Column="0" Style="{StaticResource FrameIcono}" BackgroundColor="#FEF3C7" CornerRadius="16"
+                           HeightRequest="64"
                            WidthRequest="64" VerticalOptions="Center">
                         <Label Text="🎯" FontSize="32"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -68,8 +68,8 @@
                         <Label Text="Responde preguntas sobre hábitos saludables y suma puntos."
                                FontFamily="NunitoRegular" FontSize="13"
                                TextColor="#888888" LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#FEF3C7" CornerRadius="8" Padding="8,3"
-                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                        <Frame Style="{StaticResource FrameStatusChip}" BackgroundColor="#FEF3C7"
+                               HorizontalOptions="Start" Margin="0,2,0,0">
                             <Label Text="✅ Disponible"
                                    FontFamily="NunitoSemiBold" FontSize="11"
                                    TextColor="{StaticResource Naranja}"/>
@@ -82,12 +82,12 @@
             </Frame>
 
             <!-- ── SOPA DE LETRAS (próximo) ── -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
-                   HasShadow="False" BorderColor="#F3F4F6"
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16"
+                   BorderColor="#F3F4F6"
                    Opacity="0.5" Margin="0,0,0,14">
                 <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
-                    <Frame Grid.Column="0" BackgroundColor="#F3F4F6" CornerRadius="16"
-                           Padding="0" HasShadow="False" HeightRequest="64"
+                    <Frame Grid.Column="0" Style="{StaticResource FrameIcono}" BackgroundColor="#F3F4F6" CornerRadius="16"
+                           HeightRequest="64"
                            WidthRequest="64" VerticalOptions="Center">
                         <Label Text="🔤" FontSize="32"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -98,8 +98,8 @@
                         <Label Text="Encuentra palabras escondidas sobre salud."
                                FontFamily="NunitoRegular" FontSize="13"
                                TextColor="#888888" LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#F3F4F6" CornerRadius="8" Padding="8,3"
-                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                        <Frame Style="{StaticResource FrameStatusChip}" BackgroundColor="#F3F4F6"
+                               HorizontalOptions="Start" Margin="0,2,0,0">
                             <Label Text="🔒 Próximamente"
                                    FontFamily="NunitoSemiBold" FontSize="11"
                                    TextColor="#9CA3AF"/>
@@ -111,11 +111,11 @@
             </Frame>
 
             <!-- ── ORDENAR SECUENCIA (próximo) ── -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
-                   HasShadow="False" BorderColor="#F3F4F6" Opacity="0.5">
+            <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16"
+                   BorderColor="#F3F4F6" Opacity="0.5">
                 <Grid ColumnDefinitions="70,*,28" ColumnSpacing="12">
-                    <Frame Grid.Column="0" BackgroundColor="#F3F4F6" CornerRadius="16"
-                           Padding="0" HasShadow="False" HeightRequest="64"
+                    <Frame Grid.Column="0" Style="{StaticResource FrameIcono}" BackgroundColor="#F3F4F6" CornerRadius="16"
+                           HeightRequest="64"
                            WidthRequest="64" VerticalOptions="Center">
                         <Label Text="🧩" FontSize="32"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -126,8 +126,8 @@
                         <Label Text="Ordena los pasos de una rutina saludable."
                                FontFamily="NunitoRegular" FontSize="13"
                                TextColor="#888888" LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#F3F4F6" CornerRadius="8" Padding="8,3"
-                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                        <Frame Style="{StaticResource FrameStatusChip}" BackgroundColor="#F3F4F6"
+                               HorizontalOptions="Start" Margin="0,2,0,0">
                             <Label Text="🔒 Próximamente"
                                    FontFamily="NunitoSemiBold" FontSize="11"
                                    TextColor="#9CA3AF"/>

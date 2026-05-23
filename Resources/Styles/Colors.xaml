@@ -41,4 +41,10 @@
     <Color x:Key="ColorCompletado">#16A34A</Color>
     <Color x:Key="ColorCompletadoClaro">#DCFCE7</Color>
 
+    <!-- Aliases cortos usados en páginas de juegos -->
+    <Color x:Key="Crema">#FFF7ED</Color>
+    <Color x:Key="Violeta">#7C3AED</Color>
+    <Color x:Key="Naranja">#F97316</Color>
+    <Color x:Key="Verde">#0D9488</Color>
+
 </ResourceDictionary>

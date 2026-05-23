@@ -5,93 +5,327 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
     xmlns:models="clr-namespace:EnvejecerConBienestar.Models"
+    xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
     x:DataType="vm:HomeViewModel"
     x:Name="homePage"
-    Title="Inicio">
+    Title="Inicio"
+    BackgroundColor="{StaticResource ColorFondo}">
 
-    <Grid RowDefinitions="*, Auto">
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout Padding="20" Spacing="25">
-                
-                <!-- Saludo -->
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="{Binding Saludo}" Style="{StaticResource LabelTitulo}" FontSize="32" />
-                    <Label Text="¿Cómo se siente hoy?" Style="{StaticResource LabelSubtitulo}" />
-                </VerticalStackLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-                <!-- BOTÓN SOS DESTACADO -->
-                <Button Text="🚨 LLAMADA DE EMERGENCIA (SOS)" 
+    <RefreshView Command="{Binding LoadDataCommand}" IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="24,50,24,30" Spacing="28">
+
+                <!-- ═══════════ ENCABEZADO: SALUDO ═══════════ -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="14">
+                    <Frame Grid.Column="0" Style="{StaticResource FrameIcono}"
+                           BackgroundColor="White" CornerRadius="24"
+                           HeightRequest="56" WidthRequest="56"
+                           VerticalOptions="Center">
+                        <Label Text="{Binding EmojiSaludo}" FontSize="28"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="{Binding Saludo}" FontFamily="NunitoBold" FontSize="26"
+                               TextColor="#1E293B" LineBreakMode="TailTruncation" />
+                        <Label Text="¿Cómo se siente hoy?" FontFamily="NunitoRegular" FontSize="16"
+                               TextColor="#64748B" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- ═══════════ BOTÓN SOS ═══════════ -->
+                <Button Text="🚨  LLAMADA DE EMERGENCIA (SOS)"
                         Command="{Binding LlamadaEmergenciaCommand}"
                         BackgroundColor="{StaticResource ColorEmergencia}"
                         TextColor="White"
                         FontFamily="NunitoBold"
-                        FontSize="20"
-                        HeightRequest="70"
-                        CornerRadius="15"
-                        Margin="0,10" />
+                        FontSize="22"
+                        HeightRequest="72"
+                        CornerRadius="18" />
 
-                <!-- Widget de Hábitos (Carousel) -->
-                <Frame Padding="0" HasShadow="True" CornerRadius="20" BorderColor="Transparent" BackgroundColor="{StaticResource ColorFondoTarjeta}">
-                    <VerticalStackLayout Padding="0">
-                        <Label Text="Tus Hábitos de Hoy" FontFamily="NunitoBold" Margin="20,15,20,5" FontSize="18" />
-                        
-                        <CarouselView ItemsSource="{Binding Habitos}" HeightRequest="220" PeekAreaInsets="30">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate x:DataType="models:Habito">
-                                    <Frame Margin="10" Padding="15" BackgroundColor="White" BorderColor="#CBD5E1" CornerRadius="15" HasShadow="False">
-                                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, *, Auto">
-                                            <Label Text="{Binding Tipo}" FontSize="18" FontFamily="NunitoBold" TextColor="{StaticResource ColorPrimario}" />
-                                            
-                                            <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-                                                <Label Text="{Binding ProgresoActual, StringFormat='{0}'}" FontSize="40" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="#1E293B" />
-                                                <Label Text="{Binding Meta, StringFormat='meta: {0}'}" Style="{StaticResource LabelPequeno}" HorizontalOptions="Center" />
-                                            </VerticalStackLayout>
+                <!-- ═══════════ MIS MEDICINAS DE HOY ═══════════ -->
+                <VerticalStackLayout Spacing="14">
 
-                                            <ProgressBar Grid.Row="2" Progress="{Binding Porcentaje}" ProgressColor="{StaticResource ColorPrimario}" HeightRequest="12" />
-                                            
-                                            <Button Grid.Column="1" Grid.RowSpan="3" 
-                                                    Text="+" 
-                                                    Command="{Binding BindingContext.ActualizarProgresoCommand, Source={x:Reference homePage}}"
-                                                    CommandParameter="{Binding .}"
-                                                    BackgroundColor="{StaticResource ColorPrimario}"
-                                                    TextColor="White"
-                                                    FontSize="28"
-                                                    WidthRequest="60" HeightRequest="60" CornerRadius="30" />
-                                        </Grid>
-                                    </Frame>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
+                    <!-- Encabezado de sección -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="💊 Mis Medicinas de Hoy"
+                               FontFamily="NunitoBold" FontSize="22"
+                               TextColor="#1E293B" VerticalOptions="Center" />
+                        <Frame Grid.Column="1" BackgroundColor="#FEF2F2" CornerRadius="10"
+                               Padding="10,4" HasShadow="False" HorizontalOptions="End"
+                               IsVisible="{Binding HayPendientes}">
+                            <Label Text="⏳ Pendiente" FontFamily="NunitoSemiBold"
+                                   FontSize="13" TextColor="#DC2626" />
+                        </Frame>
+                    </Grid>
 
-                        <IndicatorView HorizontalOptions="Center" Margin="0,0,0,10" IndicatorColor="Silver" SelectedIndicatorColor="{StaticResource ColorPrimario}" />
+                    <!-- Estado: Sin medicamentos registrados -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="18" Padding="20"
+                           IsVisible="{Binding HayMedicamentos, Converter={StaticResource InverseBoolConverter}}">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="💊" FontSize="36" HorizontalOptions="Center" />
+                            <Label Text="No tiene medicinas registradas"
+                                   FontFamily="NunitoSemiBold" FontSize="16"
+                                   TextColor="#64748B" HorizontalOptions="Center" />
+                            <Label Text="Vaya a la sección Medicinas para agregar sus dosis diarias."
+                                   FontSize="14" TextColor="#94A3B8"
+                                   HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                                   MaximumWidthRequest="260" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- PRÓXIMA MEDICINA (destacada) -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="22" Padding="22"
+                           BorderColor="#F97316" IsVisible="{Binding HayProxima}">
+                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="16"
+                              RowDefinitions="Auto, Auto, Auto" RowSpacing="8">
+
+                            <!-- Icono grande -->
+                            <Frame Grid.RowSpan="3" Style="{StaticResource FrameIcono}"
+                                   BackgroundColor="#FFF7ED" CornerRadius="20"
+                                   HeightRequest="76" WidthRequest="76"
+                                   VerticalOptions="Center">
+                                <Label Text="{Binding ProximaMedicina.Icono}" FontSize="40"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Frame>
+
+                            <!-- Etiqueta "PRÓXIMA" -->
+                            <Label Grid.Column="1" Grid.Row="0"
+                                   Text="PRÓXIMA TOMA"
+                                   Style="{StaticResource LabelSeccion}" />
+
+                            <!-- Nombre y dosis -->
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="2">
+                                <Label Text="{Binding ProximaMedicina.Nombre}"
+                                       FontFamily="NunitoBold" FontSize="22"
+                                       TextColor="#1E293B" />
+                                <Label FontSize="15" TextColor="#64748B">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding ProximaMedicina.Miligramos, StringFormat='{0} mg'}"
+                                                  FontFamily="NunitoSemiBold" />
+                                            <Span Text=" · Cada " />
+                                            <Span Text="{Binding ProximaMedicina.Frecuencia, StringFormat='{0} h'}"
+                                                  FontFamily="NunitoSemiBold" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+
+                            <!-- Hora + botón -->
+                            <Grid Grid.Column="1" Grid.Row="2" ColumnDefinitions="Auto, *" ColumnSpacing="14">
+                                <Frame BackgroundColor="#FFF7ED" CornerRadius="12"
+                                       Padding="12,6" HasShadow="False">
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label Text="⏰" FontSize="16" VerticalOptions="Center" />
+                                        <Label Text="{Binding ProximaEtiqueta}"
+                                               FontFamily="NunitoBold" FontSize="16"
+                                               TextColor="{StaticResource ColorPrimario}"
+                                               VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Frame>
+                                <Button Grid.Column="1" Text="✓  Marcar como tomada"
+                                        Clicked="OnMarcarProximaTomada"
+                                        BackgroundColor="{StaticResource ColorCompletado}"
+                                        TextColor="White"
+                                        FontFamily="NunitoBold" FontSize="16"
+                                        HeightRequest="50" CornerRadius="14"
+                                        Padding="16,0" />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Estado: Todo tomado -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="18" Padding="20"
+                           IsVisible="{Binding TodasTomadas}"
+                           BackgroundColor="#F0FDF4" BorderColor="#86EFAC">
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Label Text="🎉" FontSize="24" VerticalOptions="Center" />
+                            <Label Text="¡Todas las medicinas fueron tomadas hoy!"
+                                   FontFamily="NunitoSemiBold" FontSize="17"
+                                   TextColor="#166534" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- Lista de otras pendientes -->
+                    <VerticalStackLayout Spacing="10"
+                                         BindableLayout.ItemsSource="{Binding MedicinasPendientes}"
+                                         IsVisible="{Binding HayPendientes}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:Medicamento">
+                                <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="16" Padding="16">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14">
+                                        <!-- Icono pequeño -->
+                                        <Frame Style="{StaticResource FrameIcono}"
+                                               BackgroundColor="#FFF7ED" CornerRadius="14"
+                                               HeightRequest="50" WidthRequest="50"
+                                               VerticalOptions="Center">
+                                            <Label Text="{Binding Icono}" FontSize="26"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Frame>
+
+                                        <!-- Nombre y hora -->
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding Nombre}"
+                                                   FontFamily="NunitoBold" FontSize="17"
+                                                   TextColor="#1E293B" />
+                                            <Label FontSize="14" TextColor="#64748B">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Miligramos, StringFormat='{0} mg'}" />
+                                                        <Span Text=" · Cada " />
+                                                        <Span Text="{Binding Frecuencia, StringFormat='{0} h'}"
+                                                              FontFamily="NunitoSemiBold" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+
+                                        <!-- Botón marcar tomada -->
+                                        <Button Grid.Column="2" Text="✓"
+                                                Clicked="OnMarcarPendienteTomada"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource ColorPrimario}"
+                                                TextColor="White"
+                                                FontFamily="NunitoBold" FontSize="18"
+                                                WidthRequest="50" HeightRequest="50"
+                                                CornerRadius="25"
+                                                Padding="0"
+                                                VerticalOptions="Center" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
-                </Frame>
+                </VerticalStackLayout>
 
-                <!-- Sección de Ayuda Rápida (Limpia) -->
-                <Label Text="Panel de Control" FontFamily="NunitoBold" FontSize="18" />
-                
-                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
-                    <Frame Grid.Column="0" BackgroundColor="#DBEAFE" CornerRadius="15" HasShadow="False">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnVerMedicamentosClicked" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
-                            <Label Text="💊" FontSize="30" HorizontalOptions="Center" />
-                            <Label Text="Medicina" FontFamily="NunitoBold" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
+                <!-- ═══════════ LOGROS DEL DÍA (METAS) ═══════════ -->
+                <VerticalStackLayout Spacing="14">
+
+                    <!-- Encabezado con resumen -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="16" CornerRadius="18">
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="8">
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="🎯 Logros del Día"
+                                   FontFamily="NunitoBold" FontSize="20" TextColor="#1E293B"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding ResumenDiario}"
+                                   FontFamily="NunitoSemiBold" FontSize="14" TextColor="#64748B"
+                                   VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="1" Grid.ColumnSpan="2"
+                                         Style="{StaticResource ProgressBarDefault}"
+                                         Progress="{Binding PorcentajeDiario}"
+                                         ProgressColor="{StaticResource ColorPrimario}"
+                                         HeightRequest="10" />
+                        </Grid>
                     </Frame>
-                    <Frame Grid.Column="1" BackgroundColor="#F3E8FF" CornerRadius="15" HasShadow="False">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnVerContactosClicked" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
-                            <Label Text="👥" FontSize="30" HorizontalOptions="Center" />
-                            <Label Text="Contactos" FontFamily="NunitoBold" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </Grid>
+
+                    <!-- Tarjetas de metas -->
+                    <VerticalStackLayout Spacing="12"
+                                         BindableLayout.ItemsSource="{Binding Metas}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:Meta">
+                                <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="20" CornerRadius="20">
+                                    <Frame.Triggers>
+                                        <DataTrigger TargetType="Frame" Binding="{Binding Completada}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#F0FDF4" />
+                                            <Setter Property="BorderColor" Value="#86EFAC" />
+                                        </DataTrigger>
+                                    </Frame.Triggers>
+
+                                    <Grid ColumnDefinitions="Auto, *, Auto"
+                                          RowDefinitions="Auto, Auto, Auto"
+                                          ColumnSpacing="16" RowSpacing="6">
+
+                                        <!-- Icono de la meta -->
+                                        <Frame Grid.RowSpan="3" Style="{StaticResource FrameIcono}"
+                                               BackgroundColor="#FFF7ED" CornerRadius="18"
+                                               HeightRequest="64" WidthRequest="64"
+                                               VerticalOptions="Center">
+                                            <Label Text="{Binding Icono}" FontSize="34"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Frame>
+
+                                        <!-- Nombre -->
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                               Text="{Binding Nombre}"
+                                               FontFamily="NunitoBold" FontSize="20"
+                                               TextColor="#1E293B" VerticalOptions="End" />
+
+                                        <!-- Progreso -->
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                               Text="{Binding TextoProgreso}"
+                                               FontFamily="NunitoRegular" FontSize="15"
+                                               TextColor="#64748B" VerticalOptions="Start" />
+
+                                        <!-- Barra de progreso -->
+                                        <ProgressBar Grid.Column="1" Grid.Row="2"
+                                                     Style="{StaticResource ProgressBarDefault}"
+                                                     Progress="{Binding Porcentaje}"
+                                                     ProgressColor="{StaticResource ColorPrimario}"
+                                                     HeightRequest="12" />
+
+                                        <!-- Botón + grande -->
+                                        <Button Grid.Column="2" Grid.RowSpan="3"
+                                                Text="+"
+                                                Clicked="OnIncrementarClicked"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource ColorPrimario}"
+                                                TextColor="White"
+                                                FontSize="32"
+                                                FontFamily="NunitoBold"
+                                                WidthRequest="68" HeightRequest="68"
+                                                CornerRadius="34"
+                                                Padding="0"
+                                                VerticalOptions="Center">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                             Binding="{Binding Completada}" Value="True">
+                                                    <Setter Property="Text" Value="✓" />
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletado}" />
+                                                    <Setter Property="FontSize" Value="28" />
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                        </Button>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+
+                        <!-- Estado vacío -->
+                        <BindableLayout.EmptyView>
+                            <Frame Style="{StaticResource FrameEmptyState}">
+                                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                                    <Label Text="🎯" FontSize="48" HorizontalOptions="Center" />
+                                    <Label Text="Sin metas para hoy"
+                                           FontFamily="NunitoBold" FontSize="19"
+                                           TextColor="#1E293B" HorizontalOptions="Center" />
+                                    <Label Text="Toca el botón de abajo para crear tu primera meta y empezar a cuidarte."
+                                           FontSize="15" TextColor="#64748B"
+                                           HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                                           MaximumWidthRequest="260" LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </BindableLayout.EmptyView>
+                    </VerticalStackLayout>
+
+                    <!-- Botón Nueva Meta -->
+                    <Button Text="＋  Nueva Meta"
+                            Clicked="OnAddMetaClicked"
+                            BackgroundColor="{StaticResource ColorPrimario}"
+                            TextColor="White"
+                            FontFamily="NunitoBold" FontSize="20"
+                            HeightRequest="64" CornerRadius="18"
+                            Margin="0,4,0,0" />
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>
-    </Grid>
+    </RefreshView>
 </ContentPage>

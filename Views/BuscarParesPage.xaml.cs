@@ -232,7 +232,7 @@ public partial class BuscarParesPage : ContentPage
     private async void OnVolverTocado(object sender, TappedEventArgs e)
     {
         _timer?.Stop();
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("..");
     }
 
     private void OnDificultadFacil(object sender, TappedEventArgs e)

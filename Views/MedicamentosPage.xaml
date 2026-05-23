@@ -7,108 +7,255 @@
     xmlns:models="clr-namespace:EnvejecerConBienestar.Models"
     x:DataType="vm:MedicamentosViewModel"
     x:Name="thisPage"
-    Title="Mis Medicamentos">
+    Title="Mis Medicamentos"
+    BackgroundColor="{StaticResource ColorFondo}">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Header -->
-        <VerticalStackLayout Padding="20,15" BackgroundColor="{StaticResource ColorFondoTarjeta}">
-            <Label Text="💊 Control de Medicinas" Style="{StaticResource LabelTitulo}" />
-            <Label Text="No olvide tomar sus dosis a tiempo" Style="{StaticResource LabelSubtitulo}" />
+        <!-- Encabezado -->
+        <VerticalStackLayout Padding="24,20" Spacing="4"
+                             BackgroundColor="{StaticResource ColorFondoTarjeta}">
+            <Label Text="💊 Control de Medicinas"
+                   FontFamily="NunitoBold" FontSize="26" TextColor="#1E293B" />
+            <Label Text="No olvide tomar sus dosis a tiempo"
+                   FontFamily="NunitoRegular" FontSize="16" TextColor="#64748B" />
         </VerticalStackLayout>
 
-        <RefreshView Grid.Row="1" Command="{Binding LoadMedicamentosCommand}" IsRefreshing="{Binding IsBusy}">
+        <RefreshView Grid.Row="1" Command="{Binding LoadMedicamentosCommand}"
+                     IsRefreshing="{Binding IsBusy}">
             <ScrollView>
-                <VerticalStackLayout Padding="20" Spacing="15">
-                    
-                    <!-- Sugerencias Rápidas -->
-                    <Label Text="💡 Sugerencias Rápidas" FontFamily="NunitoBold" FontSize="16" Margin="0,5" />
-                    <CollectionView ItemsSource="{Binding Sugerencias}" HeightRequest="150">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Medicamento">
-                                <Frame WidthRequest="130" Padding="10" CornerRadius="15" BorderColor="#CBD5E1" BackgroundColor="White" HasShadow="False">
-                                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                                        <Label Text="{Binding Icono}" FontSize="32" HorizontalOptions="Center" />
-                                        <Label Text="{Binding Nombre}" FontSize="13" FontFamily="NunitoBold" HorizontalOptions="Center" HorizontalTextAlignment="Center" MaxLines="1" />
-                                        <Button Text="Añadir" 
-                                                Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.AddSugerenciaCommand}" 
-                                                CommandParameter="{Binding .}"
-                                                BackgroundColor="#E0F2FE"
-                                                TextColor="{StaticResource ColorPrimario}"
-                                                FontSize="11"
-                                                Padding="5,0"
-                                                HeightRequest="30"
-                                                CornerRadius="10" />
+                <VerticalStackLayout Padding="24,20" Spacing="24">
+
+                    <!-- ═══ SUGERENCIAS RÁPIDAS ═══ -->
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="💡 Sugerencias Rápidas"
+                               FontFamily="NunitoBold" FontSize="18" TextColor="#1E293B" />
+
+                        <ScrollView Orientation="Horizontal"
+                                    HorizontalScrollBarVisibility="Never">
+                            <HorizontalStackLayout Spacing="12">
+                                <BindableLayout.ItemsSource>
+                                    <Binding Path="Sugerencias" />
+                                </BindableLayout.ItemsSource>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Medicamento">
+                                        <!-- Chip de sugerencia -->
+                                        <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="0"
+                                               CornerRadius="16" WidthRequest="140" HeightRequest="130">
+                                            <VerticalStackLayout Padding="14,12"
+                                                                 Spacing="8"
+                                                                 HorizontalOptions="Center"
+                                                                 VerticalOptions="Center">
+                                                <!-- Icono -->
+                                                <Frame Style="{StaticResource FrameIcono}"
+                                                       BackgroundColor="#FFF7ED" CornerRadius="14"
+                                                       HeightRequest="44" WidthRequest="44">
+                                                    <Label Text="{Binding Icono}" FontSize="22"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center" />
+                                                </Frame>
+                                                <!-- Nombre -->
+                                                <Label Text="{Binding Nombre}"
+                                                       FontFamily="NunitoBold" FontSize="13"
+                                                       TextColor="#1E293B"
+                                                       HorizontalOptions="Center"
+                                                       HorizontalTextAlignment="Center"
+                                                       MaxLines="2" LineBreakMode="TailTruncation" />
+                                                <!-- Dosis -->
+                                                <Label Text="{Binding Miligramos, StringFormat='{0} mg'}"
+                                                       FontSize="11" TextColor="#94A3B8"
+                                                       HorizontalOptions="Center" />
+                                                <!-- Botón añadir -->
+                                                <Button Text="＋ Añadir"
+                                                        Clicked="OnAddSugerenciaClicked"
+                                                        CommandParameter="{Binding .}"
+                                                        BackgroundColor="#EFF6FF"
+                                                        TextColor="#2563EB"
+                                                        FontFamily="NunitoBold" FontSize="12"
+                                                        HeightRequest="30" CornerRadius="10"
+                                                        Padding="10,0" />
+                                            </VerticalStackLayout>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
+                        </ScrollView>
+                    </VerticalStackLayout>
+
+                    <!-- ═══ MIS MEDICAMENTOS ═══ -->
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="📋 Mis Medicamentos"
+                                   FontFamily="NunitoBold" FontSize="18"
+                                   TextColor="#1E293B" VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding Medicamentos.Count, StringFormat='{0} medicinas'}"
+                                   FontFamily="NunitoRegular" FontSize="14"
+                                   TextColor="#94A3B8" VerticalOptions="Center" />
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="12"
+                                             BindableLayout.ItemsSource="{Binding Medicamentos}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:Medicamento">
+                                    <!-- TARJETA DE MEDICAMENTO -->
+                                    <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="18" CornerRadius="18">
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding EstaTomado}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="#F0FDF4" />
+                                                <Setter Property="BorderColor" Value="#86EFAC" />
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+
+                                        <Grid ColumnDefinitions="Auto, *, Auto"
+                                              RowDefinitions="Auto, Auto, Auto"
+                                              ColumnSpacing="14" RowSpacing="5">
+
+                                            <!-- Icono del medicamento -->
+                                            <Frame Grid.RowSpan="3" Style="{StaticResource FrameIcono}"
+                                                   BackgroundColor="#FFF7ED" CornerRadius="16"
+                                                   HeightRequest="56" WidthRequest="56"
+                                                   VerticalOptions="Center">
+                                                <Label Text="{Binding Icono}" FontSize="30"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Frame>
+
+                                            <!-- Nombre y dosis -->
+                                            <VerticalStackLayout Grid.Column="1" Grid.Row="0"
+                                                                 VerticalOptions="End" Spacing="2">
+                                                <Label Text="{Binding Nombre}"
+                                                       FontFamily="NunitoBold" FontSize="19"
+                                                       TextColor="#1E293B">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label"
+                                                                     Binding="{Binding EstaTomado}" Value="True">
+                                                            <Setter Property="TextColor" Value="#166534" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </VerticalStackLayout>
+
+                                            <!-- Dosis y frecuencia -->
+                                            <Label Grid.Column="1" Grid.Row="1"
+                                                   VerticalOptions="Start">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Miligramos, StringFormat='{0} mg'}"
+                                                              FontSize="14" TextColor="#64748B" />
+                                                        <Span Text=" · Cada "
+                                                              FontSize="14" TextColor="#94A3B8" />
+                                                        <Span Text="{Binding Frecuencia, StringFormat='{0} h'}"
+                                                              FontSize="14" TextColor="#64748B"
+                                                              FontFamily="NunitoSemiBold" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <!-- Próxima alarma -->
+                                            <Label Grid.Column="1" Grid.Row="2"
+                                                   VerticalOptions="Start">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="⏰ Próxima: "
+                                                              FontSize="13" TextColor="#94A3B8" />
+                                                        <Span Text="{Binding HoraAlarma, StringFormat='{0:hh\\:mm}'}"
+                                                              FontSize="14"
+                                                              TextColor="{StaticResource ColorPrimario}"
+                                                              FontFamily="NunitoBold" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <!-- Indicador de estado + Botón -->
+                                            <VerticalStackLayout Grid.Column="2" Grid.RowSpan="3"
+                                                                 Spacing="6" VerticalOptions="Center"
+                                                                 HorizontalOptions="Center">
+                                                <!-- Indicador visual -->
+                                                <Frame Style="{StaticResource FrameStatusChip}" Padding="6,3">
+                                                    <Frame.Triggers>
+                                                        <DataTrigger TargetType="Frame"
+                                                                     Binding="{Binding EstaTomado}" Value="False">
+                                                            <Setter Property="BackgroundColor" Value="#FEF2F2" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Frame"
+                                                                     Binding="{Binding EstaTomado}" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                                                        </DataTrigger>
+                                                    </Frame.Triggers>
+                                                    <Label Text="{Binding IndicadorEstado}"
+                                                           FontSize="12" />
+                                                </Frame>
+
+                                                <!-- Botón marcar -->
+                                                <Button Text="{Binding TextoBoton}"
+                                                        Clicked="OnToggleTomadoClicked"
+                                                        CommandParameter="{Binding .}"
+                                                        FontSize="13"
+                                                        FontFamily="NunitoBold"
+                                                        HeightRequest="42"
+                                                        CornerRadius="12"
+                                                        Padding="14,0">
+                                                    <Button.Triggers>
+                                                        <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding EstaTomado}" Value="False">
+                                                            <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimario}" />
+                                                            <Setter Property="TextColor" Value="White" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Button"
+                                                                     Binding="{Binding EstaTomado}" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletado}" />
+                                                            <Setter Property="TextColor" Value="White" />
+                                                            <Setter Property="Text" Value="✓ Tomado" />
+                                                        </DataTrigger>
+                                                    </Button.Triggers>
+                                                </Button>
+                                            </VerticalStackLayout>
+                                        </Grid>
+
+                                        <!-- Toque para ver detalle -->
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnMedicamentoTapped" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+
+                            <!-- Estado vacío -->
+                            <BindableLayout.EmptyView>
+                                <Frame Style="{StaticResource FrameEmptyState}">
+                                    <VerticalStackLayout Spacing="12"
+                                                         HorizontalOptions="Center">
+                                        <Label Text="💊" FontSize="48"
+                                               HorizontalOptions="Center" />
+                                        <Label Text="No tiene medicinas registradas"
+                                               FontFamily="NunitoBold" FontSize="18"
+                                               TextColor="#1E293B"
+                                               HorizontalOptions="Center" />
+                                        <Label Text="Toque el botón ＋ para agregar su primer medicamento"
+                                               FontSize="15" TextColor="#64748B"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               MaximumWidthRequest="260"
+                                               LineBreakMode="WordWrap" />
                                     </VerticalStackLayout>
                                 </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                            </BindableLayout.EmptyView>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
 
-                    <Label Text="📋 Mis Medicamentos" FontFamily="NunitoBold" FontSize="16" Margin="0,10,0,0" />
-                    <CollectionView ItemsSource="{Binding Medicamentos}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Medicamento">
-                                <Frame Style="{StaticResource TarjetaBase}" Margin="0,5" BorderColor="#CBD5E1">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.GoToDetailCommand}" CommandParameter="{Binding .}" />
-                                    </Frame.GestureRecognizers>
-                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                                        <Label Text="{Binding Icono}" FontSize="35" VerticalOptions="Center" />
-                                        
-                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Nombre}" FontFamily="NunitoBold" FontSize="20" TextColor="#1E293B">
-                                                <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding EstaTomado}" Value="True">
-                                                        <Setter Property="TextColor" Value="Gray" />
-                                                        <Setter Property="TextDecorations" Value="Strikethrough" />
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
-                                            <Label Text="{Binding Miligramos, StringFormat='{0} mg'}" FontSize="15" TextColor="Gray" />
-                                            <Label Text="{Binding HoraAlarma, StringFormat='⏰ Próxima: {0:hh\\:mm}'}" FontSize="15" FontFamily="NunitoSemiBold" TextColor="{StaticResource ColorPrimario}" />
-                                        </VerticalStackLayout>
-
-                                        <Button Grid.Column="2" 
-                                                Text="{Binding TextoBoton}"
-                                                Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.ToggleTomadoCommand}"
-                                                CommandParameter="{Binding .}"
-                                                BackgroundColor="{StaticResource ColorPrimario}"
-                                                TextColor="White"
-                                                FontSize="13" 
-                                                Padding="10,0" 
-                                                HeightRequest="45"
-                                                CornerRadius="10">
-                                            <Button.Triggers>
-                                                <DataTrigger TargetType="Button" Binding="{Binding EstaTomado}" Value="True">
-                                                    <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletado}" />
-                                                    <Setter Property="Text" Value="✓" />
-                                                    <Setter Property="WidthRequest" Value="45" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
-                                        </Button>
-                                    </Grid>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.EmptyView>
-                            <VerticalStackLayout HorizontalOptions="Center" Margin="0,60" Spacing="10">
-                                <Label Text="💊" FontSize="50" HorizontalOptions="Center" />
-                                <Label Text="No tiene medicinas registradas" Style="{StaticResource LabelSubtitulo}" HorizontalOptions="Center" />
-                                <Label Text="Toque el botón + para agregar una" FontSize="14" HorizontalOptions="Center" TextColor="Gray" />
-                            </VerticalStackLayout>
-                        </CollectionView.EmptyView>
-                    </CollectionView>
                 </VerticalStackLayout>
             </ScrollView>
         </RefreshView>
 
-        <!-- FAB -->
-        <Button Grid.Row="1" Text="+" Command="{Binding AddMedicamentoCommand}"
-                BackgroundColor="{StaticResource ColorPrimario}" TextColor="White"
-                FontSize="35" WidthRequest="70" HeightRequest="70" CornerRadius="35"
-                HorizontalOptions="End" VerticalOptions="End" Margin="25" />
+        <!-- FAB para agregar medicamento -->
+        <Button Grid.Row="1" Text="＋"
+                Command="{Binding AddMedicamentoCommand}"
+                Style="{StaticResource BotonFAB}"
+                FontSize="34"
+                WidthRequest="70" HeightRequest="70"
+                CornerRadius="35"
+                HorizontalOptions="End" VerticalOptions="End"
+                Margin="24" />
     </Grid>
 </ContentPage>
