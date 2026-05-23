@@ -19,6 +19,7 @@ public static class MauiProgram
                 fonts.AddFont("Nunito-Regular.ttf", "NunitoRegular");
                 fonts.AddFont("Nunito-Bold.ttf", "NunitoBold");
                 fonts.AddFont("Nunito-SemiBold.ttf", "NunitoSemiBold");
+                fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FASolid");
             });
 
         // Registrar AppShell

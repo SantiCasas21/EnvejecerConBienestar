@@ -7,26 +7,33 @@
 
     <Frame Style="{StaticResource FramePopup}" WidthRequest="340">
         <VerticalStackLayout Spacing="15">
-            <Label Text="Nuevo Contacto" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
-            
-            <Entry x:Name="NombreEntry" Placeholder="Nombre completo" Style="{StaticResource EntryForm}" />
-            <Entry x:Name="TelefonoEntry" Placeholder="Teléfono" Keyboard="Telephone" Style="{StaticResource EntryForm}" />
-            <Entry x:Name="UbicacionEntry" Placeholder="Ubicación (Opcional)" Style="{StaticResource EntryForm}" />
+            <Label Text="Nuevo Contacto" FontSize="24" FontFamily="NunitoBold"
+                   HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
 
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
-                    <Label Text="Favorito" FontSize="12" HorizontalOptions="Center" />
+            <Entry x:Name="NombreEntry" Placeholder="Nombre completo *" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="RelacionEntry" Placeholder="Relación (Ej. Hijo, Doctor)" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="TelefonoEntry" Placeholder="Teléfono" Keyboard="Telephone" Style="{StaticResource EntryForm}" />
+            <Entry x:Name="UbicacionEntry" Placeholder="Dirección (Opcional)" Style="{StaticResource EntryForm}" />
+
+            <HorizontalStackLayout Spacing="24" HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label Text="⭐ Favorito" FontSize="13" FontFamily="NunitoSemiBold"
+                           HorizontalOptions="Center" TextColor="{StaticResource ColorTextoSecundario}" />
                     <CheckBox x:Name="FavoritoCheck" />
                 </VerticalStackLayout>
-                <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
-                    <Label Text="Es SOS" FontSize="12" HorizontalOptions="Center" />
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label Text="🚨 SOS" FontSize="13" FontFamily="NunitoSemiBold"
+                           HorizontalOptions="Center" TextColor="{StaticResource ColorEmergencia}" />
                     <CheckBox x:Name="EmergenciaCheck" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
-                <Button Text="Cancelar" Clicked="OnCancelClicked" Style="{StaticResource BotonSecundario}" Grid.Column="0" />
-                <Button Text="Guardar" Clicked="OnSaveClicked" Style="{StaticResource BotonPrimario}" Grid.Column="1" BackgroundColor="{StaticResource ColorCompletado}" />
+                <Button Text="Cancelar" Clicked="OnCancelClicked"
+                        Style="{StaticResource BotonSecundario}" Grid.Column="0" />
+                <Button Text="Guardar" Clicked="OnSaveClicked"
+                        Style="{StaticResource BotonPrimario}" Grid.Column="1"
+                        BackgroundColor="{StaticResource ColorCompletado}" />
             </Grid>
         </VerticalStackLayout>
     </Frame>

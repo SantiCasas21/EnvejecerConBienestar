@@ -11,12 +11,13 @@ namespace EnvejecerConBienestar.ViewModels;
 public partial class ContactosViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
-
-    [ObservableProperty]
-    private ObservableCollection<Contacto> _favoritos = new();
+    private readonly ContactService _contactService;
 
     [ObservableProperty]
     private ObservableCollection<Contacto> _emergencias = new();
+
+    [ObservableProperty]
+    private ObservableCollection<Contacto> _favoritos = new();
 
     [ObservableProperty]
     private ObservableCollection<Contacto> _otros = new();
@@ -24,9 +25,16 @@ public partial class ContactosViewModel : ObservableObject
     [ObservableProperty]
     private bool _isBusy;
 
-    public ContactosViewModel(DatabaseService databaseService)
+    [ObservableProperty]
+    private int _totalContactos;
+
+    [ObservableProperty]
+    private bool _sinContactos;
+
+    public ContactosViewModel(DatabaseService databaseService, ContactService contactService)
     {
         _databaseService = databaseService;
+        _contactService = contactService;
     }
 
     [RelayCommand]
@@ -35,8 +43,8 @@ public partial class ContactosViewModel : ObservableObject
         IsBusy = true;
         var all = await _databaseService.GetContactosAsync();
 
-        Favoritos.Clear();
         Emergencias.Clear();
+        Favoritos.Clear();
         Otros.Clear();
 
         foreach (var c in all)
@@ -45,6 +53,9 @@ public partial class ContactosViewModel : ObservableObject
             else if (c.EsFavorito) Favoritos.Add(c);
             else Otros.Add(c);
         }
+
+        TotalContactos = all.Count;
+        SinContactos = all.Count == 0;
         IsBusy = false;
     }
 
@@ -56,14 +67,61 @@ public partial class ContactosViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task LlamarAsync(Contacto contacto)
+    {
+        if (contacto == null) return;
+        await _contactService.RealizarLlamada(contacto.Telefono);
+    }
+
+    [RelayCommand]
+    private async Task ImportarDesdeAgendaAsync()
+    {
+        try
+        {
+            var contactoNativo = await Contacts.Default.PickContactAsync();
+            if (contactoNativo == null) return;
+
+            var nombre = contactoNativo.DisplayName ?? "Sin nombre";
+            var telefono = contactoNativo.Phones?.FirstOrDefault()?.PhoneNumber ?? "";
+
+            if (string.IsNullOrWhiteSpace(nombre) && string.IsNullOrWhiteSpace(telefono))
+            {
+                await Shell.Current.DisplayAlert("Sin datos", "El contacto seleccionado no tiene nombre ni teléfono.", "OK");
+                return;
+            }
+
+            var nuevo = new Contacto
+            {
+                Nombre = nombre,
+                Telefono = telefono,
+                Icono = "👤",
+                ColorAvatar = Contacto.GenerarColorPorNombre(nombre)
+            };
+
+            await _databaseService.SaveContactoAsync(nuevo);
+            await LoadDataAsync();
+
+            await Shell.Current.DisplayAlert("✅ Contacto Importado",
+                $"'{nombre}' se ha agregado a tu agenda de confianza.", "OK");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", $"No se pudo importar el contacto: {ex.Message}", "OK");
+        }
+    }
+
+    [RelayCommand]
     private async Task AddNewAsync()
     {
         var popup = new AddContactoPopup();
         await Shell.Current.CurrentPage.ShowPopupAsync(popup);
-        
+
         var resultado = await popup.PopupResult.Task;
         if (resultado != null)
         {
+            if (string.IsNullOrWhiteSpace(resultado.ColorAvatar))
+                resultado.ColorAvatar = Contacto.GenerarColorPorNombre(resultado.Nombre);
+
             await _databaseService.SaveContactoAsync(resultado);
             await LoadDataAsync();
         }

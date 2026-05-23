@@ -17,18 +17,18 @@
 
     <Grid RowDefinitions="Auto, *">
         <!-- Barra superior -->
-        <Grid BackgroundColor="White" Padding="20,12" ColumnDefinitions="Auto, *, Auto"
+        <Grid BackgroundColor="{StaticResource ColorFondoTarjeta}" Padding="20,12" ColumnDefinitions="Auto, *, Auto"
               ColumnSpacing="14">
             <Button Text="← Volver"
                     Command="{Binding BackCommand}"
                     BackgroundColor="Transparent"
-                    TextColor="#64748B"
+                    TextColor="{StaticResource ColorTextoSecundario}"
                     FontFamily="NunitoSemiBold" FontSize="16"
                     BorderColor="Transparent"
                     HeightRequest="44" Padding="8,0" />
 
             <Label Grid.Column="1" Text="Detalles"
-                   FontFamily="NunitoBold" FontSize="19" TextColor="#1E293B"
+                   FontFamily="NunitoBold" FontSize="19" TextColor="{StaticResource ColorTexto}"
                    VerticalOptions="Center" HorizontalOptions="Center" />
 
             <Button Grid.Column="2"
@@ -55,7 +55,7 @@
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Frame Style="{StaticResource FrameIcono}" HeightRequest="90" WidthRequest="90"
                            CornerRadius="45" HorizontalOptions="Center"
-                           BackgroundColor="#FFF7ED">
+                           BackgroundColor="{StaticResource ColorPrimarioClaro}">
                         <Label Text="{Binding Medicamento.Icono}" FontSize="44"
                                HorizontalOptions="Center" VerticalOptions="Center" />
                     </Frame>
@@ -64,11 +64,11 @@
                         <Frame.Triggers>
                             <DataTrigger TargetType="Frame"
                                          Binding="{Binding Medicamento.EstaTomado}" Value="False">
-                                <Setter Property="BackgroundColor" Value="#FEF2F2" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource ColorPendiente}" />
                             </DataTrigger>
                             <DataTrigger TargetType="Frame"
                                          Binding="{Binding Medicamento.EstaTomado}" Value="True">
-                                <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletadoClaro}" />
                             </DataTrigger>
                         </Frame.Triggers>
                         <Label FontSize="14" FontFamily="NunitoSemiBold" HorizontalOptions="Center">
@@ -76,12 +76,12 @@
                                 <DataTrigger TargetType="Label"
                                              Binding="{Binding Medicamento.EstaTomado}" Value="False">
                                     <Setter Property="Text" Value="🔴 Pendiente" />
-                                    <Setter Property="TextColor" Value="#DC2626" />
+                                    <Setter Property="TextColor" Value="{StaticResource ColorEmergencia}" />
                                 </DataTrigger>
                                 <DataTrigger TargetType="Label"
                                              Binding="{Binding Medicamento.EstaTomado}" Value="True">
                                     <Setter Property="Text" Value="🟢 Tomado hoy" />
-                                    <Setter Property="TextColor" Value="#16A34A" />
+                                    <Setter Property="TextColor" Value="{StaticResource ColorCompletado}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -93,12 +93,12 @@
                 <VerticalStackLayout Spacing="6">
                     <Label Text="NOMBRE" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Medicamento.Nombre}" FontFamily="NunitoBold"
-                           FontSize="24" TextColor="#1E293B"
+                           FontSize="24" TextColor="{StaticResource ColorTexto}"
                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
                     <Entry Text="{Binding Medicamento.Nombre}"
                            Placeholder="Nombre del medicamento"
                            IsVisible="{Binding IsEditing}"
-                           FontSize="20" BackgroundColor="#F8FAFC"
+                           FontSize="20" BackgroundColor="{StaticResource ColorFondo}"
                            HeightRequest="54" />
                 </VerticalStackLayout>
 
@@ -106,13 +106,13 @@
                 <VerticalStackLayout Spacing="6">
                     <Label Text="DOSIS" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Medicamento.Miligramos, StringFormat='{0} miligramos'}"
-                           FontFamily="NunitoRegular" FontSize="20" TextColor="#1E293B"
+                           FontFamily="NunitoRegular" FontSize="20" TextColor="{StaticResource ColorTexto}"
                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
                     <Entry Text="{Binding Medicamento.Miligramos}"
                            Placeholder="Ej. 500"
                            Keyboard="Numeric"
                            IsVisible="{Binding IsEditing}"
-                           FontSize="20" BackgroundColor="#F8FAFC"
+                           FontSize="20" BackgroundColor="{StaticResource ColorFondo}"
                            HeightRequest="54" />
                 </VerticalStackLayout>
 
@@ -120,13 +120,13 @@
                 <VerticalStackLayout Spacing="6">
                     <Label Text="FRECUENCIA" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Medicamento.Frecuencia, StringFormat='Cada {0} horas'}"
-                           FontFamily="NunitoRegular" FontSize="20" TextColor="#1E293B"
+                           FontFamily="NunitoRegular" FontSize="20" TextColor="{StaticResource ColorTexto}"
                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
                     <Entry Text="{Binding Medicamento.Frecuencia}"
                            Placeholder="Cada cuántas horas (ej. 8)"
                            Keyboard="Numeric"
                            IsVisible="{Binding IsEditing}"
-                           FontSize="20" BackgroundColor="#F8FAFC"
+                           FontSize="20" BackgroundColor="{StaticResource ColorFondo}"
                            HeightRequest="54" />
                 </VerticalStackLayout>
 
@@ -151,8 +151,8 @@
                             <VerticalStackLayout Grid.Column="1" Spacing="4" Margin="10,0,0,0">
                                 <Label Text="Horario de tomas hoy"
                                        FontFamily="NunitoBold" FontSize="17"
-                                       TextColor="#1E293B" />
-                                <Label FontSize="14" TextColor="#64748B">
+                                       TextColor="{StaticResource ColorTexto}" />
+                                <Label FontSize="14" TextColor="{StaticResource ColorTextoSecundario}">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="Cada " />
@@ -174,7 +174,7 @@
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{Binding Medicamento.TextoHorario}"
                                    FontFamily="NunitoRegular" FontSize="17"
-                                   TextColor="#334155" LineBreakMode="WordWrap" />
+                                   TextColor="{StaticResource ColorTextoSecundario}" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
@@ -183,13 +183,13 @@
                 <VerticalStackLayout Spacing="6">
                     <Label Text="NOTAS" Style="{StaticResource LabelSeccion}" />
                     <Label Text="{Binding Medicamento.Notas}"
-                           FontFamily="NunitoRegular" FontSize="18" TextColor="#475569"
+                           FontFamily="NunitoRegular" FontSize="18" TextColor="{StaticResource ColorTextoSecundario}"
                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
                     <Editor Text="{Binding Medicamento.Notas}"
                             Placeholder="Notas adicionales..."
                             AutoSize="TextChanges"
                             IsVisible="{Binding IsEditing}"
-                            FontSize="18" BackgroundColor="#F8FAFC"
+                            FontSize="18" BackgroundColor="{StaticResource ColorFondo}"
                             MinimumHeightRequest="80" />
                 </VerticalStackLayout>
 
@@ -199,7 +199,7 @@
                             Command="{Binding SaveCommand}"
                             IsVisible="{Binding IsEditing}"
                             BackgroundColor="{StaticResource ColorCompletado}"
-                            TextColor="White"
+                            TextColor="{StaticResource ColorTextoInverso}"
                             FontFamily="NunitoBold" FontSize="20"
                             HeightRequest="62" CornerRadius="16" />
 
@@ -207,7 +207,7 @@
                             Command="{Binding DeleteCommand}"
                             IsVisible="{Binding IsEditing}"
                             BackgroundColor="Transparent"
-                            TextColor="#DC2626" BorderColor="#DC2626"
+                            TextColor="{StaticResource ColorEmergencia}" BorderColor="{StaticResource ColorEmergencia}"
                             FontFamily="NunitoSemiBold" FontSize="18"
                             HeightRequest="56" CornerRadius="16"
                             BorderWidth="2" />

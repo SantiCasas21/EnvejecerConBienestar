@@ -11,7 +11,7 @@
 
             <!-- BOTÓN VOLVER -->
             <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="14" Padding="12,10"
-                   BorderColor="#FEF3C7" HorizontalOptions="Start">
+                   BorderColor="{StaticResource ColorPrimarioClaro}" HorizontalOptions="Start">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnVolverTocado"/>
                 </Frame.GestureRecognizers>
@@ -28,18 +28,18 @@
                    FontFamily="NunitoBold" FontSize="24"
                    TextColor="{StaticResource Naranja}" HorizontalOptions="Center"/>
             <Label Text="¿Cuánto sabes sobre hábitos saludables?"
-                   FontFamily="NunitoRegular" FontSize="14" TextColor="#888888"
+                   FontFamily="NunitoRegular" FontSize="14" TextColor="{StaticResource ColorTextoSecundario}"
                    HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
             <!-- PROGRESO Y PUNTAJE -->
             <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="16" Padding="16,12"
-                   BorderColor="#F3F4F6">
+                   BorderColor="{StaticResource ColorBorde}">
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8">
                     <Label Grid.Row="0" Grid.Column="0" x:Name="LblProgreso"
                            Text="Pregunta 1 de 10" FontFamily="NunitoSemiBold"
-                           FontSize="14" TextColor="#1F2937"/>
+                           FontSize="14" TextColor="{StaticResource ColorTexto}"/>
                     <Frame Grid.Row="0" Grid.Column="1" Style="{StaticResource FrameStatusChip}"
-                           BackgroundColor="#FEF3C7" Padding="10,4">
+                           BackgroundColor="{StaticResource ColorPrimarioClaro}" Padding="10,4">
                         <HorizontalStackLayout Spacing="4">
                             <Label Text="⭐" FontSize="14"/>
                             <Label x:Name="LblPuntaje" Text="0 pts"
@@ -55,87 +55,87 @@
             </Frame>
 
             <!-- PREGUNTA -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="20"
-                   Style="{StaticResource FrameTarjetaSimple}" BorderColor="#FEF3C7" MinimumHeightRequest="110">
+            <Frame BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="20" Padding="20"
+                   Style="{StaticResource FrameTarjetaSimple}" BorderColor="{StaticResource ColorPrimarioClaro}" MinimumHeightRequest="110">
                 <VerticalStackLayout Spacing="8">
                     <Label x:Name="LblEmojiPregunta" Text="❓" FontSize="36"
                            HorizontalOptions="Center"/>
                     <Label x:Name="LblPregunta" Text="Cargando..."
-                           FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"
+                           FontFamily="NunitoBold" FontSize="17" TextColor="{StaticResource ColorTexto}"
                            HorizontalOptions="Center" HorizontalTextAlignment="Center"
                            LineBreakMode="WordWrap"/>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- OPCIONES A B C D -->
-            <Frame x:Name="OpcionA" BackgroundColor="White" CornerRadius="16"
-                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
+            <Frame x:Name="OpcionA" BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="16"
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="{StaticResource ColorBorde}">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="0"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
-                    <Frame Grid.Column="0" x:Name="BadgeA" BackgroundColor="#F3F4F6"
+                    <Frame Grid.Column="0" x:Name="BadgeA" BackgroundColor="{StaticResource ColorFondoSecundario}"
                            Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="A" FontFamily="NunitoBold" FontSize="14"
-                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                               TextColor="{StaticResource ColorTextoSecundario}" HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
                     <Label x:Name="LblOpcionA" Grid.Column="1" Text=""
-                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="{StaticResource ColorTexto}"
                            VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
                 </Grid>
             </Frame>
 
-            <Frame x:Name="OpcionB" BackgroundColor="White" CornerRadius="16"
-                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
+            <Frame x:Name="OpcionB" BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="16"
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="{StaticResource ColorBorde}">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="1"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
-                    <Frame Grid.Column="0" x:Name="BadgeB" BackgroundColor="#F3F4F6"
+                    <Frame Grid.Column="0" x:Name="BadgeB" BackgroundColor="{StaticResource ColorFondoSecundario}"
                            Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="B" FontFamily="NunitoBold" FontSize="14"
-                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                               TextColor="{StaticResource ColorTextoSecundario}" HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
                     <Label x:Name="LblOpcionB" Grid.Column="1" Text=""
-                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="{StaticResource ColorTexto}"
                            VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
                 </Grid>
             </Frame>
 
-            <Frame x:Name="OpcionC" BackgroundColor="White" CornerRadius="16"
-                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
+            <Frame x:Name="OpcionC" BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="16"
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="{StaticResource ColorBorde}">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="2"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
-                    <Frame Grid.Column="0" x:Name="BadgeC" BackgroundColor="#F3F4F6"
+                    <Frame Grid.Column="0" x:Name="BadgeC" BackgroundColor="{StaticResource ColorFondoSecundario}"
                            Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="C" FontFamily="NunitoBold" FontSize="14"
-                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                               TextColor="{StaticResource ColorTextoSecundario}" HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
                     <Label x:Name="LblOpcionC" Grid.Column="1" Text=""
-                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="{StaticResource ColorTexto}"
                            VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
                 </Grid>
             </Frame>
 
-            <Frame x:Name="OpcionD" BackgroundColor="White" CornerRadius="16"
-                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="#F3F4F6">
+            <Frame x:Name="OpcionD" BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="16"
+                   Style="{StaticResource FrameTarjetaSimple}" Padding="16,14" BorderColor="{StaticResource ColorBorde}">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOpcionTocada" CommandParameter="3"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="36,*">
-                    <Frame Grid.Column="0" x:Name="BadgeD" BackgroundColor="#F3F4F6"
+                    <Frame Grid.Column="0" x:Name="BadgeD" BackgroundColor="{StaticResource ColorFondoSecundario}"
                            Style="{StaticResource FrameIcono}" CornerRadius="10"
                            HeightRequest="32" WidthRequest="32">
                         <Label Text="D" FontFamily="NunitoBold" FontSize="14"
-                               TextColor="#6B7280" HorizontalOptions="Center" VerticalOptions="Center"/>
+                               TextColor="{StaticResource ColorTextoSecundario}" HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
                     <Label x:Name="LblOpcionD" Grid.Column="1" Text=""
-                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="#1F2937"
+                           FontFamily="NunitoSemiBold" FontSize="15" TextColor="{StaticResource ColorTexto}"
                            VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
                 </Grid>
             </Frame>
@@ -155,16 +155,16 @@
 
             <!-- PANEL RESULTADO FINAL -->
             <Frame x:Name="PanelFinal" Style="{StaticResource FrameTarjetaSimple}"
-                   CornerRadius="20" Padding="24,20" BorderColor="#FEF3C7"
+                   CornerRadius="20" Padding="24,20" BorderColor="{StaticResource ColorPrimarioClaro}"
                    IsVisible="False">
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label x:Name="LblEmojiFinal" Text="🏆" FontSize="52"
                            HorizontalOptions="Center"/>
                     <Label Text="¡Trivia completada!"
                            FontFamily="NunitoBold" FontSize="22"
-                           TextColor="#1F2937" HorizontalOptions="Center"/>
+                           TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center"/>
                     <Label x:Name="LblPuntajeFinal" Text=""
-                           FontFamily="NunitoRegular" FontSize="15" TextColor="#6B7280"
+                           FontFamily="NunitoRegular" FontSize="15" TextColor="{StaticResource ColorTextoSecundario}"
                            HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                 </VerticalStackLayout>
             </Frame>
@@ -173,7 +173,7 @@
             <Button x:Name="BtnAccion" Text="Siguiente →"
                     FontFamily="NunitoBold" FontSize="16"
                     BackgroundColor="{StaticResource Naranja}"
-                    TextColor="White" CornerRadius="16"
+                    TextColor="{StaticResource ColorTextoInverso}" CornerRadius="16"
                     HeightRequest="54" IsVisible="False"
                     Clicked="OnAccionTocada"/>
 

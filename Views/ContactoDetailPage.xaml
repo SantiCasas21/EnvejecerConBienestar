@@ -6,7 +6,8 @@
     xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
     xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
     x:DataType="vm:ContactoDetailViewModel"
-    Title="Detalle del Contacto">
+    Title="Perfil del Contacto"
+    BackgroundColor="{StaticResource ColorFondo}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,90 +16,223 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Header con botón de edición -->
-        <Grid BackgroundColor="{StaticResource ColorFondoTarjeta}" Padding="20,10" ColumnDefinitions="Auto, *, Auto">
-            <Button Text="←" Command="{Binding BackCommand}" Style="{StaticResource BotonSecundario}" WidthRequest="50" BorderColor="Transparent" />
-            <Label Grid.Column="1" Text="Perfil del Contacto" Style="{StaticResource LabelTitulo}" VerticalOptions="Center" HorizontalOptions="Center" />
-            <Button Grid.Column="2" 
-                    Command="{Binding ToggleEditCommand}" 
-                    Style="{StaticResource BotonSecundario}" 
-                    WidthRequest="50"
-                    BorderColor="Transparent">
+
+        <!-- ═══ HEADER ═══ -->
+        <Grid BackgroundColor="{StaticResource ColorFondoTarjeta}" Padding="20,12" ColumnDefinitions="Auto, *, Auto"
+              ColumnSpacing="14">
+            <Button Text="← Volver"
+                    Command="{Binding BackCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource ColorTextoSecundario}"
+                    FontFamily="NunitoSemiBold" FontSize="16"
+                    BorderColor="Transparent"
+                    HeightRequest="44" Padding="8,0" />
+
+            <Label Grid.Column="1" Text="Perfil"
+                   FontFamily="NunitoBold" FontSize="19" TextColor="{StaticResource ColorTexto}"
+                   VerticalOptions="Center" HorizontalOptions="Center" />
+
+            <Button Grid.Column="2"
+                    Command="{Binding ToggleEditCommand}"
+                    BackgroundColor="Transparent"
+                    WidthRequest="48" HeightRequest="44"
+                    BorderColor="Transparent"
+                    FontSize="20">
                 <Button.Triggers>
                     <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="False">
                         <Setter Property="Text" Value="✏️" />
                     </DataTrigger>
                     <DataTrigger TargetType="Button" Binding="{Binding IsEditing}" Value="True">
-                        <Setter Property="Text" Value="❌" />
+                        <Setter Property="Text" Value="✕" />
                     </DataTrigger>
                 </Button.Triggers>
             </Button>
         </Grid>
 
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="25" Spacing="20">
-                
-                <!-- Avatar Gigante -->
-                <Frame Style="{StaticResource FrameIcono}" HeightRequest="120" WidthRequest="120"
-                       CornerRadius="60" HorizontalOptions="Center"
-                       BackgroundColor="{StaticResource ColorFondoSecundario}">
-                    <Label Text="{Binding Contacto.Icono}" FontSize="60" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Frame>
+            <VerticalStackLayout Padding="28,24" Spacing="24">
 
-                <!-- Campo: Nombre -->
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="NOMBRE COMPLETO" Style="{StaticResource LabelSeccion}" />
-                    <Label Text="{Binding Contacto.Nombre}" FontSize="22" FontFamily="NunitoBold" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Nombre}" Placeholder="Ej. Juan Pérez" IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
+                <!-- ═══ AVATAR GRANDE ═══ -->
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                    <!-- Círculo con inicial -->
+                    <Frame Style="{StaticResource FrameIcono}"
+                           BackgroundColor="{Binding Contacto.ColorAvatarFinal}"
+                           CornerRadius="60" HeightRequest="120" WidthRequest="120"
+                           HorizontalOptions="Center">
+                        <Label Text="{Binding Contacto.Inicial}"
+                               FontFamily="NunitoBold" FontSize="52"
+                               TextColor="{StaticResource ColorTextoInverso}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Frame>
+
+                    <!-- Nombre -->
+                    <Label Text="{Binding Contacto.Nombre}"
+                           FontFamily="NunitoBold" FontSize="28"
+                           TextColor="{StaticResource ColorTexto}"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+
+                    <!-- Relación -->
+                    <Label Text="{Binding Contacto.Relacion}"
+                           FontFamily="NunitoSemiBold" FontSize="17"
+                           TextColor="{StaticResource ColorPrimario}"
+                           HorizontalOptions="Center" />
+
+                    <!-- Badge SOS -->
+                    <Frame BackgroundColor="{StaticResource ColorPendiente}" CornerRadius="12" Padding="14,6"
+                           HasShadow="False" HorizontalOptions="Center" BorderColor="{StaticResource ColorPendienteBorde}"
+                           IsVisible="{Binding Contacto.EsEmergencia}">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="🚨" FontSize="16" VerticalOptions="Center" />
+                            <Label Text="Contacto de Emergencia"
+                                   FontFamily="NunitoBold" FontSize="15"
+                                   TextColor="{StaticResource ColorEmergencia}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Frame>
                 </VerticalStackLayout>
 
-                <!-- Campo: Teléfono -->
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="TELÉFONO" Style="{StaticResource LabelSeccion}" />
-                    <Label Text="{Binding Contacto.Telefono}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Telefono}" Keyboard="Telephone" Placeholder="Ej. 310..." IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
-                </VerticalStackLayout>
-
-                <!-- Campo: Ubicación -->
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="UBICACIÓN / DIRECCIÓN" Style="{StaticResource LabelSeccion}" />
-                    <Label Text="{Binding Contacto.Ubicacion}" FontSize="18" IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
-                    <Entry Text="{Binding Contacto.Ubicacion}" Placeholder="Ej. Calle 123..." IsVisible="{Binding IsEditing}" Style="{StaticResource EntryForm}" />
-                </VerticalStackLayout>
-
-                <!-- Favorito / Emergencia -->
-                <HorizontalStackLayout Spacing="20" HorizontalOptions="Center" Margin="0,10">
-                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                        <Label Text="Favorito" Style="{StaticResource LabelPequeno}" />
-                        <CheckBox IsChecked="{Binding Contacto.EsFavorito}" IsEnabled="{Binding IsEditing}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                        <Label Text="SOS" Style="{StaticResource LabelPequeno}" />
-                        <CheckBox IsChecked="{Binding Contacto.EsEmergencia}" IsEnabled="{Binding IsEditing}" />
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-
-                <!-- Botones de Acción -->
-                <VerticalStackLayout Spacing="15" Margin="0,20">
-                    <Button Text="📞 REALIZAR LLAMADA" 
-                            Command="{Binding CallCommand}" 
-                            Style="{StaticResource BotonPrimario}" 
-                            IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}"
-                            HeightRequest="60" CornerRadius="15" />
-                    
-                    <Button Text="💾 GUARDAR CAMBIOS" 
-                            Command="{Binding SaveCommand}" 
-                            Style="{StaticResource BotonPrimario}" 
+                <!-- ═══ BOTONES DE ACCIÓN PRINCIPALES ═══ -->
+                <VerticalStackLayout Spacing="12"
+                                     IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}">
+                    <!-- Llamar -->
+                    <Button Text="📞  Llamar Ahora"
+                            Command="{Binding CallCommand}"
                             BackgroundColor="{StaticResource ColorCompletado}"
-                            IsVisible="{Binding IsEditing}"
-                            HeightRequest="60" CornerRadius="15" />
+                            TextColor="{StaticResource ColorTextoInverso}"
+                            FontFamily="NunitoBold" FontSize="20"
+                            HeightRequest="64" CornerRadius="18" />
 
-                    <Button Text="🗑️ ELIMINAR CONTACTO" 
-                            Command="{Binding DeleteCommand}" 
-                            Style="{StaticResource BotonSecundario}" 
-                            TextColor="Red" BorderColor="Red"
-                            IsVisible="{Binding IsEditing}"
-                            HeightRequest="60" CornerRadius="15" />
+                    <!-- Enviar mensaje -->
+                    <Button Text="💬  Enviar Mensaje"
+                            Command="{Binding SendMessageCommand}"
+                            BackgroundColor="{StaticResource ColorPrimario}"
+                            TextColor="{StaticResource ColorTextoInverso}"
+                            FontFamily="NunitoBold" FontSize="20"
+                            HeightRequest="64" CornerRadius="18" />
+                </VerticalStackLayout>
+
+                <!-- ═══ FORMULARIO DE EDICIÓN ═══ -->
+                <VerticalStackLayout Spacing="20"
+                                     IsVisible="{Binding IsEditing}">
+
+                    <BoxView Style="{StaticResource Separador}" />
+
+                    <!-- Nombre -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="NOMBRE COMPLETO" Style="{StaticResource LabelSeccion}" />
+                        <Entry Text="{Binding Contacto.Nombre}"
+                               Placeholder="Ej. Juan Pérez"
+                               Style="{StaticResource EntryForm}"
+                               FontSize="20" HeightRequest="56" />
+                    </VerticalStackLayout>
+
+                    <!-- Relación -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="RELACIÓN" Style="{StaticResource LabelSeccion}" />
+                        <Entry Text="{Binding Contacto.Relacion}"
+                               Placeholder="Ej. Hijo, Doctor, Amigo..."
+                               Style="{StaticResource EntryForm}"
+                               FontSize="20" HeightRequest="56" />
+                    </VerticalStackLayout>
+
+                    <!-- Teléfono -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="TELÉFONO" Style="{StaticResource LabelSeccion}" />
+                        <Entry Text="{Binding Contacto.Telefono}"
+                               Keyboard="Telephone"
+                               Placeholder="Ej. 310 123 4567"
+                               Style="{StaticResource EntryForm}"
+                               FontSize="20" HeightRequest="56" />
+                    </VerticalStackLayout>
+
+                    <!-- Ubicación -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="DIRECCIÓN" Style="{StaticResource LabelSeccion}" />
+                        <Entry Text="{Binding Contacto.Ubicacion}"
+                               Placeholder="Ej. Calle 123, Bogotá"
+                               Style="{StaticResource EntryForm}"
+                               FontSize="20" HeightRequest="56" />
+                    </VerticalStackLayout>
+
+                    <!-- Favorito + SOS -->
+                    <HorizontalStackLayout Spacing="32" HorizontalOptions="Center" Margin="0,8">
+                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Label Text="⭐ Favorito" FontFamily="NunitoSemiBold" FontSize="16"
+                                   TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center" />
+                            <Switch IsToggled="{Binding Contacto.EsFavorito}"
+                                    OnColor="{StaticResource ColorPrimario}"
+                                    HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Label Text="🚨 Emergencia" FontFamily="NunitoSemiBold" FontSize="16"
+                                   TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center" />
+                            <Switch IsToggled="{Binding Contacto.EsEmergencia}"
+                                    OnColor="{StaticResource ColorEmergencia}"
+                                    HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <BoxView Style="{StaticResource Separador}" />
+
+                    <!-- Botones de edición -->
+                    <Button Text="💾  Guardar Cambios"
+                            Command="{Binding SaveCommand}"
+                            BackgroundColor="{StaticResource ColorCompletado}"
+                            TextColor="{StaticResource ColorTextoInverso}"
+                            FontFamily="NunitoBold" FontSize="20"
+                            HeightRequest="64" CornerRadius="18" />
+
+                    <Button Text="🗑️  Eliminar Contacto"
+                            Command="{Binding DeleteCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource ColorEmergencia}" BorderColor="{StaticResource ColorEmergencia}"
+                            FontFamily="NunitoSemiBold" FontSize="18"
+                            HeightRequest="56" CornerRadius="16"
+                            BorderWidth="2" />
+                </VerticalStackLayout>
+
+                <!-- ═══ INFORMACIÓN EN MODO LECTURA ═══ -->
+                <VerticalStackLayout Spacing="18"
+                                     IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}">
+
+                    <BoxView Style="{StaticResource Separador}" />
+
+                    <!-- Teléfono -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="TELÉFONO" Style="{StaticResource LabelSeccion}" />
+                        <Label Text="{Binding Contacto.Telefono}"
+                               FontFamily="NunitoRegular" FontSize="20"
+                               TextColor="{StaticResource ColorTexto}" />
+                    </VerticalStackLayout>
+
+                    <!-- Dirección -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="DIRECCIÓN" Style="{StaticResource LabelSeccion}" />
+                        <Label Text="{Binding Contacto.Ubicacion}"
+                               FontFamily="NunitoRegular" FontSize="20"
+                               TextColor="{StaticResource ColorTexto}" />
+                    </VerticalStackLayout>
+
+                    <!-- Favorito + SOS indicadores -->
+                    <HorizontalStackLayout Spacing="24" HorizontalOptions="Center" Margin="0,8">
+                        <Frame BackgroundColor="{StaticResource ColorSecundarioClaro}" CornerRadius="12" Padding="14,8"
+                               HasShadow="False" IsVisible="{Binding Contacto.EsFavorito}">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="⭐" FontSize="16" VerticalOptions="Center" />
+                                <Label Text="Favorito" FontFamily="NunitoSemiBold" FontSize="15"
+                                       TextColor="{StaticResource ColorPrimario}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <Frame BackgroundColor="{StaticResource ColorPendiente}" CornerRadius="12" Padding="14,8"
+                               HasShadow="False" IsVisible="{Binding Contacto.EsEmergencia}">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="🚨" FontSize="16" VerticalOptions="Center" />
+                                <Label Text="Emergencia" FontFamily="NunitoSemiBold" FontSize="15"
+                                       TextColor="{StaticResource ColorEmergencia}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
 
             </VerticalStackLayout>

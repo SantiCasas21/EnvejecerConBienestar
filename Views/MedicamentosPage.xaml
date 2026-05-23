@@ -15,9 +15,9 @@
         <VerticalStackLayout Padding="24,20" Spacing="4"
                              BackgroundColor="{StaticResource ColorFondoTarjeta}">
             <Label Text="💊 Control de Medicinas"
-                   FontFamily="NunitoBold" FontSize="26" TextColor="#1E293B" />
+                   FontFamily="NunitoBold" FontSize="26" TextColor="{StaticResource ColorTexto}" />
             <Label Text="No olvide tomar sus dosis a tiempo"
-                   FontFamily="NunitoRegular" FontSize="16" TextColor="#64748B" />
+                   FontFamily="NunitoRegular" FontSize="16" TextColor="{StaticResource ColorTextoSecundario}" />
         </VerticalStackLayout>
 
         <RefreshView Grid.Row="1" Command="{Binding LoadMedicamentosCommand}"
@@ -28,7 +28,7 @@
                     <!-- ═══ SUGERENCIAS RÁPIDAS ═══ -->
                     <VerticalStackLayout Spacing="12">
                         <Label Text="💡 Sugerencias Rápidas"
-                               FontFamily="NunitoBold" FontSize="18" TextColor="#1E293B" />
+                               FontFamily="NunitoBold" FontSize="18" TextColor="{StaticResource ColorTexto}" />
 
                         <ScrollView Orientation="Horizontal"
                                     HorizontalScrollBarVisibility="Never">
@@ -47,7 +47,7 @@
                                                                  VerticalOptions="Center">
                                                 <!-- Icono -->
                                                 <Frame Style="{StaticResource FrameIcono}"
-                                                       BackgroundColor="#FFF7ED" CornerRadius="14"
+                                                       BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="14"
                                                        HeightRequest="44" WidthRequest="44">
                                                     <Label Text="{Binding Icono}" FontSize="22"
                                                            HorizontalOptions="Center"
@@ -56,20 +56,20 @@
                                                 <!-- Nombre -->
                                                 <Label Text="{Binding Nombre}"
                                                        FontFamily="NunitoBold" FontSize="13"
-                                                       TextColor="#1E293B"
+                                                       TextColor="{StaticResource ColorTexto}"
                                                        HorizontalOptions="Center"
                                                        HorizontalTextAlignment="Center"
                                                        MaxLines="2" LineBreakMode="TailTruncation" />
                                                 <!-- Dosis -->
                                                 <Label Text="{Binding Miligramos, StringFormat='{0} mg'}"
-                                                       FontSize="11" TextColor="#94A3B8"
+                                                       FontSize="11" TextColor="{StaticResource ColorTextoSecundario}"
                                                        HorizontalOptions="Center" />
                                                 <!-- Botón añadir -->
                                                 <Button Text="＋ Añadir"
                                                         Clicked="OnAddSugerenciaClicked"
                                                         CommandParameter="{Binding .}"
-                                                        BackgroundColor="#EFF6FF"
-                                                        TextColor="#2563EB"
+                                                        BackgroundColor="{StaticResource ColorSecundarioClaro}"
+                                                        TextColor="{StaticResource ColorPrimario}"
                                                         FontFamily="NunitoBold" FontSize="12"
                                                         HeightRequest="30" CornerRadius="10"
                                                         Padding="10,0" />
@@ -86,24 +86,24 @@
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Text="📋 Mis Medicamentos"
                                    FontFamily="NunitoBold" FontSize="18"
-                                   TextColor="#1E293B" VerticalOptions="Center" />
+                                   TextColor="{StaticResource ColorTexto}" VerticalOptions="Center" />
                             <Label Grid.Column="1"
                                    Text="{Binding Medicamentos.Count, StringFormat='{0} medicinas'}"
                                    FontFamily="NunitoRegular" FontSize="14"
-                                   TextColor="#94A3B8" VerticalOptions="Center" />
+                                   TextColor="{StaticResource ColorTextoSecundario}" VerticalOptions="Center" />
                         </Grid>
 
-                        <VerticalStackLayout Spacing="12"
+                        <VerticalStackLayout Spacing="18"
                                              BindableLayout.ItemsSource="{Binding Medicamentos}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Medicamento">
                                     <!-- TARJETA DE MEDICAMENTO -->
-                                    <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="18" CornerRadius="18">
+                                    <Frame Style="{StaticResource TarjetaMedicamento}">
                                         <Frame.Triggers>
                                             <DataTrigger TargetType="Frame"
                                                          Binding="{Binding EstaTomado}" Value="True">
-                                                <Setter Property="BackgroundColor" Value="#F0FDF4" />
-                                                <Setter Property="BorderColor" Value="#86EFAC" />
+                                                <Setter Property="BackgroundColor" Value="{StaticResource ColorExitoClaro}" />
+                                                <Setter Property="BorderColor" Value="{StaticResource ColorCompletado}" />
                                             </DataTrigger>
                                         </Frame.Triggers>
 
@@ -113,7 +113,7 @@
 
                                             <!-- Icono del medicamento -->
                                             <Frame Grid.RowSpan="3" Style="{StaticResource FrameIcono}"
-                                                   BackgroundColor="#FFF7ED" CornerRadius="16"
+                                                   BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="16"
                                                    HeightRequest="56" WidthRequest="56"
                                                    VerticalOptions="Center">
                                                 <Label Text="{Binding Icono}" FontSize="30"
@@ -126,11 +126,11 @@
                                                                  VerticalOptions="End" Spacing="2">
                                                 <Label Text="{Binding Nombre}"
                                                        FontFamily="NunitoBold" FontSize="19"
-                                                       TextColor="#1E293B">
+                                                       TextColor="{StaticResource ColorTexto}">
                                                     <Label.Triggers>
                                                         <DataTrigger TargetType="Label"
                                                                      Binding="{Binding EstaTomado}" Value="True">
-                                                            <Setter Property="TextColor" Value="#166534" />
+                                                            <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
                                                         </DataTrigger>
                                                     </Label.Triggers>
                                                 </Label>
@@ -142,11 +142,11 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding Miligramos, StringFormat='{0} mg'}"
-                                                              FontSize="14" TextColor="#64748B" />
+                                                              FontSize="14" TextColor="{StaticResource ColorTextoSecundario}" />
                                                         <Span Text=" · Cada "
-                                                              FontSize="14" TextColor="#94A3B8" />
+                                                              FontSize="14" TextColor="{StaticResource ColorTextoSecundario}" />
                                                         <Span Text="{Binding Frecuencia, StringFormat='{0} h'}"
-                                                              FontSize="14" TextColor="#64748B"
+                                                              FontSize="14" TextColor="{StaticResource ColorTextoSecundario}"
                                                               FontFamily="NunitoSemiBold" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
@@ -158,7 +158,7 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="⏰ Próxima: "
-                                                              FontSize="13" TextColor="#94A3B8" />
+                                                              FontSize="13" TextColor="{StaticResource ColorTextoSecundario}" />
                                                         <Span Text="{Binding HoraAlarma, StringFormat='{0:hh\\:mm}'}"
                                                               FontSize="14"
                                                               TextColor="{StaticResource ColorPrimario}"
@@ -176,11 +176,11 @@
                                                     <Frame.Triggers>
                                                         <DataTrigger TargetType="Frame"
                                                                      Binding="{Binding EstaTomado}" Value="False">
-                                                            <Setter Property="BackgroundColor" Value="#FEF2F2" />
+                                                            <Setter Property="BackgroundColor" Value="{StaticResource ColorPendiente}" />
                                                         </DataTrigger>
                                                         <DataTrigger TargetType="Frame"
                                                                      Binding="{Binding EstaTomado}" Value="True">
-                                                            <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                                                            <Setter Property="BackgroundColor" Value="{StaticResource ColorCompletadoClaro}" />
                                                         </DataTrigger>
                                                     </Frame.Triggers>
                                                     <Label Text="{Binding IndicadorEstado}"
@@ -230,10 +230,10 @@
                                                HorizontalOptions="Center" />
                                         <Label Text="No tiene medicinas registradas"
                                                FontFamily="NunitoBold" FontSize="18"
-                                               TextColor="#1E293B"
+                                               TextColor="{StaticResource ColorTexto}"
                                                HorizontalOptions="Center" />
                                         <Label Text="Toque el botón ＋ para agregar su primer medicamento"
-                                               FontSize="15" TextColor="#64748B"
+                                               FontSize="15" TextColor="{StaticResource ColorTextoSecundario}"
                                                HorizontalOptions="Center"
                                                HorizontalTextAlignment="Center"
                                                MaximumWidthRequest="260"

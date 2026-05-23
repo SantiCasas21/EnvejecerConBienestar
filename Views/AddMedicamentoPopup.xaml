@@ -5,31 +5,92 @@
            x:Class="EnvejecerConBienestar.Views.AddMedicamentoPopup"
            Color="Transparent">
 
-    <Frame Style="{StaticResource FramePopup}" WidthRequest="340">
-        <VerticalStackLayout Spacing="15">
-            <Label Text="Agregar Medicina" FontSize="24" FontFamily="NunitoBold" HorizontalOptions="Center" TextColor="{StaticResource ColorPrimario}" />
-            
-            <!-- Sugerencias -->
-            <Label Text="Sugerencias rápidas:" Style="{StaticResource LabelPequeno}" />
-            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Button Text="Acetaminofén" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="12" Padding="10,5" HeightRequest="40" />
-                <Button Text="Ibuprofeno" Clicked="OnSugerenciaClicked" Style="{StaticResource BotonSecundario}" FontSize="12" Padding="10,5" HeightRequest="40" />
-            </HorizontalStackLayout>
+    <Frame Style="{StaticResource FramePopup}" WidthRequest="370" Padding="28">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20">
 
-            <!-- Formulario -->
-            <Entry x:Name="NombreEntry" Placeholder="Nombre del medicamento" Style="{StaticResource EntryForm}" />
-            <Entry x:Name="MgEntry" Placeholder="Miligramos (mg)" Keyboard="Numeric" Style="{StaticResource EntryForm}" />
-            <Entry x:Name="FrecuenciaEntry" Placeholder="Cada cuántas horas (ej. 8)" Keyboard="Numeric" Style="{StaticResource EntryForm}" />
-            
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Hora de la primera alarma:" Style="{StaticResource LabelPequeno}" />
-                <TimePicker x:Name="TimePicker" Time="08:00:00" FontSize="18" HorizontalOptions="Center" />
+                <!-- ═══ TÍTULO ═══ -->
+                <Label Text="💊 Agregar Medicina"
+                       FontSize="26" FontFamily="NunitoBold"
+                       HorizontalOptions="Center"
+                       TextColor="{StaticResource ColorPrimario}" />
+
+                <!-- ═══ CARRUSEL DE SUGERENCIAS ═══ -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Sugerencias rápidas (toca para rellenar):"
+                           Style="{StaticResource LabelPequeno}" />
+
+                    <ScrollView Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout x:Name="SugerenciasContainer"
+                                               Spacing="12" />
+                    </ScrollView>
+                </VerticalStackLayout>
+
+                <BoxView Style="{StaticResource Separador}" />
+
+                <!-- ═══ FORMULARIO ═══ -->
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Datos del medicamento:"
+                           Style="{StaticResource LabelPequeno}" />
+
+                    <!-- Nombre -->
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,0" HasShadow="False"
+                           BorderColor="{StaticResource ColorBorde}">
+                        <Entry x:Name="NombreEntry"
+                               Placeholder="Nombre del medicamento"
+                               FontSize="18" FontFamily="NunitoRegular"
+                               HeightRequest="52" />
+                    </Frame>
+
+                    <!-- Dosis (mg) -->
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,0" HasShadow="False"
+                           BorderColor="{StaticResource ColorBorde}">
+                        <Entry x:Name="MgEntry"
+                               Placeholder="Miligramos (ej. 500)"
+                               Keyboard="Numeric"
+                               FontSize="18" FontFamily="NunitoRegular"
+                               HeightRequest="52" />
+                    </Frame>
+
+                    <!-- Frecuencia (horas) -->
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,0" HasShadow="False"
+                           BorderColor="{StaticResource ColorBorde}">
+                        <Entry x:Name="FrecuenciaEntry"
+                               Placeholder="Cada cuántas horas (ej. 8)"
+                               Keyboard="Numeric"
+                               FontSize="18" FontFamily="NunitoRegular"
+                               HeightRequest="52" />
+                    </Frame>
+
+                    <!-- Hora de primera alarma -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Hora de la primera alarma:"
+                               Style="{StaticResource LabelPequeno}" />
+                        <TimePicker x:Name="TimePicker"
+                                    Time="08:00:00"
+                                    FontSize="18"
+                                    HorizontalOptions="Start" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- ═══ BOTONES ═══ -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,4,0,0">
+                    <Button Text="Cancelar"
+                            Clicked="OnCancelClicked"
+                            Style="{StaticResource BotonSecundario}"
+                            Grid.Column="0" />
+                    <Button Text="Guardar"
+                            Clicked="OnSaveClicked"
+                            Style="{StaticResource BotonPrimario}"
+                            Grid.Column="1"
+                            BackgroundColor="{StaticResource ColorCompletado}" />
+                </Grid>
+
             </VerticalStackLayout>
-
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
-                <Button Text="Cancelar" Clicked="OnCancelClicked" Style="{StaticResource BotonSecundario}" Grid.Column="0" />
-                <Button Text="Guardar" Clicked="OnSaveClicked" Style="{StaticResource BotonPrimario}" Grid.Column="1" BackgroundColor="{StaticResource ColorCompletado}" />
-            </Grid>
-        </VerticalStackLayout>
+        </ScrollView>
     </Frame>
 </mct:Popup>

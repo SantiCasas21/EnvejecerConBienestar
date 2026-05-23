@@ -12,38 +12,58 @@
 
     <!-- =============================================
          NAVEGACIÓN INFERIOR — 4 PESTAÑAS
-         Estilo: limpio, iconos grandes, etiquetas claras
+         Iconos vectoriales Font Awesome 6 (FASolid)
          ============================================= -->
 
     <TabBar>
 
-        <!-- 1. INICIO -->
+        <!-- 1. INICIO — fa-house -->
         <ShellContent
             Title="Inicio"
-            Icon="tab_inicio.png"
             ContentTemplate="{DataTemplate views:HomePage}"
-            Route="home" />
+            Route="home">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="&#xf015;"
+                                 FontFamily="FASolid"
+                                 Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <!-- 2. MEDICAMENTOS -->
+        <!-- 2. MEDICAMENTOS — fa-capsules -->
         <ShellContent
             Title="Medicinas"
-            Icon="tab_medicina.png"
             ContentTemplate="{DataTemplate views:MedicamentosPage}"
-            Route="medicamentos" />
+            Route="medicamentos">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="&#xf484;"
+                                 FontFamily="FASolid"
+                                 Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <!-- 3. JUEGOS — Cascarón (expandir en Fase 2) -->
+        <!-- 3. JUEGOS — fa-puzzle-piece -->
         <ShellContent
             Title="Juegos"
-            Icon="tab_juegos.png"
             ContentTemplate="{DataTemplate views:JuegosPage}"
-            Route="juegos" />
+            Route="juegos">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="&#xf12e;"
+                                 FontFamily="FASolid"
+                                 Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <!-- 4. CONTACTOS — Cascarón (expandir en Fase 2) -->
+        <!-- 4. CONTACTOS — fa-users -->
         <ShellContent
             Title="Contactos"
-            Icon="tab_contactos.png"
             ContentTemplate="{DataTemplate views:ContactosPage}"
-            Route="contactos" />
+            Route="contactos">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="&#xf0c0;"
+                                 FontFamily="FASolid"
+                                 Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
     </TabBar>
 

@@ -5,13 +5,13 @@ namespace EnvejecerConBienestar.Views;
 
 public partial class ContactosPage : ContentPage
 {
+    private readonly ContactosViewModel _viewModel;
+
     public ContactosPage(ContactosViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
     }
-
-    private readonly ContactosViewModel _viewModel;
 
     protected override async void OnAppearing()
     {
@@ -23,5 +23,11 @@ public partial class ContactosPage : ContentPage
     {
         if (sender is Frame frame && frame.BindingContext is Contacto contacto)
             _viewModel.GoToDetailCommand.Execute(contacto);
+    }
+
+    private void OnLlamarClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Contacto contacto)
+            _viewModel.LlamarCommand.Execute(contacto);
     }
 }

@@ -3,48 +3,63 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- === PALETA PRINCIPAL === -->
-    <!-- Naranja cálido - color primario de la app -->
-    <Color x:Key="ColorPrimario">#F97316</Color>
-    <Color x:Key="ColorPrimarioClaro">#FDBA74</Color>
-    <Color x:Key="ColorPrimarioOscuro">#EA580C</Color>
+    <!-- ═══════════════════════════════════════════
+         PALETA "CALMA Y VITALIDAD"
+         Diseñada para alta legibilidad y bienestar
+         Contraste mínimo 4.5:1 en textos
+         ═══════════════════════════════════════════ -->
 
-    <!-- Fondos cálidos -->
-    <Color x:Key="ColorFondo">#FFF7ED</Color>
+    <!-- === PRIMARIO: Teal (Salud y Confianza) === -->
+    <Color x:Key="ColorPrimario">#0D9488</Color>
+    <Color x:Key="ColorPrimarioClaro">#CCFBF1</Color>
+    <Color x:Key="ColorPrimarioOscuro">#0F766E</Color>
+
+    <!-- === SECUNDARIO: Lavanda Suave (Paz y Descanso) === -->
+    <Color x:Key="ColorSecundario">#818CF8</Color>
+    <Color x:Key="ColorSecundarioClaro">#E0E7FF</Color>
+
+    <!-- === ÉXITO: Verde Salvia (Vida y Progreso) === -->
+    <Color x:Key="ColorExito">#22C55E</Color>
+    <Color x:Key="ColorExitoClaro">#DCFCE7</Color>
+
+    <!-- === ALERTA: Rojo Coral (Urgencia) === -->
+    <Color x:Key="ColorEmergencia">#E11D48</Color>
+    <Color x:Key="ColorEmergenciaOscuro">#BE123C</Color>
+
+    <!-- === FONDOS (Confort visual, sin deslumbramiento) === -->
+    <Color x:Key="ColorFondo">#F8FAFC</Color>
     <Color x:Key="ColorFondoTarjeta">#FFFFFF</Color>
-    <Color x:Key="ColorFondoSecundario">#FEF3C7</Color>
+    <Color x:Key="ColorFondoSecundario">#F1F5F9</Color>
 
-    <!-- Verde salud -->
-    <Color x:Key="ColorSalud">#0D9488</Color>
-    <Color x:Key="ColorSaludClaro">#CCFBF1</Color>
-
-    <!-- Rojo emergencia - NUNCA usar para otra cosa -->
-    <Color x:Key="ColorEmergencia">#DC2626</Color>
-    <Color x:Key="ColorEmergenciaOscuro">#B91C1C</Color>
-
-    <!-- Violeta juegos -->
-    <Color x:Key="ColorJuegos">#7C3AED</Color>
-
-    <!-- Azul contactos -->
-    <Color x:Key="ColorContactos">#1D4ED8</Color>
-
-    <!-- Texto -->
-    <Color x:Key="ColorTexto">#1C1917</Color>
-    <Color x:Key="ColorTextoSecundario">#78716C</Color>
+    <!-- === TEXTO (Máxima legibilidad) === -->
+    <Color x:Key="ColorTexto">#1E293B</Color>
+    <Color x:Key="ColorTextoSecundario">#64748B</Color>
     <Color x:Key="ColorTextoInverso">#FFFFFF</Color>
 
-    <!-- Separadores y bordes -->
-    <Color x:Key="ColorBorde">#E7E5E4</Color>
+    <!-- === BORDES Y SOMBRAS === -->
+    <Color x:Key="ColorBorde">#E2E8F0</Color>
     <Color x:Key="ColorSombra">#00000020</Color>
 
-    <!-- Estado: completado -->
-    <Color x:Key="ColorCompletado">#16A34A</Color>
+    <!-- === ESTADO: COMPLETADO (verde + check) === -->
+    <Color x:Key="ColorCompletado">#22C55E</Color>
     <Color x:Key="ColorCompletadoClaro">#DCFCE7</Color>
 
-    <!-- Aliases cortos usados en páginas de juegos -->
-    <Color x:Key="Crema">#FFF7ED</Color>
-    <Color x:Key="Violeta">#7C3AED</Color>
-    <Color x:Key="Naranja">#F97316</Color>
-    <Color x:Key="Verde">#0D9488</Color>
+    <!-- === ESTADO: PENDIENTE / ALERTA SUAVE === -->
+    <Color x:Key="ColorPendiente">#FEF2F2</Color>
+    <Color x:Key="ColorPendienteBorde">#FECACA</Color>
+
+    <!-- === COLORES DE SECCIÓN === -->
+    <Color x:Key="ColorMedicinas">#0D9488</Color>
+    <Color x:Key="ColorMedicinasFondo">#CCFBF1</Color>
+    <Color x:Key="ColorJuegos">#818CF8</Color>
+    <Color x:Key="ColorJuegosFondo">#E0E7FF</Color>
+    <Color x:Key="ColorContactos">#0D9488</Color>
+    <Color x:Key="ColorContactosFondo">#CCFBF1</Color>
+
+    <!-- === ALIAS CORTOS (compatibilidad con páginas de juegos) === -->
+    <Color x:Key="Crema">#F8FAFC</Color>
+    <Color x:Key="Violeta">#818CF8</Color>
+    <Color x:Key="Naranja">#0D9488</Color>
+    <Color x:Key="Verde">#22C55E</Color>
 
 </ResourceDictionary>

@@ -8,86 +8,244 @@
     xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
     x:DataType="vm:ContactosViewModel"
     x:Name="thisPage"
-    Title="Agenda de Contactos">
+    Title="Agenda de Contactos"
+    BackgroundColor="{StaticResource ColorFondo}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
             <helpers:IntToBoolConverter x:Key="IntToBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto, *">
-        <VerticalStackLayout Padding="20,15" BackgroundColor="{StaticResource ColorFondoTarjeta}">
-            <Label Text="Mis Contactos" Style="{StaticResource LabelTitulo}" />
-            <Label Text="Personas importantes y de confianza" Style="{StaticResource LabelSubtitulo}" />
+
+        <!-- ═══ ENCABEZADO ═══ -->
+        <VerticalStackLayout Padding="24,20" Spacing="12"
+                             BackgroundColor="{StaticResource ColorFondoTarjeta}">
+            <Grid ColumnDefinitions="*, Auto">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="👥 Mi Agenda" FontFamily="NunitoBold" FontSize="26"
+                           TextColor="{StaticResource ColorTexto}" />
+                    <Label Text="{Binding TotalContactos, StringFormat='{0} contactos de confianza'}"
+                           FontFamily="NunitoRegular" FontSize="15" TextColor="{StaticResource ColorTextoSecundario}" />
+                </VerticalStackLayout>
+                <!-- Importar de la agenda del teléfono -->
+                <Button Grid.Column="1" Text="📋  Importar"
+                        Command="{Binding ImportarDesdeAgendaCommand}"
+                        BackgroundColor="{StaticResource ColorSecundarioClaro}"
+                        TextColor="{StaticResource ColorPrimario}"
+                        FontFamily="NunitoBold" FontSize="15"
+                        HeightRequest="48" CornerRadius="14"
+                        Padding="16,0"
+                        BorderColor="{StaticResource ColorBorde}" BorderWidth="1" />
+            </Grid>
         </VerticalStackLayout>
 
         <RefreshView Grid.Row="1" Command="{Binding LoadDataCommand}" IsRefreshing="{Binding IsBusy}">
             <ScrollView>
-                <VerticalStackLayout Padding="20" Spacing="25">
-                    
-                    <!-- SOS -->
-                    <VerticalStackLayout Spacing="10" IsVisible="{Binding Emergencias.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="🚨 EMERGENCIAS" FontFamily="NunitoBold" TextColor="{StaticResource ColorEmergencia}" />
-                        <CollectionView ItemsSource="{Binding Emergencias}">
-                            <CollectionView.ItemTemplate>
+                <VerticalStackLayout Padding="24,20" Spacing="24">
+
+                    <!-- ═══ EMERGENCIAS (SOS) ═══ -->
+                    <VerticalStackLayout Spacing="10"
+                                         IsVisible="{Binding Emergencias.Count, Converter={StaticResource IntToBoolConverter}}">
+                        <Label Text="🚨 Emergencias" FontFamily="NunitoBold" FontSize="18"
+                               TextColor="{StaticResource ColorEmergencia}" />
+
+                        <VerticalStackLayout Spacing="10"
+                                             BindableLayout.ItemsSource="{Binding Emergencias}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Contacto">
-                                    <Frame Style="{StaticResource TarjetaBase}" Margin="0,5">
+                                    <Frame BackgroundColor="{StaticResource ColorPendiente}" CornerRadius="20" Padding="16"
+                                           BorderColor="{StaticResource ColorPendienteBorde}" HasShadow="False">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnContactoTapped" />
                                         </Frame.GestureRecognizers>
-                                        <Grid ColumnDefinitions="Auto, *, Auto">
-                                            <Label Text="{Binding Icono}" FontSize="24" VerticalOptions="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Nombre}" Style="{StaticResource LabelCuerpo}" Margin="15,0" VerticalOptions="Center" />
-                                            <Label Grid.Column="2" Text="📞" FontSize="20" VerticalOptions="Center" />
+
+                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
+
+                                            <!-- Avatar circular con inicial -->
+                                            <Frame Style="{StaticResource FrameIcono}"
+                                                   BackgroundColor="{Binding ColorAvatarFinal}"
+                                                   CornerRadius="32" HeightRequest="64"
+                                                   WidthRequest="64" VerticalOptions="Center">
+                                                <Label Text="{Binding Inicial}"
+                                                       FontFamily="NunitoBold" FontSize="28"
+                                                       TextColor="{StaticResource ColorTextoInverso}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Frame>
+
+                                            <!-- Info -->
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label Text="🚨" FontSize="14" VerticalOptions="Center" />
+                                                    <Label Text="{Binding Nombre}"
+                                                           FontFamily="NunitoBold" FontSize="19"
+                                                           TextColor="{StaticResource ColorTexto}"
+                                                           LineBreakMode="TailTruncation" />
+                                                </HorizontalStackLayout>
+                                                <Label Text="{Binding Relacion}"
+                                                       FontFamily="NunitoRegular" FontSize="15"
+                                                       TextColor="{StaticResource ColorEmergencia}" />
+                                                <Label Text="{Binding Telefono}"
+                                                       FontFamily="NunitoRegular" FontSize="14"
+                                                       TextColor="{StaticResource ColorTextoSecundario}" />
+                                            </VerticalStackLayout>
+
+                                            <!-- Botón llamar gigante -->
+                                            <Button Grid.Column="2" Text="📞"
+                                                    Clicked="OnLlamarClicked"
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="{StaticResource ColorEmergencia}"
+                                                    TextColor="{StaticResource ColorTextoInverso}"
+                                                    FontSize="24"
+                                                    WidthRequest="64" HeightRequest="64"
+                                                    CornerRadius="32"
+                                                    Padding="0"
+                                                    VerticalOptions="Center" />
                                         </Grid>
                                     </Frame>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
 
-                    <!-- FAVORITOS -->
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="⭐ FAVORITOS" FontFamily="NunitoBold" TextColor="{StaticResource ColorPrimario}" />
-                        <CollectionView ItemsSource="{Binding Favoritos}">
-                            <CollectionView.ItemTemplate>
+                    <!-- ═══ FAVORITOS ═══ -->
+                    <VerticalStackLayout Spacing="10"
+                                         IsVisible="{Binding Favoritos.Count, Converter={StaticResource IntToBoolConverter}}">
+                        <Label Text="⭐ Favoritos" FontFamily="NunitoBold" FontSize="18"
+                               TextColor="{StaticResource ColorPrimario}" />
+
+                        <VerticalStackLayout Spacing="10"
+                                             BindableLayout.ItemsSource="{Binding Favoritos}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Contacto">
-                                    <Frame Style="{StaticResource TarjetaBase}" Margin="0,5">
+                                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnContactoTapped" />
                                         </Frame.GestureRecognizers>
-                                        <Grid ColumnDefinitions="Auto, *, Auto">
-                                            <Label Text="{Binding Icono}" FontSize="24" VerticalOptions="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Nombre}" Style="{StaticResource LabelCuerpo}" Margin="15,0" VerticalOptions="Center" />
-                                            <Label Grid.Column="2" Text="▶️" FontSize="18" VerticalOptions="Center" TextColor="Gray" />
+
+                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
+
+                                            <!-- Avatar circular con inicial -->
+                                            <Frame Style="{StaticResource FrameIcono}"
+                                                   BackgroundColor="{Binding ColorAvatarFinal}"
+                                                   CornerRadius="32" HeightRequest="64"
+                                                   WidthRequest="64" VerticalOptions="Center">
+                                                <Label Text="{Binding Inicial}"
+                                                       FontFamily="NunitoBold" FontSize="28"
+                                                       TextColor="{StaticResource ColorTextoInverso}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Frame>
+
+                                            <!-- Info -->
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                                <Label Text="{Binding Nombre}"
+                                                       FontFamily="NunitoBold" FontSize="19"
+                                                       TextColor="{StaticResource ColorTexto}"
+                                                       LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding Relacion}"
+                                                       FontFamily="NunitoRegular" FontSize="15"
+                                                       TextColor="{StaticResource ColorPrimario}" />
+                                                <Label Text="{Binding Telefono}"
+                                                       FontFamily="NunitoRegular" FontSize="14"
+                                                       TextColor="{StaticResource ColorTextoSecundario}" />
+                                            </VerticalStackLayout>
+
+                                            <!-- Botón llamar -->
+                                            <Button Grid.Column="2" Text="📞"
+                                                    Clicked="OnLlamarClicked"
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="{StaticResource ColorPrimario}"
+                                                    TextColor="{StaticResource ColorTextoInverso}"
+                                                    FontSize="24"
+                                                    WidthRequest="64" HeightRequest="64"
+                                                    CornerRadius="32"
+                                                    Padding="0"
+                                                    VerticalOptions="Center" />
                                         </Grid>
                                     </Frame>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
 
-                    <!-- OTROS -->
+                    <!-- ═══ TODOS LOS CONTACTOS ═══ -->
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="👥 TODOS LOS CONTACTOS" FontFamily="NunitoBold" TextColor="Gray" />
-                        <CollectionView ItemsSource="{Binding Otros}">
-                            <CollectionView.ItemTemplate>
+                        <Label Text="👥 Todos los Contactos" FontFamily="NunitoBold" FontSize="18"
+                               TextColor="{StaticResource ColorTextoSecundario}" />
+
+                        <VerticalStackLayout Spacing="10"
+                                             BindableLayout.ItemsSource="{Binding Otros}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Contacto">
-                                    <Frame Style="{StaticResource TarjetaBase}" Margin="0,5" Padding="12">
+                                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="20" Padding="16">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnContactoTapped" />
                                         </Frame.GestureRecognizers>
-                                        <Grid ColumnDefinitions="Auto, *, Auto">
-                                            <Label Text="{Binding Icono}" FontSize="24" VerticalOptions="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Nombre}" Style="{StaticResource LabelCuerpo}" Margin="15,0" VerticalOptions="Center" />
-                                            <Label Grid.Column="2" Text="▶️" FontSize="18" VerticalOptions="Center" TextColor="Silver" />
+
+                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
+
+                                            <!-- Avatar circular con inicial -->
+                                            <Frame Style="{StaticResource FrameIcono}"
+                                                   BackgroundColor="{Binding ColorAvatarFinal}"
+                                                   CornerRadius="32" HeightRequest="64"
+                                                   WidthRequest="64" VerticalOptions="Center">
+                                                <Label Text="{Binding Inicial}"
+                                                       FontFamily="NunitoBold" FontSize="28"
+                                                       TextColor="{StaticResource ColorTextoInverso}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Frame>
+
+                                            <!-- Info -->
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                                <Label Text="{Binding Nombre}"
+                                                       FontFamily="NunitoBold" FontSize="19"
+                                                       TextColor="{StaticResource ColorTexto}"
+                                                       LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding Relacion}"
+                                                       FontFamily="NunitoRegular" FontSize="15"
+                                                       TextColor="{StaticResource ColorTextoSecundario}" />
+                                                <Label Text="{Binding Telefono}"
+                                                       FontFamily="NunitoRegular" FontSize="14"
+                                                       TextColor="{StaticResource ColorTextoSecundario}" />
+                                            </VerticalStackLayout>
+
+                                            <!-- Botón llamar -->
+                                            <Button Grid.Column="2" Text="📞"
+                                                    Clicked="OnLlamarClicked"
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="{StaticResource ColorCompletado}"
+                                                    TextColor="{StaticResource ColorTextoInverso}"
+                                                    FontSize="24"
+                                                    WidthRequest="64" HeightRequest="64"
+                                                    CornerRadius="32"
+                                                    Padding="0"
+                                                    VerticalOptions="Center" />
                                         </Grid>
                                     </Frame>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+
+                            <!-- Estado vacío para Otros -->
+                            <BindableLayout.EmptyView>
+                                <Frame Style="{StaticResource FrameEmptyState}"
+                                       IsVisible="{Binding SinContactos}">
+                                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                                        <Label Text="👥" FontSize="48" HorizontalOptions="Center" />
+                                        <Label Text="Sin contactos aún"
+                                               FontFamily="NunitoBold" FontSize="19"
+                                               TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center" />
+                                        <Label Text="Importe contactos desde su teléfono o agréguelos manualmente."
+                                               FontSize="15" TextColor="{StaticResource ColorTextoSecundario}"
+                                               HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                                               MaximumWidthRequest="260" LineBreakMode="WordWrap" />
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </BindableLayout.EmptyView>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
@@ -95,8 +253,11 @@
         </RefreshView>
 
         <!-- FAB -->
-        <Button Grid.Row="1" Text="+" Command="{Binding AddNewCommand}"
+        <Button Grid.Row="1" Text="＋"
+                Command="{Binding AddNewCommand}"
                 Style="{StaticResource BotonFAB}"
-                HorizontalOptions="End" VerticalOptions="End" Margin="25" />
+                FontSize="30"
+                HorizontalOptions="End" VerticalOptions="End"
+                Margin="24" />
     </Grid>
 </ContentPage>

@@ -9,6 +9,14 @@ public partial class BienvenidaPopup : Popup
     public BienvenidaPopup()
     {
         InitializeComponent();
+        Opened += OnPopupOpened;
+    }
+
+    private async void OnPopupOpened(object? sender, EventArgs e)
+    {
+        // Pequeña demora para que la animación del popup termine
+        await Task.Delay(300);
+        NombreEntry.Focus();
     }
 
     private void OnNombreCompleted(object sender, EventArgs e)

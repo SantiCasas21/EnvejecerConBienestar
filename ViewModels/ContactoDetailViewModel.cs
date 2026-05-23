@@ -55,15 +55,22 @@ public partial class ContactoDetailViewModel : ObservableObject
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(Contacto.ColorAvatar))
+            Contacto.ColorAvatar = Contacto.GenerarColorPorNombre(Contacto.Nombre);
+
         await _databaseService.SaveContactoAsync(Contacto);
         IsEditing = false;
-        await Shell.Current.DisplayAlert("Éxito", "Contacto guardado correctamente.", "OK");
+        await Shell.Current.DisplayAlert("Guardado", $"{Contacto.Nombre} se actualizó correctamente.", "OK");
     }
 
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        bool confirm = await Shell.Current.DisplayAlert("Borrar", $"¿Desea eliminar a {Contacto.Nombre}?", "Sí, eliminar", "No");
+        bool confirm = await Shell.Current.DisplayAlert(
+            "Eliminar Contacto",
+            $"¿Desea eliminar a {Contacto.Nombre} de su agenda?",
+            "Sí, eliminar", "Cancelar");
+
         if (confirm)
         {
             await _databaseService.DeleteItemAsync(Contacto);
@@ -74,7 +81,23 @@ public partial class ContactoDetailViewModel : ObservableObject
     [RelayCommand]
     private async Task CallAsync()
     {
+        if (string.IsNullOrWhiteSpace(Contacto.Telefono))
+        {
+            await Shell.Current.DisplayAlert("Sin teléfono", "Este contacto no tiene un número registrado.", "OK");
+            return;
+        }
         await _contactService.RealizarLlamada(Contacto.Telefono);
+    }
+
+    [RelayCommand]
+    private async Task SendMessageAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Contacto.Telefono))
+        {
+            await Shell.Current.DisplayAlert("Sin teléfono", "Este contacto no tiene un número registrado.", "OK");
+            return;
+        }
+        await _contactService.EnviarMensaje(Contacto.Telefono);
     }
 
     [RelayCommand]
