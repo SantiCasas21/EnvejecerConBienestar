@@ -1,4 +1,4 @@
-using EnvejecerConBienestar.Views;
+﻿using EnvejecerConBienestar.Views;
 
 namespace EnvejecerConBienestar;
 
@@ -7,10 +7,13 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
+        // ── Rutas de los minijuegos ───────────────────────────────
+        Routing.RegisterRoute(nameof(BuscarParesPage), typeof(BuscarParesPage));
+        Routing.RegisterRoute(nameof(TriviaPage), typeof(TriviaPage));
+        Routing.RegisterRoute(nameof(SopaLetrasPage), typeof(SopaLetrasPage));
 
-        Routing.RegisterRoute(nameof(Views.BuscarParesPage), typeof(Views.BuscarParesPage));
-        Routing.RegisterRoute(nameof(Views.TriviaPage), typeof(Views.TriviaPage));
-        Routing.RegisterRoute(nameof(Views.ContactoDetailPage), typeof(Views.ContactoDetailPage));
-        Routing.RegisterRoute(nameof(Views.MedicamentoDetailPage), typeof(Views.MedicamentoDetailPage));
+        
+        Routing.RegisterRoute(nameof(ContactoDetailPage), typeof(ContactoDetailPage));
+        Routing.RegisterRoute(nameof(MedicamentoDetailPage), typeof(MedicamentoDetailPage));
     }
 }

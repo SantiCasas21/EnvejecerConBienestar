@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EnvejecerConBienestar.Views.SopaLetrasPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F2F2F7">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,50,16,30" Spacing="14">
+
+            <!-- BOTÓN VOLVER -->
+            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
+                   HasShadow="False" BorderColor="#F3F4F6" HorizontalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolverTocado"/>
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="←" FontFamily="NunitoBold" FontSize="18"
+                           TextColor="#0D9488" VerticalOptions="Center"/>
+                    <Label Text="Volver a Juegos" FontFamily="NunitoSemiBold"
+                           FontSize="15" TextColor="#0D9488" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- ENCABEZADO -->
+            <Label Text="🔤 Sopa de Letras"
+                   FontFamily="NunitoBold" FontSize="24"
+                   TextColor="#1F2937" HorizontalOptions="Center"/>
+            <Label Text="Toca la primera y la última letra de cada palabra"
+                   FontFamily="NunitoRegular" FontSize="13" TextColor="#9CA3AF"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+            <!-- ESTADÍSTICAS -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Frame Grid.Column="0" BackgroundColor="White" CornerRadius="14"
+                       Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="🔍" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Palabras" FontFamily="NunitoRegular" FontSize="11"
+                               TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        <Label x:Name="LblPalabras" Text="0/6" FontFamily="NunitoBold"
+                               FontSize="20" TextColor="#0D9488"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="White" CornerRadius="14"
+                       Padding="10,12" HasShadow="False" BorderColor="#F3F4F6">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="⏱️" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Tiempo" FontFamily="NunitoRegular" FontSize="11"
+                               TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                        <Label x:Name="LblTiempo" Text="0s" FontFamily="NunitoBold"
+                               FontSize="20" TextColor="#1F2937"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- LISTA DE PALABRAS -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="14,12"
+                   HasShadow="False" BorderColor="#F3F4F6">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Palabras a encontrar:"
+                           FontFamily="NunitoSemiBold" FontSize="13"
+                           TextColor="#6B7280"/>
+                    <FlexLayout x:Name="ContenedorPalabras"
+                                Wrap="Wrap" Direction="Row"
+                                JustifyContent="Start" AlignItems="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- TABLERO -->
+            <Frame BackgroundColor="White" CornerRadius="16" Padding="8"
+                   HasShadow="False" BorderColor="#F3F4F6">
+                <Grid x:Name="GridTablero"
+                      RowSpacing="3" ColumnSpacing="3"
+                      HeightRequest="316"/>
+            </Frame>
+
+            <!-- INSTRUCCIÓN -->
+            <Frame BackgroundColor="#F0FDF4" CornerRadius="12" Padding="12,8"
+                   HasShadow="False" BorderColor="#DCFCE7">
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="💡" FontSize="14"/>
+                    <Label Text="1er toque = primera letra · 2do toque = última letra"
+                           FontFamily="NunitoRegular" FontSize="12"
+                           TextColor="#166534" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- BANNER VICTORIA -->
+            <Frame x:Name="BannerVictoria" BackgroundColor="#D1FAE5" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#6EE7B7"
+                   IsVisible="False">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <Label Text="🎉 ¡Encontraste todas las palabras!"
+                           FontFamily="NunitoBold" FontSize="18"
+                           TextColor="#065F46" HorizontalOptions="Center"/>
+                    <Label x:Name="LblResultado" Text=""
+                           FontFamily="NunitoRegular" FontSize="14"
+                           TextColor="#047857" HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- BOTÓN NUEVA PARTIDA -->
+            <Button Text="🔄  Nueva partida"
+                    FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="#0D9488"
+                    TextColor="White" CornerRadius="16"
+                    HeightRequest="54" Margin="0,4,0,0"
+                    Clicked="OnNuevaPartida"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

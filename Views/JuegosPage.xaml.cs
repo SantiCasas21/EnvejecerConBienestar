@@ -7,11 +7,15 @@ public partial class JuegosPage : ContentPage
         InitializeComponent();
     }
 
-    // Navega al juego "Buscar los pares"
+    // Juego 1 — Buscar los pares
     private async void OnBuscarParesTocado(object sender, TappedEventArgs e)
-        => await Shell.Current.GoToAsync(nameof(BuscarParesPage));
+        => await Navigation.PushAsync(new BuscarParesPage());
 
-    // Navega al juego "Trivia de Salud"
+    // Juego 2 — Trivia de Salud
     private async void OnTriviaTocado(object sender, TappedEventArgs e)
-        => await Shell.Current.GoToAsync(nameof(TriviaPage));
+        => await Navigation.PushAsync(new TriviaPage());
+
+    // Juego 3 — Sopa de Letras
+    private async void OnSopaLetrasTocado(object sender, TappedEventArgs e)
+        => await Navigation.PushAsync(new SopaLetrasPage());
 }

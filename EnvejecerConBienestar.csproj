@@ -45,6 +45,9 @@
     <MauiXaml Update="Views\BuscarParesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\SopaLetrasPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\TriviaPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
