@@ -9,243 +9,139 @@
     <ScrollView>
         <VerticalStackLayout Padding="20,50,20,30" Spacing="0">
 
-            <!-- ══════════════════════════════════════════ -->
-            <!--              ENCABEZADO                   -->
-            <!-- ══════════════════════════════════════════ -->
+            <!-- ENCABEZADO -->
             <Label Text="🎮 Mini-juegos"
-                   FontFamily="NunitoBold"
-                   FontSize="28"
-                   TextColor="#1F2937"
-                   Margin="0,0,0,4"/>
-
+                   FontFamily="NunitoBold" FontSize="28"
+                   TextColor="#1F2937" Margin="0,0,0,4"/>
             <Label Text="Ejercita tu mente con estos juegos"
-                   FontFamily="NunitoRegular"
-                   FontSize="15"
-                   TextColor="#9CA3AF"
-                   Margin="0,0,0,24"/>
+                   FontFamily="NunitoRegular" FontSize="15"
+                   TextColor="#9CA3AF" Margin="0,0,0,24"/>
 
             <!-- ══════════════════════════════════════════ -->
             <!--   JUEGO 1 — BUSCAR LOS PARES  ✅          -->
             <!-- ══════════════════════════════════════════ -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="20" Padding="16"
-                   HasShadow="False"
-                   BorderColor="#F3F4F6"
-                   Margin="0,0,0,12">
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6" Margin="0,0,0,12">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBuscarParesTocado"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,24" ColumnSpacing="12">
-
-                    <!-- Ícono -->
-                    <Frame Grid.Column="0"
-                           BackgroundColor="#EDE9FE"
-                           CornerRadius="16" Padding="0"
-                           HasShadow="False"
-                           HeightRequest="60" WidthRequest="60"
-                           VerticalOptions="Center">
+                    <Frame Grid.Column="0" BackgroundColor="#EDE9FE"
+                           CornerRadius="16" Padding="0" HasShadow="False"
+                           HeightRequest="60" WidthRequest="60" VerticalOptions="Center">
                         <Label Text="🃏" FontSize="30"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"/>
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
-
-                    <!-- Texto -->
-                    <VerticalStackLayout Grid.Column="1"
-                                         VerticalOptions="Center"
-                                         Spacing="4">
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                         <Label Text="Buscar los pares"
-                               FontFamily="NunitoBold"
-                               FontSize="17"
-                               TextColor="#1F2937"/>
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
                         <Label Text="Voltea cartas y encuentra las parejas. Mejora tu memoria visual."
-                               FontFamily="NunitoRegular"
-                               FontSize="13"
-                               TextColor="#9CA3AF"
-                               LineBreakMode="WordWrap"/>
-                        <!-- Badge Disponible -->
-                        <Frame BackgroundColor="#F0FDF4"
-                               CornerRadius="8" Padding="8,3"
-                               HasShadow="False"
-                               HorizontalOptions="Start"
-                               Margin="0,2,0,0">
-                            <Label Text="✅ Disponible"
-                                   FontFamily="NunitoSemiBold"
-                                   FontSize="11"
-                                   TextColor="#0D9488"/>
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#9CA3AF" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F0FDF4" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible" FontFamily="NunitoSemiBold"
+                                   FontSize="11" TextColor="#0D9488"/>
                         </Frame>
                     </VerticalStackLayout>
-
-                    <!-- Flecha -->
-                    <Label Grid.Column="2" Text="›"
-                           FontSize="26" FontFamily="NunitoBold"
-                           TextColor="#D1D5DB"
-                           VerticalOptions="Center"
-                           HorizontalOptions="End"/>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
             <!-- ══════════════════════════════════════════ -->
             <!--   JUEGO 2 — TRIVIA DE SALUD  ✅           -->
             <!-- ══════════════════════════════════════════ -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="20" Padding="16"
-                   HasShadow="False"
-                   BorderColor="#F3F4F6"
-                   Margin="0,0,0,12">
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6" Margin="0,0,0,12">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTriviaTocado"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,24" ColumnSpacing="12">
-
-                    <Frame Grid.Column="0"
-                           BackgroundColor="#CCFBF1"
-                           CornerRadius="16" Padding="0"
-                           HasShadow="False"
-                           HeightRequest="60" WidthRequest="60"
-                           VerticalOptions="Center">
+                    <Frame Grid.Column="0" BackgroundColor="#CCFBF1"
+                           CornerRadius="16" Padding="0" HasShadow="False"
+                           HeightRequest="60" WidthRequest="60" VerticalOptions="Center">
                         <Label Text="🎯" FontSize="30"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"/>
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
-
-                    <VerticalStackLayout Grid.Column="1"
-                                         VerticalOptions="Center"
-                                         Spacing="4">
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                         <Label Text="Trivia de salud"
-                               FontFamily="NunitoBold"
-                               FontSize="17"
-                               TextColor="#1F2937"/>
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
                         <Label Text="Responde preguntas sobre hábitos saludables y suma puntos."
-                               FontFamily="NunitoRegular"
-                               FontSize="13"
-                               TextColor="#9CA3AF"
-                               LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#F0FDF4"
-                               CornerRadius="8" Padding="8,3"
-                               HasShadow="False"
-                               HorizontalOptions="Start"
-                               Margin="0,2,0,0">
-                            <Label Text="✅ Disponible"
-                                   FontFamily="NunitoSemiBold"
-                                   FontSize="11"
-                                   TextColor="#0D9488"/>
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#9CA3AF" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F0FDF4" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible" FontFamily="NunitoSemiBold"
+                                   FontSize="11" TextColor="#0D9488"/>
                         </Frame>
                     </VerticalStackLayout>
-
-                    <Label Grid.Column="2" Text="›"
-                           FontSize="26" FontFamily="NunitoBold"
-                           TextColor="#D1D5DB"
-                           VerticalOptions="Center"
-                           HorizontalOptions="End"/>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
             <!-- ══════════════════════════════════════════ -->
             <!--   JUEGO 3 — SOPA DE LETRAS  ✅            -->
             <!-- ══════════════════════════════════════════ -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="20" Padding="16"
-                   HasShadow="False"
-                   BorderColor="#F3F4F6"
-                   Margin="0,0,0,12">
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6" Margin="0,0,0,12">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnSopaLetrasTocado"/>
                 </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,24" ColumnSpacing="12">
-
-                    <Frame Grid.Column="0"
-                           BackgroundColor="#DBEAFE"
-                           CornerRadius="16" Padding="0"
-                           HasShadow="False"
-                           HeightRequest="60" WidthRequest="60"
-                           VerticalOptions="Center">
+                    <Frame Grid.Column="0" BackgroundColor="#DBEAFE"
+                           CornerRadius="16" Padding="0" HasShadow="False"
+                           HeightRequest="60" WidthRequest="60" VerticalOptions="Center">
                         <Label Text="🔤" FontSize="30"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"/>
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
-
-                    <VerticalStackLayout Grid.Column="1"
-                                         VerticalOptions="Center"
-                                         Spacing="4">
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                         <Label Text="Sopa de letras"
-                               FontFamily="NunitoBold"
-                               FontSize="17"
-                               TextColor="#1F2937"/>
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
                         <Label Text="Encuentra palabras sobre salud escondidas en la cuadrícula."
-                               FontFamily="NunitoRegular"
-                               FontSize="13"
-                               TextColor="#9CA3AF"
-                               LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#F0FDF4"
-                               CornerRadius="8" Padding="8,3"
-                               HasShadow="False"
-                               HorizontalOptions="Start"
-                               Margin="0,2,0,0">
-                            <Label Text="✅ Disponible"
-                                   FontFamily="NunitoSemiBold"
-                                   FontSize="11"
-                                   TextColor="#0D9488"/>
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#9CA3AF" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F0FDF4" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible" FontFamily="NunitoSemiBold"
+                                   FontSize="11" TextColor="#0D9488"/>
                         </Frame>
                     </VerticalStackLayout>
-
-                    <Label Grid.Column="2" Text="›"
-                           FontSize="26" FontFamily="NunitoBold"
-                           TextColor="#D1D5DB"
-                           VerticalOptions="Center"
-                           HorizontalOptions="End"/>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
             <!-- ══════════════════════════════════════════ -->
-            <!--   JUEGO 4 — ORDENAR SECUENCIA  🔒         -->
+            <!--   JUEGO 4 — ORDENAR SECUENCIA  ✅         -->
             <!-- ══════════════════════════════════════════ -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="20" Padding="16"
-                   HasShadow="False"
-                   BorderColor="#F3F4F6"
-                   Opacity="0.55">
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="16"
+                   HasShadow="False" BorderColor="#F3F4F6">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOrdenarSecuenciaTocado"/>
+                </Frame.GestureRecognizers>
                 <Grid ColumnDefinitions="70,*,24" ColumnSpacing="12">
-
-                    <Frame Grid.Column="0"
-                           BackgroundColor="#F3F4F6"
-                           CornerRadius="16" Padding="0"
-                           HasShadow="False"
-                           HeightRequest="60" WidthRequest="60"
-                           VerticalOptions="Center">
+                    <Frame Grid.Column="0" BackgroundColor="#FEF3C7"
+                           CornerRadius="16" Padding="0" HasShadow="False"
+                           HeightRequest="60" WidthRequest="60" VerticalOptions="Center">
                         <Label Text="🧩" FontSize="30"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"/>
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Frame>
-
-                    <VerticalStackLayout Grid.Column="1"
-                                         VerticalOptions="Center"
-                                         Spacing="4">
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                         <Label Text="Ordenar secuencia"
-                               FontFamily="NunitoBold"
-                               FontSize="17"
-                               TextColor="#1F2937"/>
-                        <Label Text="Ordena los pasos de una rutina saludable."
-                               FontFamily="NunitoRegular"
-                               FontSize="13"
-                               TextColor="#9CA3AF"
-                               LineBreakMode="WordWrap"/>
-                        <Frame BackgroundColor="#F3F4F6"
-                               CornerRadius="8" Padding="8,3"
-                               HasShadow="False"
-                               HorizontalOptions="Start"
-                               Margin="0,2,0,0">
-                            <Label Text="🔒 Próximamente"
-                                   FontFamily="NunitoSemiBold"
-                                   FontSize="11"
-                                   TextColor="#9CA3AF"/>
+                               FontFamily="NunitoBold" FontSize="17" TextColor="#1F2937"/>
+                        <Label Text="Ordena los pasos de una rutina saludable en el orden correcto."
+                               FontFamily="NunitoRegular" FontSize="13"
+                               TextColor="#9CA3AF" LineBreakMode="WordWrap"/>
+                        <Frame BackgroundColor="#F0FDF4" CornerRadius="8" Padding="8,3"
+                               HasShadow="False" HorizontalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="✅ Disponible" FontFamily="NunitoSemiBold"
+                                   FontSize="11" TextColor="#0D9488"/>
                         </Frame>
                     </VerticalStackLayout>
-
-                    <Label Grid.Column="2" Text="›"
-                           FontSize="26" FontFamily="NunitoBold"
-                           TextColor="#E5E7EB"
-                           VerticalOptions="Center"
-                           HorizontalOptions="End"/>
+                    <Label Grid.Column="2" Text="›" FontSize="26" FontFamily="NunitoBold"
+                           TextColor="#D1D5DB" VerticalOptions="Center" HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EnvejecerConBienestar.Views.OrdenarSecuenciaPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F2F2F7">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,50,20,30" Spacing="14">
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--         BOTÓN VOLVER AL MENÚ              -->
+            <!-- ══════════════════════════════════════════ -->
+            <Frame BackgroundColor="White" CornerRadius="14" Padding="12,10"
+                   HasShadow="False" BorderColor="#F3F4F6"
+                   HorizontalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolverTocado"/>
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="←" FontFamily="NunitoBold" FontSize="18"
+                           TextColor="#0D9488" VerticalOptions="Center"/>
+                    <Label Text="Volver a Juegos" FontFamily="NunitoSemiBold"
+                           FontSize="15" TextColor="#0D9488"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--              ENCABEZADO                   -->
+            <!-- ══════════════════════════════════════════ -->
+            <Label Text="🧩 Ordenar Secuencia"
+                   FontFamily="NunitoBold" FontSize="24"
+                   TextColor="#1F2937"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Toca los pasos en el orden correcto: 1°, 2°, 3°..."
+                   FontFamily="NunitoRegular" FontSize="13"
+                   TextColor="#9CA3AF"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--     TARJETA DE PROGRESO Y RUTINA          -->
+            <!-- ══════════════════════════════════════════ -->
+            <Frame BackgroundColor="White" CornerRadius="16"
+                   Padding="16,14" HasShadow="False" BorderColor="#F3F4F6">
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+
+                    <!-- Fila 1: Rutina actual y puntos -->
+                    <Grid Grid.Row="0"
+                          ColumnDefinitions="*,Auto">
+                        <Label x:Name="LblRutina"
+                               Grid.Column="0"
+                               Text="Rutina 1 de 4"
+                               FontFamily="NunitoSemiBold" FontSize="14"
+                               TextColor="#1F2937"
+                               VerticalOptions="Center"/>
+                        <Frame Grid.Column="1"
+                               BackgroundColor="#CCFBF1" CornerRadius="10"
+                               Padding="10,4" HasShadow="False">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="⭐" FontSize="13"/>
+                                <Label x:Name="LblPuntos"
+                                       Text="0 pts"
+                                       FontFamily="NunitoBold" FontSize="13"
+                                       TextColor="#0D9488"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </Grid>
+
+                    <!-- Fila 2: Barra de progreso -->
+                    <ProgressBar x:Name="BarraProgreso"
+                                 Grid.Row="1"
+                                 Progress="0.25"
+                                 ProgressColor="#0D9488"
+                                 BackgroundColor="#F3F4F6"/>
+
+                    <!-- Fila 3: Emoji + título de la rutina -->
+                    <HorizontalStackLayout Grid.Row="2" Spacing="10"
+                                           HorizontalOptions="Center">
+                        <Label x:Name="LblEmojiRutina"
+                               Text="🍳" FontSize="28"
+                               VerticalOptions="Center"/>
+                        <Label x:Name="LblTituloRutina"
+                               Text="Preparar el desayuno"
+                               FontFamily="NunitoBold" FontSize="17"
+                               TextColor="#1F2937"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                </Grid>
+            </Frame>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--    INSTRUCCIÓN CONTEXTUAL                 -->
+            <!-- ══════════════════════════════════════════ -->
+            <Frame BackgroundColor="#F0FDF4" CornerRadius="12"
+                   Padding="12,8" HasShadow="False" BorderColor="#DCFCE7">
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="💡" FontSize="14"/>
+                    <Label x:Name="LblInstruccion"
+                           Text="Toca el 1er paso → luego el 2do → y así hasta completar"
+                           FontFamily="NunitoRegular" FontSize="12"
+                           TextColor="#166534"
+                           VerticalOptions="Center"
+                           LineBreakMode="WordWrap"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--   TARJETAS DE PASOS (generadas en código) -->
+            <!-- ══════════════════════════════════════════ -->
+            <VerticalStackLayout x:Name="ContenedorPasos" Spacing="10"/>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--   BOTÓN VERIFICAR (aparece cuando están   -->
+            <!--   todos los pasos numerados)              -->
+            <!-- ══════════════════════════════════════════ -->
+            <Button x:Name="BtnVerificar"
+                    Text="✔  Verificar orden"
+                    FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="#0D9488"
+                    TextColor="White" CornerRadius="16"
+                    HeightRequest="54"
+                    IsVisible="False"
+                    Clicked="OnVerificarTocado"/>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--   BANNER RESULTADO (correcto/incorrecto)  -->
+            <!-- ══════════════════════════════════════════ -->
+            <Frame x:Name="BannerResultado"
+                   CornerRadius="16" Padding="16,14"
+                   HasShadow="False" IsVisible="False">
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="LblResultadoTitulo"
+                           Text="" FontFamily="NunitoBold" FontSize="18"
+                           HorizontalOptions="Center"/>
+                    <Label x:Name="LblResultadoDetalle"
+                           Text="" FontFamily="NunitoRegular" FontSize="13"
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!--   BOTÓN SIGUIENTE RUTINA / REINTENTAR     -->
+            <!-- ══════════════════════════════════════════ -->
+            <Button x:Name="BtnSiguiente"
+                    Text="Siguiente rutina →"
+                    FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="#0D9488"
+                    TextColor="White" CornerRadius="16"
+                    HeightRequest="54"
+                    IsVisible="False"
+                    Clicked="OnSiguienteTocado"/>
+
+            <Button x:Name="BtnReintentar"
+                    Text="🔄  Intentar de nuevo"
+                    FontFamily="NunitoBold" FontSize="16"
+                    BackgroundColor="White"
+                    TextColor="#0D9488" CornerRadius="16"
+                    HeightRequest="54"
+                    BorderColor="#0D9488"
+                    IsVisible="False"
+                    Clicked="OnReintentarTocado"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
