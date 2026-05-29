@@ -78,7 +78,7 @@ public partial class ContactosViewModel : ObservableObject
     {
         try
         {
-            var contactoNativo = await Contacts.Default.PickContactAsync();
+            var contactoNativo = await Microsoft.Maui.ApplicationModel.Communication.Contacts.Default.PickContactAsync();
             if (contactoNativo == null) return;
 
             var nombre = contactoNativo.DisplayName ?? "Sin nombre";
@@ -94,7 +94,7 @@ public partial class ContactosViewModel : ObservableObject
             {
                 Nombre = nombre,
                 Telefono = telefono,
-                Icono = "👤",
+                Icono = "",
                 ColorAvatar = Contacto.GenerarColorPorNombre(nombre)
             };
 

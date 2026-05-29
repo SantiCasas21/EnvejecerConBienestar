@@ -2,7 +2,7 @@ using SQLite;
 
 namespace EnvejecerConBienestar.Models;
 
-public class Habito
+public class Habito : IEntity
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }

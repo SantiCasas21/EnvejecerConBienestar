@@ -19,7 +19,7 @@ public partial class AddMetaPopup : Popup
         var texto = btn.Text;
         // El formato es "icono Nombre", ej: "💧 Agua"
         var partes = texto.Split(' ', 2);
-        var icono = partes.Length > 0 ? partes[0] : "🎯";
+        var icono = partes.Length > 0 ? partes[0] : "";
         var nombre = partes.Length > 1 ? partes[1] : texto;
 
         NombreEntry.Text = nombre;
@@ -67,7 +67,8 @@ public partial class AddMetaPopup : Popup
             Frecuencia = frecuencia,
             FechaInicio = ahora,
             FechaFin = fechaFin,
-            Icono = ObtenerIcono(NombreEntry.Text.Trim())
+            Icono = ObtenerIcono(NombreEntry.Text.Trim()),
+            ColorIcono = ObtenerColorIcono(NombreEntry.Text.Trim())
         };
 
         PopupResult.SetResult(meta);
@@ -78,15 +79,31 @@ public partial class AddMetaPopup : Popup
     {
         return nombre.ToLower() switch
         {
-            "agua" or "hidratación" => "💧",
-            "caminata" or "caminar" => "🚶",
-            "ejercicio" or "actividad física" => "💪",
-            "lectura" or "leer" => "📚",
-            "meditación" or "respiración" => "🧘",
-            "socializar" or "compañía" => "🤝",
-            "medicinas" or "medicamentos" => "💊",
-            "sueño" or "descanso" => "😴",
-            _ => "🎯"
+            "agua" or "hidratación" => "",
+            "caminata" or "caminar" => "",
+            "ejercicio" or "actividad física" => "",
+            "lectura" or "leer" => "",
+            "meditación" or "respiración" => "",
+            "socializar" or "compañía" => "",
+            "medicinas" or "medicamentos" => "",
+            "sueño" or "descanso" => "",
+            _ => ""
+        };
+    }
+
+    private static string ObtenerColorIcono(string nombre)
+    {
+        return nombre.ToLower() switch
+        {
+            "agua" or "hidratación" => "#0284C7",
+            "caminata" or "caminar" => "#22C55E",
+            "ejercicio" or "actividad física" => "#818CF8",
+            "lectura" or "leer" => "#F97316",
+            "meditación" or "respiración" => "#7C3AED",
+            "socializar" or "compañía" => "#E11D48",
+            "medicinas" or "medicamentos" => "#64748B",
+            "sueño" or "descanso" => "#6366F1",
+            _ => "#0D9488"
         };
     }
 }

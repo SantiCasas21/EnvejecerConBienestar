@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using EnvejecerConBienestar.ViewModels;
 using EnvejecerConBienestar.Views;
 using CommunityToolkit.Maui;
+using Plugin.LocalNotification;
 
 namespace EnvejecerConBienestar;
 
@@ -14,6 +15,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseLocalNotification()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Nunito-Regular.ttf", "NunitoRegular");
@@ -29,6 +31,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<Services.DatabaseService>();
         builder.Services.AddSingleton<Services.AlarmService>();
         builder.Services.AddSingleton<Services.ContactService>();
+        builder.Services.AddSingleton<Services.ReportService>();
 
         // Registrar ViewModels
         builder.Services.AddSingleton<HomeViewModel>();
@@ -37,6 +40,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ContactosViewModel>();
         builder.Services.AddTransient<ContactoDetailViewModel>();
         builder.Services.AddTransient<MedicamentoDetailViewModel>();
+        builder.Services.AddTransient<PerfilViewModel>();
 
         // Registrar Views
         builder.Services.AddSingleton<HomePage>();
@@ -47,6 +51,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MedicamentoDetailPage>();
         builder.Services.AddTransient<BuscarParesPage>();
         builder.Services.AddTransient<TriviaPage>();
+        builder.Services.AddSingleton<PerfilPage>();
 
 #if DEBUG
         //builder.Logging.AddDebug();

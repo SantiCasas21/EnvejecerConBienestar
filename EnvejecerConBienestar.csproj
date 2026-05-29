@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0-android</TargetFrameworks>
+    <TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <WindowsPackageType>None</WindowsPackageType>
     <RootNamespace>EnvejecerConBienestar</RootNamespace>
@@ -14,12 +14,20 @@
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 
     <!-- Suprime el warning de MainPage obsoleto (CS0618) en App.xaml.cs -->
     <NoWarn>$(NoWarn);CS0618</NoWarn>
 
-    <!-- Activa compilación de bindings con Source para suprimir XC0025 -->
+    <!-- Activa compilacion de bindings con Source para suprimir XC0025 -->
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+
+    <!-- ── FIRMA DE RELEASE PARA ANDROID ── -->
+    <AndroidKeyStore Condition="'$(Configuration)' == 'Release'">True</AndroidKeyStore>
+    <AndroidSigningKeyStore Condition="'$(Configuration)' == 'Release'">envejecer.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyAlias Condition="'$(Configuration)' == 'Release'">envejecer</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass Condition="'$(Configuration)' == 'Release'">Envejecer2026!</AndroidSigningKeyPass>
+    <AndroidSigningStorePass Condition="'$(Configuration)' == 'Release'">Envejecer2026!</AndroidSigningStorePass>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +47,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+    <PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -65,6 +65,18 @@
             </ShellContent.Icon>
         </ShellContent>
 
+        <!-- 5. PERFIL — fa-id-card -->
+        <ShellContent
+            Title="Perfil"
+            ContentTemplate="{DataTemplate views:PerfilPage}"
+            Route="perfil">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="&#xf2c2;"
+                                 FontFamily="FASolid"
+                                 Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
     </TabBar>
 
 </Shell>

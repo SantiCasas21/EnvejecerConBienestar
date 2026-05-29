@@ -18,6 +18,29 @@ public partial class HomePage : ContentPage
         base.OnAppearing();
         _viewModel.ActualizarSaludo();
         await _viewModel.LoadDataAsync();
+        await AnimarEntradaAsync();
+    }
+
+    private async Task AnimarEntradaAsync()
+    {
+        var elementos = this.GetVisualTreeDescendants()
+            .OfType<Frame>()
+            .Where(f => f.StyleId != "static")
+            .ToList();
+
+        foreach (var elemento in elementos)
+        {
+            elemento.Opacity = 0;
+            elemento.TranslationY = 30;
+        }
+
+        foreach (var elemento in elementos)
+        {
+            await Task.WhenAll(
+                elemento.FadeTo(1, 400, Easing.CubicOut),
+                elemento.TranslateTo(0, 0, 400, Easing.CubicOut));
+            await Task.Delay(50);
+        }
     }
 
     // ── Metas ──

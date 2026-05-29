@@ -1,10 +1,11 @@
 using CommunityToolkit.Maui.Views;
+using EnvejecerConBienestar.Models;
 
 namespace EnvejecerConBienestar.Views;
 
 public partial class BienvenidaPopup : Popup
 {
-    public TaskCompletionSource<string> Resultado { get; } = new();
+    public TaskCompletionSource<PerfilUsuario?> Resultado { get; } = new();
 
     public BienvenidaPopup()
     {
@@ -14,14 +15,8 @@ public partial class BienvenidaPopup : Popup
 
     private async void OnPopupOpened(object? sender, EventArgs e)
     {
-        // Pequeña demora para que la animación del popup termine
         await Task.Delay(300);
         NombreEntry.Focus();
-    }
-
-    private void OnNombreCompleted(object sender, EventArgs e)
-    {
-        OnComenzarClicked(sender, e);
     }
 
     private void OnComenzarClicked(object sender, EventArgs e)
@@ -30,10 +25,22 @@ public partial class BienvenidaPopup : Popup
         if (string.IsNullOrWhiteSpace(nombre))
         {
             NombreEntry.Placeholder = "Por favor, escribe tu nombre...";
+            NombreEntry.Focus();
             return;
         }
 
-        Resultado.SetResult(nombre);
+        var perfil = new PerfilUsuario
+        {
+            Nombre = nombre
+        };
+
+        if (int.TryParse(EdadEntry.Text?.Trim(), out var edad))
+            perfil.Edad = edad;
+
+        perfil.TipoSangre = SangreEntry.Text?.Trim() ?? string.Empty;
+        perfil.Telefono = TelefonoEntry.Text?.Trim() ?? string.Empty;
+
+        Resultado.SetResult(perfil);
         Close();
     }
 }

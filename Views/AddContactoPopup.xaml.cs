@@ -34,7 +34,7 @@ public partial class AddContactoPopup : Popup
             Ubicacion = UbicacionEntry.Text?.Trim() ?? "",
             EsFavorito = FavoritoCheck.IsChecked,
             EsEmergencia = EmergenciaCheck.IsChecked,
-            Icono = "👤",
+            Icono = "",
             ColorAvatar = Contacto.GenerarColorPorNombre(NombreEntry.Text.Trim())
         };
 

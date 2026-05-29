@@ -24,13 +24,13 @@
                              BackgroundColor="{StaticResource ColorFondoTarjeta}">
             <Grid ColumnDefinitions="*, Auto">
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="👥 Mi Agenda" FontFamily="NunitoBold" FontSize="26"
+                    <Label Text="&#xf0c0;  Mi Agenda" FontFamily="NunitoBold" FontSize="26"
                            TextColor="{StaticResource ColorTexto}" />
                     <Label Text="{Binding TotalContactos, StringFormat='{0} contactos de confianza'}"
                            FontFamily="NunitoRegular" FontSize="15" TextColor="{StaticResource ColorTextoSecundario}" />
                 </VerticalStackLayout>
                 <!-- Importar de la agenda del teléfono -->
-                <Button Grid.Column="1" Text="📋  Importar"
+                <Button Grid.Column="1" Text="&#xf2bb;  Importar"
                         Command="{Binding ImportarDesdeAgendaCommand}"
                         BackgroundColor="{StaticResource ColorSecundarioClaro}"
                         TextColor="{StaticResource ColorPrimario}"
@@ -48,7 +48,7 @@
                     <!-- ═══ EMERGENCIAS (SOS) ═══ -->
                     <VerticalStackLayout Spacing="10"
                                          IsVisible="{Binding Emergencias.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="🚨 Emergencias" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="&#xf071;  Emergencias" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorEmergencia}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -78,7 +78,7 @@
                                             <!-- Info -->
                                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                                                 <HorizontalStackLayout Spacing="8">
-                                                    <Label Text="🚨" FontSize="14" VerticalOptions="Center" />
+                                                    <Label Text="&#xf071;" FontFamily="FASolid" FontSize="14" TextColor="{StaticResource ColorEmergencia}" VerticalOptions="Center" />
                                                     <Label Text="{Binding Nombre}"
                                                            FontFamily="NunitoBold" FontSize="19"
                                                            TextColor="{StaticResource ColorTexto}"
@@ -93,7 +93,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar gigante -->
-                                            <Button Grid.Column="2" Text="📞"
+                                            <Button Grid.Column="2" Text="&#xf095;"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorEmergencia}"
@@ -113,7 +113,7 @@
                     <!-- ═══ FAVORITOS ═══ -->
                     <VerticalStackLayout Spacing="10"
                                          IsVisible="{Binding Favoritos.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="⭐ Favoritos" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="&#xf005;  Favoritos" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorPrimario}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -154,7 +154,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar -->
-                                            <Button Grid.Column="2" Text="📞"
+                                            <Button Grid.Column="2" Text="&#xf095;"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorPrimario}"
@@ -173,7 +173,7 @@
 
                     <!-- ═══ TODOS LOS CONTACTOS ═══ -->
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="👥 Todos los Contactos" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="&#xf0c0;  Todos los Contactos" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorTextoSecundario}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -214,7 +214,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar -->
-                                            <Button Grid.Column="2" Text="📞"
+                                            <Button Grid.Column="2" Text="&#xf095;"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorCompletado}"
@@ -234,7 +234,7 @@
                                 <Frame Style="{StaticResource FrameEmptyState}"
                                        IsVisible="{Binding SinContactos}">
                                     <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
-                                        <Label Text="👥" FontSize="48" HorizontalOptions="Center" />
+                                        <Label Text="&#xf0c0;" FontFamily="FASolid" FontSize="48" HorizontalOptions="Center" TextColor="{StaticResource ColorTextoSecundario}" />
                                         <Label Text="Sin contactos aún"
                                                FontFamily="NunitoBold" FontSize="19"
                                                TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center" />

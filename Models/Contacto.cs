@@ -2,7 +2,7 @@ using SQLite;
 
 namespace EnvejecerConBienestar.Models;
 
-public class Contacto
+public class Contacto : IEntity
 {
     private static readonly string[] PaletaColores =
     {
@@ -22,7 +22,9 @@ public class Contacto
 
     public string Relacion { get; set; } = string.Empty;
 
-    public string Icono { get; set; } = "👤";
+    public string Icono { get; set; } = ""; // fa-user
+
+    public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
 
     public string ColorAvatar { get; set; } = string.Empty;
 

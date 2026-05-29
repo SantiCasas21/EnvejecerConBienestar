@@ -27,7 +27,7 @@
                            BackgroundColor="{StaticResource ColorFondoTarjeta}" CornerRadius="24"
                            HeightRequest="56" WidthRequest="56"
                            VerticalOptions="Center">
-                        <Label Text="{Binding EmojiSaludo}" FontSize="28"
+                        <Label Text="{Binding EmojiSaludo}" FontFamily="FASolid" FontSize="28"
                                HorizontalOptions="Center" VerticalOptions="Center" />
                     </Frame>
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -39,7 +39,7 @@
                 </Grid>
 
                 <!-- ═══════════ BOTÓN SOS ═══════════ -->
-                <Button Text="🚨  LLAMADA DE EMERGENCIA (SOS)"
+                <Button Text="&#xf071;  LLAMADA DE EMERGENCIA (SOS)"
                         Command="{Binding LlamadaEmergenciaCommand}"
                         BackgroundColor="{StaticResource ColorEmergencia}"
                         TextColor="{StaticResource ColorTextoInverso}"
@@ -53,13 +53,13 @@
 
                     <!-- Encabezado de sección -->
                     <Grid ColumnDefinitions="*, Auto">
-                        <Label Text="💊 Mis Medicinas de Hoy"
+                        <Label Text="&#xf484;  Mis Medicinas de Hoy"
                                FontFamily="NunitoBold" FontSize="22"
                                TextColor="{StaticResource ColorTexto}" VerticalOptions="Center" />
                         <Frame Grid.Column="1" BackgroundColor="{StaticResource ColorPendiente}" CornerRadius="10"
                                Padding="10,4" HasShadow="False" HorizontalOptions="End"
                                IsVisible="{Binding HayPendientes}">
-                            <Label Text="⏳ Pendiente" FontFamily="NunitoSemiBold"
+                            <Label Text="&#xf254;  Pendiente" FontFamily="NunitoSemiBold"
                                    FontSize="13" TextColor="{StaticResource ColorEmergencia}" />
                         </Frame>
                     </Grid>
@@ -68,7 +68,7 @@
                     <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="18" Padding="20"
                            IsVisible="{Binding HayMedicamentos, Converter={StaticResource InverseBoolConverter}}">
                         <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <Label Text="💊" FontSize="36" HorizontalOptions="Center" />
+                            <Label Text="&#xf484;" FontFamily="FASolid" FontSize="36" HorizontalOptions="Center" TextColor="{StaticResource ColorTextoSecundario}" />
                             <Label Text="No tiene medicinas registradas"
                                    FontFamily="NunitoSemiBold" FontSize="16"
                                    TextColor="{StaticResource ColorTextoSecundario}" HorizontalOptions="Center" />
@@ -86,13 +86,15 @@
                               RowDefinitions="Auto, Auto, Auto" RowSpacing="8">
 
                             <!-- Icono grande -->
-                            <Frame Grid.RowSpan="3" Style="{StaticResource FrameIcono}"
-                                   BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="20"
-                                   HeightRequest="76" WidthRequest="76"
-                                   VerticalOptions="Center">
-                                <Label Text="{Binding ProximaMedicina.Icono}" FontSize="40"
-                                       HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Frame>
+                                        <Frame Style="{StaticResource FrameIcono}"
+                                               BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="20"
+                                               HeightRequest="76" WidthRequest="76"
+                                               VerticalOptions="Center">
+                                            <Label Text="{Binding ProximaMedicina.Icono}" FontSize="40"
+                                                   FontFamily="FASolid"
+                                                   TextColor="{Binding ProximaMedicina.ColorIcono}"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Frame>
 
                             <!-- Etiqueta "PRÓXIMA" -->
                             <Label Grid.Column="1" Grid.Row="0"
@@ -122,7 +124,7 @@
                                 <Frame BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="12"
                                        Padding="12,6" HasShadow="False">
                                     <HorizontalStackLayout Spacing="6">
-                                        <Label Text="⏰" FontSize="16" VerticalOptions="Center" />
+                                        <Label Text="&#xf017;" FontFamily="FASolid" FontSize="16" VerticalOptions="Center" />
                                         <Label Text="{Binding ProximaEtiqueta}"
                                                FontFamily="NunitoBold" FontSize="16"
                                                TextColor="{StaticResource ColorPrimario}"
@@ -145,7 +147,7 @@
                            IsVisible="{Binding TodasTomadas}"
                            BackgroundColor="{StaticResource ColorExitoClaro}" BorderColor="{StaticResource ColorCompletado}">
                         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                            <Label Text="🎉" FontSize="24" VerticalOptions="Center" />
+                            <Label Text="&#xf091;" FontFamily="FASolid" FontSize="24" VerticalOptions="Center" />
                             <Label Text="¡Todas las medicinas fueron tomadas hoy!"
                                    FontFamily="NunitoSemiBold" FontSize="17"
                                    TextColor="{StaticResource ColorTexto}" VerticalOptions="Center" />
@@ -166,6 +168,8 @@
                                                HeightRequest="50" WidthRequest="50"
                                                VerticalOptions="Center">
                                             <Label Text="{Binding Icono}" FontSize="26"
+                                                   FontFamily="FASolid"
+                                                   TextColor="{Binding ColorIcono}"
                                                    HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Frame>
 
@@ -211,7 +215,7 @@
                     <Frame Style="{StaticResource FrameTarjetaSimple}" Padding="16" CornerRadius="18">
                         <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="8">
                             <Label Grid.Row="0" Grid.Column="0"
-                                   Text="🎯 Logros del Día"
+                                   Text="&#xf140;  Logros del Dia"
                                    FontFamily="NunitoBold" FontSize="20" TextColor="{StaticResource ColorTexto}"
                                    VerticalOptions="Center" />
                             <Label Grid.Row="0" Grid.Column="1"
@@ -249,6 +253,8 @@
                                                HeightRequest="64" WidthRequest="64"
                                                VerticalOptions="Center">
                                             <Label Text="{Binding Icono}" FontSize="34"
+                                                   FontFamily="FASolid"
+                                                   TextColor="{Binding ColorIcono}"
                                                    HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Frame>
 
@@ -302,7 +308,7 @@
                         <BindableLayout.EmptyView>
                             <Frame Style="{StaticResource FrameEmptyState}">
                                 <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
-                                    <Label Text="🎯" FontSize="48" HorizontalOptions="Center" />
+                                    <Label Text="&#xf140;" FontFamily="FASolid" FontSize="48" HorizontalOptions="Center" TextColor="{StaticResource ColorTextoSecundario}" />
                                     <Label Text="Sin metas para hoy"
                                            FontFamily="NunitoBold" FontSize="19"
                                            TextColor="{StaticResource ColorTexto}" HorizontalOptions="Center" />
@@ -316,7 +322,7 @@
                     </VerticalStackLayout>
 
                     <!-- Botón Nueva Meta -->
-                    <Button Text="＋  Nueva Meta"
+                    <Button Text="&#xf067;  Nueva Meta"
                             Clicked="OnAddMetaClicked"
                             BackgroundColor="{StaticResource ColorPrimario}"
                             TextColor="{StaticResource ColorTextoInverso}"

@@ -1,3 +1,5 @@
+using EnvejecerConBienestar.Services;
+
 namespace EnvejecerConBienestar;
 
 public partial class App : Application
@@ -6,5 +8,11 @@ public partial class App : Application
     {
         InitializeComponent();
         MainPage = shell;
+
+        Task.Run(async () =>
+        {
+            await Task.Delay(500);
+            await AlarmService.InicializarCanal();
+        });
     }
 }

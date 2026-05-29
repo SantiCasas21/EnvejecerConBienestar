@@ -2,7 +2,7 @@ using SQLite;
 
 namespace EnvejecerConBienestar.Models;
 
-public class Meta
+public class Meta : IEntity
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
@@ -10,7 +10,9 @@ public class Meta
     [NotNull]
     public string Nombre { get; set; } = string.Empty;
 
-    public string Icono { get; set; } = "🎯";
+    public string Icono { get; set; } = ""; // fa-bullseye
+
+    public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
 
     public int Objetivo { get; set; }
 

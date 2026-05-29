@@ -2,7 +2,7 @@ using SQLite;
 
 namespace EnvejecerConBienestar.Models;
 
-public class ActividadCognitiva
+public class ActividadCognitiva : IEntity
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }

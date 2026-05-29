@@ -7,77 +7,124 @@
            CanBeDismissedByTappingOutsideOfPopup="False">
 
     <Frame BackgroundColor="{StaticResource ColorFondoTarjeta}"
-           Padding="36,40" CornerRadius="30"
-           HasShadow="True" WidthRequest="380">
+           Padding="28,30" CornerRadius="28"
+           HasShadow="True" WidthRequest="380"
+           MaximumHeightRequest="600">
 
-        <VerticalStackLayout Spacing="28" HorizontalOptions="Center">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
 
-            <!-- ═══ NOMBRE DE LA APP ═══ -->
-            <Label Text="Envejecer con Bienestar"
-                   FontSize="32" FontFamily="NunitoBold"
-                   TextColor="{StaticResource ColorPrimario}"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center" />
+                <!-- ═══ NOMBRE DE LA APP ═══ -->
+                <Label Text="Envejecer con Bienestar"
+                       FontSize="28" FontFamily="NunitoBold"
+                       TextColor="{StaticResource ColorPrimario}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
 
-            <!-- ═══ MENSAJE CÁLIDO ═══ -->
-            <Label Text="Tu compañero diario para una vida plena y saludable"
-                   FontSize="16" FontFamily="NunitoRegular"
-                   TextColor="{StaticResource ColorTextoSecundario}"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   LineBreakMode="WordWrap"
-                   MaximumWidthRequest="300" />
-
-            <!-- ═══ EMOJI GRANDE EN CÍRCULO PASTEL ═══ -->
-            <Frame Style="{StaticResource FrameIcono}"
-                   BackgroundColor="{StaticResource ColorPrimarioClaro}"
-                   CornerRadius="50" HeightRequest="100" WidthRequest="100"
-                   HorizontalOptions="Center">
-                <Label Text="🌿" FontSize="50"
-                       HorizontalOptions="Center" VerticalOptions="Center" />
-            </Frame>
-
-            <!-- ═══ CAMPO DEL NOMBRE ═══ -->
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Para personalizar tu experiencia, ¿cómo te gustaría que te llamemos?"
-                       FontSize="17" FontFamily="NunitoSemiBold"
-                       TextColor="{StaticResource ColorTexto}"
+                <!-- ═══ MENSAJE CALIDO ═══ -->
+                <Label Text="Configura tu perfil medico para una experiencia personalizada"
+                       FontSize="15" FontFamily="NunitoRegular"
+                       TextColor="{StaticResource ColorTextoSecundario}"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        LineBreakMode="WordWrap"
                        MaximumWidthRequest="300" />
 
-                <Frame BackgroundColor="{StaticResource ColorFondo}"
-                       CornerRadius="18" Padding="6,2" HasShadow="False"
-                       BorderColor="{StaticResource ColorPrimarioClaro}">
-                    <Entry x:Name="NombreEntry"
-                           Placeholder="Escribe tu nombre aquí..."
-                           FontSize="22"
-                           FontFamily="NunitoRegular"
-                           HorizontalOptions="Fill"
-                           HeightRequest="64"
-                           ClearButtonVisibility="WhileEditing"
-                           ReturnType="Done"
-                           Completed="OnNombreCompleted" />
+                <!-- ═══ ICONO ═══ -->
+                <Frame Style="{StaticResource FrameIcono}"
+                       BackgroundColor="{StaticResource ColorPrimarioClaro}"
+                       CornerRadius="40" HeightRequest="80" WidthRequest="80"
+                       HorizontalOptions="Center">
+                    <Label Text="&#xf0f0;" FontFamily="FASolid" FontSize="40"
+                           TextColor="{StaticResource ColorPrimario}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
                 </Frame>
+
+                <!-- ═══ NOMBRE ═══ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="¿Como te llamas?"
+                           FontSize="15" FontFamily="NunitoSemiBold"
+                           TextColor="{StaticResource ColorTexto}" />
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,2" HasShadow="False"
+                           BorderColor="{StaticResource ColorPrimarioClaro}">
+                        <Entry x:Name="NombreEntry"
+                               Placeholder="Escribe tu nombre..."
+                               FontSize="20" FontFamily="NunitoRegular"
+                               HeightRequest="56"
+                               ClearButtonVisibility="WhileEditing"
+                               ReturnType="Next" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- ═══ EDAD ═══ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="¿Cuantos anos tienes?"
+                           FontSize="15" FontFamily="NunitoSemiBold"
+                           TextColor="{StaticResource ColorTexto}" />
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,2" HasShadow="False"
+                           BorderColor="{StaticResource ColorPrimarioClaro}">
+                        <Entry x:Name="EdadEntry"
+                               Placeholder="Ej: 68"
+                               FontSize="20" FontFamily="NunitoRegular"
+                               Keyboard="Numeric"
+                               HeightRequest="56"
+                               ReturnType="Next" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- ═══ TIPO DE SANGRE ═══ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Tipo de Sangre (opcional)"
+                           FontSize="15" FontFamily="NunitoSemiBold"
+                           TextColor="{StaticResource ColorTexto}" />
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,2" HasShadow="False"
+                           BorderColor="{StaticResource ColorPrimarioClaro}">
+                        <Entry x:Name="SangreEntry"
+                               Placeholder="Ej: O+"
+                               FontSize="20" FontFamily="NunitoRegular"
+                               HeightRequest="56"
+                               ReturnType="Next" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- ═══ TELEFONO ═══ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Telefono (opcional)"
+                           FontSize="15" FontFamily="NunitoSemiBold"
+                           TextColor="{StaticResource ColorTexto}" />
+                    <Frame BackgroundColor="{StaticResource ColorFondo}"
+                           CornerRadius="14" Padding="4,2" HasShadow="False"
+                           BorderColor="{StaticResource ColorPrimarioClaro}">
+                        <Entry x:Name="TelefonoEntry"
+                               Placeholder="Tu numero"
+                               FontSize="20" FontFamily="NunitoRegular"
+                               Keyboard="Telephone"
+                               HeightRequest="56"
+                               ReturnType="Done" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- ═══ BOTON DE ACCION ═══ -->
+                <Button Text="&#xf005;  ¡Empecemos juntos!"
+                        Clicked="OnComenzarClicked"
+                        BackgroundColor="{StaticResource ColorPrimario}"
+                        TextColor="{StaticResource ColorTextoInverso}"
+                        FontSize="20"
+                        FontFamily="NunitoBold"
+                        HeightRequest="64"
+                        CornerRadius="18"
+                        Margin="0,4,0,0" />
+
+                <Label Text="Puedes completar mas datos en tu Perfil despues"
+                       FontSize="12" FontFamily="NunitoRegular"
+                       TextColor="{StaticResource ColorTextoSecundario}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+
             </VerticalStackLayout>
-
-            <!-- ═══ BOTÓN DE ACCIÓN ═══ -->
-            <Button Text="¡Empecemos juntos! ✨"
-                    Clicked="OnComenzarClicked"
-                    BackgroundColor="{StaticResource ColorPrimario}"
-                    TextColor="{StaticResource ColorTextoInverso}"
-                    FontSize="22"
-                    FontFamily="NunitoBold"
-                    HeightRequest="68"
-                    CornerRadius="20"
-                    Margin="0,4,0,0" />
-
-            <Label Text="Puedes cambiarlo después cuando quieras"
-                   FontSize="13" FontFamily="NunitoRegular"
-                   TextColor="{StaticResource ColorTextoSecundario}"
-                   HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
+        </ScrollView>
     </Frame>
 </mct:Popup>

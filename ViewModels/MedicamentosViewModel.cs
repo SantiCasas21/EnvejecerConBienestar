@@ -11,6 +11,7 @@ public partial class MedicamentosViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
     private readonly AlarmService _alarmService;
+    private readonly ReportService _reportService;
 
     [ObservableProperty]
     private ObservableCollection<Medicamento> _medicamentos = new();
@@ -21,10 +22,11 @@ public partial class MedicamentosViewModel : ObservableObject
     [ObservableProperty]
     private bool _isBusy;
 
-    public MedicamentosViewModel(DatabaseService databaseService, AlarmService alarmService)
+    public MedicamentosViewModel(DatabaseService databaseService, AlarmService alarmService, ReportService reportService)
     {
         _databaseService = databaseService;
         _alarmService = alarmService;
+        _reportService = reportService;
         LoadSugerencias();
     }
 
@@ -32,11 +34,11 @@ public partial class MedicamentosViewModel : ObservableObject
     {
         Sugerencias = new ObservableCollection<Medicamento>
         {
-            new() { Nombre = "Acetaminofén", Icono = "⚪", Miligramos = "500", Frecuencia = 6, Notas = "Para el dolor y la fiebre" },
-            new() { Nombre = "Ibuprofeno", Icono = "💊", Miligramos = "400", Frecuencia = 8, Notas = "Antiinflamatorio" },
-            new() { Nombre = "Vitamina C", Icono = "🍊", Miligramos = "500", Frecuencia = 24, Notas = "Suplemento diario" },
-            new() { Nombre = "Losartán", Icono = "💙", Miligramos = "50", Frecuencia = 24, Notas = "Presión arterial" },
-            new() { Nombre = "Metformina", Icono = "🤍", Miligramos = "850", Frecuencia = 12, Notas = "Control de azúcar" }
+            new() { Nombre = "Acetaminofen", Icono = "\uf4a4", ColorIcono = "#0D9488", Miligramos = "500", Frecuencia = 6, Notas = "Para el dolor y la fiebre" },
+            new() { Nombre = "Ibuprofeno", Icono = "\uf484", ColorIcono = "#818CF8", Miligramos = "400", Frecuencia = 8, Notas = "Antiinflamatorio" },
+            new() { Nombre = "Vitamina C", Icono = "\uf004", ColorIcono = "#22C55E", Miligramos = "500", Frecuencia = 24, Notas = "Suplemento diario" },
+            new() { Nombre = "Losartan", Icono = "\uf487", ColorIcono = "#0D9488", Miligramos = "50", Frecuencia = 24, Notas = "Presion arterial" },
+            new() { Nombre = "Metformina", Icono = "\uf484", ColorIcono = "#64748B", Miligramos = "850", Frecuencia = 12, Notas = "Control de azucar" }
         };
     }
 
@@ -50,8 +52,8 @@ public partial class MedicamentosViewModel : ObservableObject
         {
             var demo = new List<Medicamento>
             {
-                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "🤍", Notas = "Tomar con el desayuno" },
-                new() { Nombre = "Losartán", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "💙", Notas = "Tomar antes de dormir" }
+                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "\uf484", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
+                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "\uf487", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
             };
             foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
             list = await _databaseService.GetMedicamentosAsync();
@@ -86,16 +88,27 @@ public partial class MedicamentosViewModel : ObservableObject
     {
         if (medicamento == null) return;
         medicamento.EstaTomado = !medicamento.EstaTomado;
+
+        if (medicamento.EstaTomado && medicamento.CantidadRestante > 0)
+        {
+            medicamento.CantidadRestante--;
+
+            if (medicamento.AlertaInventario)
+            {
+                await Shell.Current.DisplayAlert(
+                    "⚠️ Inventario Bajo",
+                    $"¡Quedan solo {medicamento.CantidadRestante} pastillas de {medicamento.Nombre}!",
+                    "Entendido");
+            }
+        }
+
         await _databaseService.SaveMedicamentoAsync(medicamento);
 
-        // Reordenar en el lugar: remover de posición actual y reinsertar en la posición correcta
         var index = Medicamentos.IndexOf(medicamento);
         if (index < 0) return;
 
         Medicamentos.RemoveAt(index);
 
-        // Si está tomado, va al final (después de todos los no tomados)
-        // Si no está tomado, va al principio (antes de todos los tomados)
         if (medicamento.EstaTomado)
         {
             Medicamentos.Add(medicamento);
@@ -139,5 +152,13 @@ public partial class MedicamentosViewModel : ObservableObject
     {
         if (medicamento == null) return;
         await Shell.Current.GoToAsync($"{nameof(Views.MedicamentoDetailPage)}?Id={medicamento.Id}");
+    }
+
+    [RelayCommand]
+    private async Task GenerateReportAsync()
+    {
+        IsBusy = true;
+        await _reportService.CompartirReporteAsync();
+        IsBusy = false;
     }
 }

@@ -26,11 +26,8 @@ public class DatabaseService
 
             _database = new SQLiteAsyncConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags);
 
-            await _database.CreateTableAsync<Medicamento>();
-            await _database.CreateTableAsync<Contacto>();
-            await _database.CreateTableAsync<ActividadCognitiva>();
-            await _database.CreateTableAsync<Habito>();
-            await _database.CreateTableAsync<Meta>();
+            await _database.CreateTablesAsync<Medicamento, Contacto, ActividadCognitiva>();
+            await _database.CreateTablesAsync<Habito, Meta, PerfilUsuario>();
         }
         finally
         {
@@ -45,10 +42,13 @@ public class DatabaseService
         return await _database!.Table<T>().ToListAsync();
     }
 
-    public async Task<int> SaveItemAsync<T>(T item) where T : new()
+    public async Task<int> SaveItemAsync<T>(T item) where T : IEntity, new()
     {
         await Init();
-        return await _database!.InsertOrReplaceAsync(item);
+        if (item.Id == 0)
+            return await _database!.InsertAsync(item);
+        else
+            return await _database!.UpdateAsync(item);
     }
 
     public async Task<int> DeleteItemAsync<T>(T item) where T : new()
@@ -121,4 +121,13 @@ public class DatabaseService
     public async Task<int> SaveMetaAsync(Meta meta) => await SaveItemAsync(meta);
 
     public async Task<int> DeleteMetaAsync(Meta meta) => await DeleteItemAsync(meta);
+
+    // Métodos de PerfilUsuario
+    public async Task<PerfilUsuario?> GetPerfilUsuarioAsync()
+    {
+        await Init();
+        return await _database!.Table<PerfilUsuario>().FirstOrDefaultAsync();
+    }
+
+    public async Task<int> SavePerfilUsuarioAsync(PerfilUsuario perfil) => await SaveItemAsync(perfil);
 }

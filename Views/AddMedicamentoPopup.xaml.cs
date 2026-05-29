@@ -16,14 +16,14 @@ public partial class AddMedicamentoPopup : Popup
 
         _sugerencias = new List<Sugerencia>
         {
-            new("💊", "Acetaminofén",  "500", 8),
-            new("💊", "Ibuprofeno",    "400", 8),
-            new("💊", "Metformina",    "500", 12),
-            new("💊", "Losartán",      "50",  24),
-            new("💊", "Omeprazol",     "20",  24),
-            new("💉", "Insulina",      "10",  12),
-            new("💊", "Atorvastatina", "10",  24),
-            new("💊", "Levotiroxina",  "100", 24),
+            new("\uf484", "Acetaminofén",  "500", 8, "#0D9488"),
+            new("\uf484", "Ibuprofeno",    "400", 8, "#818CF8"),
+            new("\uf484", "Metformina",    "500", 12, "#64748B"),
+            new("\uf487", "Losartán",      "50",  24, "#0D9488"),
+            new("\uf484", "Omeprazol",     "20",  24, "#818CF8"),
+            new("\uf48e", "Insulina",      "10",  12, "#E11D48"),
+            new("\uf484", "Atorvastatina", "10",  24, "#64748B"),
+            new("\uf484", "Levotiroxina",  "100", 24, "#818CF8"),
         };
 
         ConstruirTarjetasSugerencias();
@@ -44,6 +44,8 @@ public partial class AddMedicamentoPopup : Popup
         {
             Text = sug.Icono,
             FontSize = 24,
+            FontFamily = "FASolid",
+            TextColor = Color.FromArgb(sug.Color),
             HorizontalOptions = LayoutOptions.Center
         };
 
@@ -142,6 +144,15 @@ public partial class AddMedicamentoPopup : Popup
             FechaInicio = DateTime.Now
         };
 
+        // Si hay una sugerencia seleccionada, heredar su icono y color
+        if (_tarjetaSeleccionada != null)
+        {
+            var content = (VerticalStackLayout)_tarjetaSeleccionada.Content;
+            var iconoLabel = (Label)content.Children[0];
+            med.Icono = iconoLabel.Text;
+            med.ColorIcono = iconoLabel.TextColor.ToHex();
+        }
+
         // Mensaje cálido antes de cerrar
         await Shell.Current.CurrentPage.DisplayAlert(
             "¡Excelente! 🌸",
@@ -156,5 +167,6 @@ public partial class AddMedicamentoPopup : Popup
         string Icono,
         string Nombre,
         string Miligramos,
-        int Frecuencia);
+        int Frecuencia,
+        string Color);
 }

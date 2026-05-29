@@ -2,7 +2,7 @@ using SQLite;
 
 namespace EnvejecerConBienestar.Models;
 
-public class Medicamento
+public class Medicamento : IEntity
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
@@ -22,13 +22,32 @@ public class Medicamento
 
     public bool EstaTomado { get; set; } = false;
 
-    public string Icono { get; set; } = "💊";
+    public string Icono { get; set; } = "\uf484"; // fa-capsules
+
+    public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
+
+    public int CantidadRestante { get; set; }
+
+    public int UmbralAlerta { get; set; } = 5;
 
     [Ignore]
-    public string TextoBoton => EstaTomado ? "✓ Tomado" : "Marcar tomado";
+    public string TextoBoton => EstaTomado ? "  Tomado" : "Marcar tomado";
 
     [Ignore]
-    public string IndicadorEstado => EstaTomado ? "🟢" : "🔴";
+    public string IndicadorEstado => EstaTomado ? "" : "";
+
+    [Ignore]
+    public bool AlertaInventario => CantidadRestante > 0 && CantidadRestante <= UmbralAlerta;
+
+    [Ignore]
+    public string TextoInventario => CantidadRestante > 0
+        ? $"Quedan {CantidadRestante} pastillas"
+        : "Sin control de inventario";
+
+    [Ignore]
+    public Color ColorInventario => AlertaInventario
+        ? Color.FromArgb("#E11D48")
+        : Color.FromArgb("#64748B");
 
     [Ignore]
     public List<TimeSpan> HorarioDiario => CalcularHorarioDiario();

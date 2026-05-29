@@ -20,7 +20,7 @@ public partial class HomeViewModel : ObservableObject
     private string _nombreUsuario = string.Empty;
 
     [ObservableProperty]
-    private string _emojiSaludo = "👋";
+    private string _emojiSaludo = "";
 
     [ObservableProperty]
     private bool _isBusy;
@@ -93,18 +93,18 @@ public partial class HomeViewModel : ObservableObject
 
         if (hora < 12)
         {
-            Saludo = "¡Buenos días";
-            EmojiSaludo = "☀️";
+            Saludo = "¡Buenos dias";
+            EmojiSaludo = "\uf185"; // fa-sun
         }
         else if (hora < 18)
         {
             Saludo = "¡Buenas tardes";
-            EmojiSaludo = "🌤️";
+            EmojiSaludo = "\uf185"; // fa-sun (tardes)
         }
         else
         {
             Saludo = "¡Buenas noches";
-            EmojiSaludo = "🌙";
+            EmojiSaludo = "\uf186"; // fa-moon
         }
 
         Saludo = string.IsNullOrWhiteSpace(NombreUsuario)
@@ -114,18 +114,27 @@ public partial class HomeViewModel : ObservableObject
 
     public async Task VerificarPrimerInicioAsync()
     {
-        if (string.IsNullOrWhiteSpace(NombreUsuario))
+        var perfil = await _databaseService.GetPerfilUsuarioAsync();
+
+        if (perfil == null && string.IsNullOrWhiteSpace(NombreUsuario))
         {
             var popup = new Views.BienvenidaPopup();
             await Shell.Current.CurrentPage.ShowPopupAsync(popup);
 
-            var nombre = await popup.Resultado.Task;
-            if (!string.IsNullOrWhiteSpace(nombre))
+            var perfilNuevo = await popup.Resultado.Task;
+            if (perfilNuevo != null && !string.IsNullOrWhiteSpace(perfilNuevo.Nombre))
             {
-                NombreUsuario = nombre;
-                Preferences.Set("nombre_usuario", nombre);
+                NombreUsuario = perfilNuevo.Nombre;
+                Preferences.Set("nombre_usuario", perfilNuevo.Nombre);
+                await _databaseService.SavePerfilUsuarioAsync(perfilNuevo);
                 ActualizarSaludo();
             }
+        }
+        else if (perfil != null)
+        {
+            NombreUsuario = perfil.Nombre;
+            Preferences.Set("nombre_usuario", perfil.Nombre);
+            ActualizarSaludo();
         }
     }
 
@@ -160,8 +169,8 @@ public partial class HomeViewModel : ObservableObject
         {
             var demo = new List<Medicamento>
             {
-                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "🤍", Notas = "Tomar con el desayuno" },
-                new() { Nombre = "Losartán", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "💙", Notas = "Tomar antes de dormir" }
+                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
+                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
             };
             foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
             list = await _databaseService.GetMedicamentosAsync();
@@ -222,13 +231,27 @@ public partial class HomeViewModel : ObservableObject
         if (medicamento == null || medicamento.EstaTomado) return;
 
         medicamento.EstaTomado = true;
+
+        if (medicamento.CantidadRestante > 0)
+        {
+            medicamento.CantidadRestante--;
+
+            if (medicamento.AlertaInventario)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Inventario Bajo",
+                    $"¡Quedan solo {medicamento.CantidadRestante} pastillas de {medicamento.Nombre}!",
+                    "Entendido");
+            }
+        }
+
         await _databaseService.SaveMedicamentoAsync(medicamento);
 
         ActualizarMedicamentosUI();
 
         await Shell.Current.DisplayAlert(
-            "✅ Medicamento Tomado",
-            $"Has registrado {medicamento.Icono} {medicamento.Nombre}. ¡Muy responsable!",
+            "Medicamento Tomado",
+            $"Has registrado {medicamento.Nombre}. ¡Muy responsable!",
             "OK");
     }
 
@@ -258,9 +281,9 @@ public partial class HomeViewModel : ObservableObject
 
         var demo = new List<Meta>
         {
-            new() { Nombre = "Agua", Icono = "💧", Objetivo = 8, Progreso = 0, Unidad = "vasos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
-            new() { Nombre = "Caminata", Icono = "🚶", Objetivo = 30, Progreso = 0, Unidad = "minutos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
-            new() { Nombre = "Ejercicio", Icono = "💪", Objetivo = 1, Progreso = 0, Unidad = "sesión", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia }
+            new() { Nombre = "Agua", Icono = "", ColorIcono = "#0284C7", Objetivo = 8, Progreso = 0, Unidad = "vasos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
+            new() { Nombre = "Caminata", Icono = "", ColorIcono = "#22C55E", Objetivo = 30, Progreso = 0, Unidad = "minutos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
+            new() { Nombre = "Ejercicio", Icono = "", ColorIcono = "#818CF8", Objetivo = 1, Progreso = 0, Unidad = "sesion", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia }
         };
 
         foreach (var m in demo) await _databaseService.SaveMetaAsync(m);

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EnvejecerConBienestar.Views.PerfilPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:EnvejecerConBienestar.ViewModels"
+    xmlns:helpers="clr-namespace:EnvejecerConBienestar.Helpers"
+    x:DataType="vm:PerfilViewModel"
+    Title="Mi Perfil"
+    BackgroundColor="{StaticResource ColorFondo}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RefreshView Command="{Binding LoadPerfilCommand}" IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="0">
+                <!-- ═══ HEADER COLORIDO ═══ -->
+                <BoxView HeightRequest="120" Color="{StaticResource ColorPrimario}" VerticalOptions="Start" />
+                
+                <!-- ═══ CONTENIDO DEL PERFIL ═══ -->
+                <VerticalStackLayout Padding="24,-60,24,40" Spacing="24">
+                    
+                    <!-- Tarjeta de Identidad -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="24" Padding="20" HasShadow="True">
+                        <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                            <Border StrokeShape="RoundRectangle 60"
+                                    Stroke="{StaticResource ColorPrimario}"
+                                    StrokeThickness="4"
+                                    BackgroundColor="{StaticResource ColorFondo}"
+                                    HeightRequest="120" WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Label Text="&#xf007;" FontFamily="FASolid" FontSize="60"
+                                       TextColor="{StaticResource ColorPrimario}"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="{Binding Perfil.Nombre}"
+                                       FontFamily="NunitoBold" FontSize="26"
+                                       TextColor="{StaticResource ColorTexto}"
+                                       HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                                <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                                    <Label Text="&#xf1fd;" FontFamily="FASolid" FontSize="14" TextColor="{StaticResource ColorTextoSecundario}" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Perfil.TextoEdad}"
+                                           FontFamily="NunitoSemiBold" FontSize="16"
+                                           TextColor="{StaticResource ColorTextoSecundario}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <Button Text="&#xf304;  Editar Perfil"
+                                    Command="{Binding ToggleEditCommand}"
+                                    BackgroundColor="{StaticResource ColorPrimarioClaro}"
+                                    TextColor="{StaticResource ColorPrimarioOscuro}"
+                                    FontFamily="NunitoBold" FontSize="16"
+                                    HeightRequest="50" CornerRadius="15"
+                                    Padding="20,0"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Tarjeta de Información Médica -->
+                    <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="24" Padding="24" HasShadow="True">
+                        <VerticalStackLayout Spacing="20">
+                            <Label Text="&#xf0f1;  Información Médica"
+                                   FontFamily="NunitoBold" FontSize="20"
+                                   TextColor="{StaticResource ColorTexto}" />
+                            
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="15" RowDefinitions="Auto, Auto">
+                                <!-- Tipo Sangre -->
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Tipo de Sangre" Style="{StaticResource LabelPequeno}" />
+                                    <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12,0" HasShadow="False">
+                                        <Entry Text="{Binding Perfil.TipoSangre}" Placeholder="O+" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoBold" HeightRequest="50"/>
+                                    </Frame>
+                                </VerticalStackLayout>
+                                
+                                <!-- Teléfono -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="Teléfono" Style="{StaticResource LabelPequeno}" />
+                                    <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12,0" HasShadow="False">
+                                        <Entry Text="{Binding Perfil.Telefono}" Placeholder="000-000" Keyboard="Telephone" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoBold" HeightRequest="50"/>
+                                    </Frame>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- Alergias -->
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="&#xf06a;  Alergias Conocidas" Style="{StaticResource LabelPequeno}" />
+                                <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12" HasShadow="False">
+                                    <Editor Text="{Binding Perfil.Alergias}" Placeholder="Ninguna" AutoSize="TextChanges" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoRegular" />
+                                </Frame>
+                            </VerticalStackLayout>
+
+                            <!-- Condiciones -->
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="&#xf0f1;  Condiciones Médicas" Style="{StaticResource LabelPequeno}" />
+                                <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12" HasShadow="False">
+                                    <Editor Text="{Binding Perfil.Condiciones}" Placeholder="Ninguna" AutoSize="TextChanges" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoRegular" />
+                                </Frame>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Botones de Acción en Edición -->
+                    <VerticalStackLayout Spacing="12" IsVisible="{Binding IsEditing}">
+                        <Button Text="&#xf0c7;  Guardar Cambios"
+                                Command="{Binding SaveCommand}"
+                                Style="{StaticResource BotonPrimario}"
+                                BackgroundColor="{StaticResource ColorExito}" />
+                        <Button Text="Cancelar"
+                                Command="{Binding ToggleEditCommand}"
+                                Style="{StaticResource BotonSecundario}"
+                                BorderColor="{StaticResource ColorTextoSecundario}"
+                                TextColor="{StaticResource ColorTextoSecundario}" />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>
