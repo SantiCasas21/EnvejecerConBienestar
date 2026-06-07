@@ -22,7 +22,7 @@ public class Medicamento : IEntity
 
     public bool EstaTomado { get; set; } = false;
 
-    public string Icono { get; set; } = "\uf484"; // fa-capsules
+    public string Icono { get; set; } = "\U0001F48A"; // pill emoji
 
     public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
 
@@ -31,10 +31,10 @@ public class Medicamento : IEntity
     public int UmbralAlerta { get; set; } = 5;
 
     [Ignore]
-    public string TextoBoton => EstaTomado ? "  Tomado" : "Marcar tomado";
+    public string TextoBoton => EstaTomado ? "✅  Tomado" : "Marcar tomado";
 
     [Ignore]
-    public string IndicadorEstado => EstaTomado ? "" : "";
+    public string IndicadorEstado => EstaTomado ? "✅" : "⏳";
 
     [Ignore]
     public bool AlertaInventario => CantidadRestante > 0 && CantidadRestante <= UmbralAlerta;

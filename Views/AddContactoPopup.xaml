@@ -17,12 +17,12 @@
 
             <HorizontalStackLayout Spacing="24" HorizontalOptions="Center">
                 <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                    <Label Text="&#xf005; Favorito" FontSize="13" FontFamily="NunitoSemiBold"
+                    <Label Text="⭐ Favorito" FontSize="13" FontFamily="NunitoSemiBold"
                            HorizontalOptions="Center" TextColor="{StaticResource ColorTextoSecundario}" />
                     <CheckBox x:Name="FavoritoCheck" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                    <Label Text="&#xf071; SOS" FontSize="13" FontFamily="NunitoSemiBold"
+                    <Label Text="⚠️ SOS" FontSize="13" FontFamily="NunitoSemiBold"
                            HorizontalOptions="Center" TextColor="{StaticResource ColorEmergencia}" />
                     <CheckBox x:Name="EmergenciaCheck" />
                 </VerticalStackLayout>

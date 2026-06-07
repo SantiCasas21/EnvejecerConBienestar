@@ -190,9 +190,23 @@
 
     <!-- ═══════════════ ENTRYS ═══════════════ -->
 
+    <!-- Estilo implícito para todos los Entry (evita texto blanco) -->
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource ColorTextoSecundario}" />
+    </Style>
+
+    <!-- Estilo implícito para todos los Editor (evita texto blanco) -->
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource ColorTextoSecundario}" />
+    </Style>
+
     <Style x:Key="EntryForm" TargetType="Entry">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="BackgroundColor" Value="{StaticResource ColorFondo}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource ColorTextoSecundario}" />
         <Setter Property="HeightRequest" Value="50" />
     </Style>
 

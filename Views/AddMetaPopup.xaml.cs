@@ -19,7 +19,7 @@ public partial class AddMetaPopup : Popup
         var texto = btn.Text;
         // El formato es "icono Nombre", ej: "💧 Agua"
         var partes = texto.Split(' ', 2);
-        var icono = partes.Length > 0 ? partes[0] : "";
+        var icono = partes.Length > 0 ? partes[0] : "🎯";
         var nombre = partes.Length > 1 ? partes[1] : texto;
 
         NombreEntry.Text = nombre;
@@ -79,15 +79,15 @@ public partial class AddMetaPopup : Popup
     {
         return nombre.ToLower() switch
         {
-            "agua" or "hidratación" => "",
-            "caminata" or "caminar" => "",
-            "ejercicio" or "actividad física" => "",
-            "lectura" or "leer" => "",
-            "meditación" or "respiración" => "",
-            "socializar" or "compañía" => "",
-            "medicinas" or "medicamentos" => "",
-            "sueño" or "descanso" => "",
-            _ => ""
+            "agua" or "hidratación" => "💧",
+            "caminata" or "caminar" => "🚶",
+            "ejercicio" or "actividad física" => "💪",
+            "lectura" or "leer" => "📖",
+            "meditación" or "respiración" => "🧘",
+            "socializar" or "compañía" => "🤝",
+            "medicinas" or "medicamentos" => "💊",
+            "sueño" or "descanso" => "🌙",
+            _ => "🎯"
         };
     }
 

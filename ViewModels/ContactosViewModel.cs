@@ -94,7 +94,7 @@ public partial class ContactosViewModel : ObservableObject
             {
                 Nombre = nombre,
                 Telefono = telefono,
-                Icono = "",
+                Icono = "👤",
                 ColorAvatar = Contacto.GenerarColorPorNombre(nombre)
             };
 

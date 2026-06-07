@@ -14,13 +14,13 @@
         <!-- Encabezado -->
         <VerticalStackLayout Padding="24,20" Spacing="8"
                              BackgroundColor="{StaticResource ColorFondoTarjeta}">
-            <Label Text="&#xf484;  Control de Medicinas"
+            <Label Text="Control de Medicinas"
                    FontFamily="NunitoBold" FontSize="26" TextColor="{StaticResource ColorTexto}" />
             <Label Text="No olvide tomar sus dosis a tiempo"
                    FontFamily="NunitoRegular" FontSize="16" TextColor="{StaticResource ColorTextoSecundario}" />
 
             <!-- Boton Generar Reporte -->
-            <Button Text="&#xf1c1;  Generar Reporte para mi Medico"
+            <Button Text="Generar Reporte para mi Medico"
                     Command="{Binding GenerateReportCommand}"
                     BackgroundColor="{StaticResource ColorSecundario}"
                     TextColor="{StaticResource ColorTextoInverso}"
@@ -37,7 +37,7 @@
 
                     <!-- ═══ SUGERENCIAS RÁPIDAS ═══ -->
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="&#xf0eb;  Sugerencias Rapidas"
+                        <Label Text="💡  Sugerencias Rapidas"
                                FontFamily="NunitoBold" FontSize="18" TextColor="{StaticResource ColorTexto}" />
 
                         <ScrollView Orientation="Horizontal"
@@ -60,7 +60,6 @@
                                                        BackgroundColor="{StaticResource ColorPrimarioClaro}" CornerRadius="14"
                                                        HeightRequest="44" WidthRequest="44">
                                                     <Label Text="{Binding Icono}" FontSize="22"
-                                                           FontFamily="FASolid"
                                                            TextColor="{Binding ColorIcono}"
                                                            HorizontalOptions="Center"
                                                            VerticalOptions="Center" />
@@ -96,7 +95,7 @@
                     <!-- ═══ MIS MEDICAMENTOS ═══ -->
                     <VerticalStackLayout Spacing="12">
                         <Grid ColumnDefinitions="*, Auto">
-                            <Label Text="&#xf0ae;  Mis Medicamentos"
+                            <Label Text="Mis Medicamentos"
                                    FontFamily="NunitoBold" FontSize="18"
                                    TextColor="{StaticResource ColorTexto}" VerticalOptions="Center" />
                             <Label Grid.Column="1"
@@ -129,7 +128,6 @@
                                                        HeightRequest="56" WidthRequest="56"
                                                        VerticalOptions="Center">
                                                     <Label Text="{Binding Icono}" FontSize="30"
-                                                           FontFamily="FASolid"
                                                            TextColor="{Binding ColorIcono}"
                                                            HorizontalOptions="Center"
                                                            VerticalOptions="Center" />
@@ -171,9 +169,8 @@
                                                 <Label>
                                                     <Label.FormattedText>
                                                         <FormattedString>
-                                                            <Span Text="&#xf017;  Proxima: "
-                                                                  FontSize="13" TextColor="{StaticResource ColorTextoSecundario}"
-                                                                  FontFamily="FASolid" />
+                                                            <Span Text="🕐  Próxima: "
+                                                                  FontSize="13" TextColor="{StaticResource ColorTextoSecundario}" />
                                                             <Span Text="{Binding HoraAlarma, StringFormat='{0:hh\\:mm}'}"
                                                                   FontSize="14"
                                                                   TextColor="{StaticResource ColorPrimario}"

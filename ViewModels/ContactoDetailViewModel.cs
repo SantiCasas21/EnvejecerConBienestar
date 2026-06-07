@@ -35,7 +35,7 @@ public partial class ContactoDetailViewModel : ObservableObject
         }
         else
         {
-            Contacto = new Contacto { Icono = "" };
+            Contacto = new Contacto { Icono = "👤" };
             IsEditing = true;
         }
     }

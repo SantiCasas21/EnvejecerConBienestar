@@ -22,7 +22,7 @@ public class Contacto : IEntity
 
     public string Relacion { get; set; } = string.Empty;
 
-    public string Icono { get; set; } = ""; // fa-user
+    public string Icono { get; set; } = "👤"; // fa-user
 
     public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
 
