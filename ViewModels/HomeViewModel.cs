@@ -112,12 +112,17 @@ public partial class HomeViewModel : ObservableObject
             : $"{Saludo}, {NombreUsuario}!";
     }
 
+    private bool _bienvenidaMostrada;
+
     public async Task VerificarPrimerInicioAsync()
     {
+        if (_bienvenidaMostrada) return;
+
         var perfil = await _databaseService.GetPerfilUsuarioAsync();
 
         if (perfil == null && string.IsNullOrWhiteSpace(NombreUsuario))
         {
+            _bienvenidaMostrada = true;
             var popup = new Views.BienvenidaPopup();
             await Shell.Current.CurrentPage.ShowPopupAsync(popup);
 
@@ -145,6 +150,7 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     public async Task LoadDataAsync()
     {
+        if (IsBusy) return;
         IsBusy = true;
 
         await VerificarPrimerInicioAsync();
@@ -169,8 +175,8 @@ public partial class HomeViewModel : ObservableObject
         {
             var demo = new List<Medicamento>
             {
-                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
-                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
+                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "\U0001F48A", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
+                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "\U0001F48A", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
             };
             foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
             list = await _databaseService.GetMedicamentosAsync();
@@ -281,9 +287,9 @@ public partial class HomeViewModel : ObservableObject
 
         var demo = new List<Meta>
         {
-            new() { Nombre = "Agua", Icono = "", ColorIcono = "#0284C7", Objetivo = 8, Progreso = 0, Unidad = "vasos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
-            new() { Nombre = "Caminata", Icono = "", ColorIcono = "#22C55E", Objetivo = 30, Progreso = 0, Unidad = "minutos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
-            new() { Nombre = "Ejercicio", Icono = "", ColorIcono = "#818CF8", Objetivo = 1, Progreso = 0, Unidad = "sesion", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia }
+            new() { Nombre = "Agua", Icono = "💧", ColorIcono = "#0284C7", Objetivo = 8, Progreso = 0, Unidad = "vasos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
+            new() { Nombre = "Caminata", Icono = "🚶", ColorIcono = "#22C55E", Objetivo = 30, Progreso = 0, Unidad = "minutos", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia },
+            new() { Nombre = "Ejercicio", Icono = "💪", ColorIcono = "#818CF8", Objetivo = 1, Progreso = 0, Unidad = "sesion", Frecuencia = "Diaria", FechaInicio = ahora, FechaFin = finDia }
         };
 
         foreach (var m in demo) await _databaseService.SaveMetaAsync(m);

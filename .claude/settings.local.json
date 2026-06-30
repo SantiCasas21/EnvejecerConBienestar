@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(dotnet build *)",
-      "Bash(Get-ChildItem -Recurse -Directory \"C:\\\\Users\\\\Santiago\\\\Documents\\\\Santiago\\\\Proyectos\\\\EnvejecerConBienestar\")",
-      "Bash(Select-Object -ExpandProperty FullName)"
-    ]
-  }
-}

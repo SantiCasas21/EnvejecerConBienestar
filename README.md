@@ -1,136 +1,103 @@
 # 🌿 Envejecer con Bienestar
 
-![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
+[![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/en-us/apps/maui)
+[![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-**Envejecer con Bienestar** es una aplicación móvil desarrollada con **.NET MAUI** diseñada específicamente para mejorar la calidad de vida de los adultos mayores. Este proyecto combina tecnología de vanguardia con un diseño centrado en el usuario para facilitar la gestión de la salud y el bienestar diario.
+**Envejecer con Bienestar** es una solución móvil integral diseñada para mejorar la autonomía y calidad de vida de los adultos mayores. Desarrollada con **.NET MAUI**, la aplicación combina una interfaz altamente accesible con herramientas potentes de gestión de salud, estimulación cognitiva y seguridad.
 
 ---
 
 ## ✨ Características Principales
 
-* **Gestión de Medicamentos:** Recordatorios visuales y sonoros para la toma de medicinas.
-* **Interfaz Adaptada:** Diseño con alto contraste, tipografía legible (Nunito) y elementos táctiles simplificados.
-* **Dashboard Personalizado:** Saludo dinámico y acceso rápido a las funciones más importantes.
-* **Multiplataforma:** Compilado inicialmente para Android, con capacidad de despliegue en Windows e iOS.
+### 💊 Gestión de Salud y Medicamentos
+* **Recordatorios Inteligentes:** Notificaciones locales programables para asegurar que nunca se olvide una toma.
+* **Control de Inventario:** Seguimiento automático de dosis restantes con alertas de "umbral bajo" para reposición de medicinas.
+* **Historial de Tomas:** Registro visual (✅/⏳) para verificar el cumplimiento del tratamiento diario.
 
-## 📋 Requisitos previos
+### 🧠 Estimulación Cognitiva (Centro de Juegos)
+* **Juegos Integrados:** Incluye actividades diseñadas para mantener la mente activa:
+    * **Trivia:** Desafíos de conocimiento general.
+    * **Sopa de Letras:** Ejercicios de agudeza visual.
+    * **Buscar Pares:** Entrenamiento de memoria a corto plazo.
+    * **Ordenar Secuencias:** Lógica y razonamiento.
 
-| Herramienta | Versión mínima | Verificar con |
-|---|---|---|
-| .NET SDK | **10.0** | `dotnet --version` |
-| .NET MAUI workload | 10.x | `dotnet workload list` |
-| Android SDK | API 21+ | Android Studio SDK Manager |
-| Xcode (solo macOS/iOS) | 15+ | `xcode-select -p` |
-| Visual Studio / Rider | 2022 17.10+ / 2024.1+ | — |
+### 🎯 Hábitos y Metas Diarias
+* **Sistema de Logros:** Seguimiento de metas personalizadas como hidratación, caminatas y lectura.
+* **Refuerzo Positivo:** Mensajes de motivación y recomendaciones personalizadas según el progreso alcanzado.
 
-### Instalar el workload de MAUI (si aún no está)
-```bash
-dotnet workload install maui
-```
-
-## ⚡ Configuración inicial — Fuentes Nunito
-
-La app usa la fuente **Nunito** (Google Fonts, licencia OFL).
-Debe agregar los archivos `.ttf` manualmente:
-
-1. Descargue desde https://fonts.google.com/specimen/Nunito
-2. Extraiga y copie estos tres archivos a `Resources/Fonts/`:
-   - `Nunito-Regular.ttf`
-   - `Nunito-SemiBold.ttf`
-   - `Nunito-Bold.ttf`
-
-> **Atajo rápido:** Si no tiene las fuentes a mano, en `MauiProgram.cs` puede comentar
-> las tres líneas `fonts.AddFont(...)` y la app compilará usando la fuente del sistema.
-> El diseño se verá casi idéntico.
+### 📞 Seguridad y Contacto
+* **Botón de Emergencia:** Acceso rápido para contactar a un familiar o cuidador designado.
+* **Directorio Simplificado:** Gestión de contactos clave con interfaz de marcación directa.
 
 ---
 
-## 🚀 Compilar y ejecutar
+## 🎨 Diseño Centrado en el Usuario (A11y)
 
-### Android (emulador o dispositivo físico)
-```bash
-# Emulador (asegúrese de tener uno creado en AVD Manager)
-dotnet build -t:Run -f net10.0-android
-
-# Dispositivo físico (conectado por USB con depuración activada)
-dotnet build -t:Run -f net10.0-android -p:AndroidAttachDebugger=false
-```
-
-### iOS (solo macOS)
-```bash
-# Simulador
-dotnet build -t:Run -f net10.0-ios -p:_DeviceName=:v2:udid=<UDID_SIMULADOR>
-
-# Listar simuladores disponibles
-xcrun simctl list devices available
-```
-
-### Desde Visual Studio / Rider
-1. Abrir `EnvejecerConBienestar.sln` (o el `.csproj`)
-2. Seleccionar el framework de destino (`net10.0-android` o `net10.0-ios`)
-3. Presionar **Run / F5**
-
----
-
-## 🗂️ Estructura del proyecto
-
-```
-EnvejecerConBienestar/
-│
-├── Models/
-│   └── Medicamento.cs          ← Modelo de datos (nombre, dosis, hora, tomado)
-│
-├── ViewModels/
-│   ├── HomeViewModel.cs        ← Saludo dinámico + comando emergencia
-│   └── MedicamentosViewModel.cs ← Lista reactiva + toggle tomado/pendiente
-│
-├── Views/
-│   ├── HomePage.xaml / .cs     ← Pantalla inicio (saludo + emergencia)
-│   ├── MedicamentosPage.xaml / .cs ← Lista con CollectionView + convertidores
-│   ├── JuegosPage.xaml / .cs   ← Cascarón "Próximamente"
-│   └── ContactosPage.xaml / .cs ← Cascarón "Próximamente"
-│
-├── Resources/
-│   ├── Fonts/                  ← Nunito-Regular/SemiBold/Bold.ttf (agregar manualmente)
-│   ├── Styles/
-│   │   ├── Colors.xaml         ← Paleta de colores cálidos completa
-│   │   └── Styles.xaml         ← Estilos globales (botones, labels, tarjetas)
-│   ├── Images/                 ← Íconos de la TabBar (agregar PNGs)
-│   └── Splash/                 ← Splash screen
-│
-├── AppShell.xaml               ← Navegación inferior (4 pestañas)
-├── App.xaml / .cs
-└── MauiProgram.cs              ← DI container, registro de fuentes
-```
-
----
-
-## 🎨 Paleta de colores
-
-| Color | Hex | Uso |
-|---|---|---|
-| Naranja cálido | `#F97316` | Primario, botones de acción |
-| Crema suave | `#FFF7ED` | Fondo de todas las pantallas |
-| Verde salud | `#0D9488` | Botón "Marcar tomado", progreso |
-| Rojo emergencia | `#DC2626` | **Solo** para el botón de emergencia |
-| Violeta juegos | `#7C3AED` | Sección Juegos |
-| Azul contactos | `#1D4ED8` | Sección Contactos |
+La aplicación ha sido diseñada bajo principios de **Accesibilidad Móvil**:
+* **Tipografía Legible:** Uso extensivo de la fuente **Nunito** para una lectura clara.
+* **Alto Contraste:** Paleta de colores cálidos y contrastados (Naranja cálido, Verde salud, Rojo emergencia).
+* **Elementos Táctiles:** Botones y tarjetas de gran tamaño para facilitar la interacción con destreza motriz reducida.
+* **Iconografía Intuitiva:** Apoyo visual con Emojis y Font Awesome para una navegación sin fricciones.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-* **Framework:** .NET 9.0 (MAUI)
-* **Lenguaje:** C#
-* **Arquitectura:** MVVM (Model-View-ViewModel) para una separación clara de la lógica y la interfaz.
-* **UI/UX:** XAML con estilos personalizados para accesibilidad.
-
-## 🚀 Instalación y Ejecución
-
-1. Clonar el repositorio:
-   ```bash
-   git clone [https://github.com/tu-usuario/EnvejecerConBienestar.git](https://github.com/tu-usuario/EnvejecerConBienestar.git)
+* **Framework:** .NET 9.0 MAUI (Multi-platform App UI).
+* **Arquitectura:** **MVVM (Model-View-ViewModel)** utilizando el CommunityToolkit.Mvvm para una reactividad eficiente y código limpio.
+* **Persistencia:** **SQLite** (sqlite-net-pcl) para almacenamiento local robusto y funcionamiento offline.
+* **Notificaciones:** Plugin.LocalNotification para alertas en tiempo real sin dependencia de servidor.
+* **Inyección de Dependencias:** Uso del contenedor nativo de .NET para desacoplamiento de servicios.
 
 ---
+
+## 🏗️ Arquitectura del Proyecto
+
+```text
+EnvejecerConBienestar/
+├── Models/           # Entidades de datos (Medicamento, Meta, Contacto, etc.)
+├── ViewModels/       # Lógica de presentación y binding de datos
+├── Views/            # Definiciones de UI en XAML y Code-behind
+├── Services/         # Servicios de negocio (Database, Alarms, Reports)
+├── Helpers/          # Convertidores y constantes globales
+└── Resources/        # Assets (Fuentes, Imágenes, Estilos globales)
+```
+
+---
+
+## 🚀 Configuración y Ejecución
+
+### Requisitos Previos
+* **.NET 9 SDK**
+* **Workload de MAUI** instalado (`dotnet workload install maui`)
+* **IDE:** Visual Studio 2022 (v17.12+) o VS Code con la extensión de .NET MAUI.
+
+### Instalación
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/EnvejecerConBienestar.git
+   ```
+2. Restaurar dependencias:
+   ```bash
+   dotnet restore
+   ```
+3. Ejecutar en el dispositivo/emulador:
+   ```bash
+   # Para Android
+   dotnet build -t:Run -f net9.0-android
+   ```
+
+---
+
+## 📝 Nota sobre Recursos (Fuentes)
+La app utiliza la familia de fuentes **Nunito**. Asegúrate de que los archivos `.ttf` se encuentren en `Resources/Fonts/` para que los estilos se apliquen correctamente.
+
+---
+
+## 📄 Licencia
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
+---
+*Desarrollado con ❤️ para mejorar la vida de quienes más nos cuidaron.*

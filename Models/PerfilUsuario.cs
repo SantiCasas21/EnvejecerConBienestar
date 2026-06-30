@@ -36,4 +36,14 @@ public class PerfilUsuario : IEntity
 
     [Ignore]
     public string TextoCondiciones => string.IsNullOrWhiteSpace(Condiciones) ? "No registradas" : Condiciones;
+
+    [Ignore]
+    public string Inicial => string.IsNullOrWhiteSpace(Nombre)
+        ? "?"
+        : Nombre.TrimStart()[0].ToString().ToUpper();
+
+    [Ignore]
+    public string ColorAvatar => string.IsNullOrWhiteSpace(Nombre)
+        ? "#0D9488"
+        : Contacto.GenerarColorPorNombre(Nombre);
 }

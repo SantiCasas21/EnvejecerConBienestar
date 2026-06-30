@@ -30,11 +30,12 @@
                             <Border StrokeShape="RoundRectangle 60"
                                     Stroke="{StaticResource ColorPrimario}"
                                     StrokeThickness="4"
-                                    BackgroundColor="{StaticResource ColorFondo}"
+                                    BackgroundColor="{Binding Perfil.ColorAvatar}"
                                     HeightRequest="120" WidthRequest="120"
                                     HorizontalOptions="Center">
-                                <Label Text="&#xf007;" FontFamily="FASolid" FontSize="60"
-                                       TextColor="{StaticResource ColorPrimario}"
+                                <Label Text="{Binding Perfil.Inicial}"
+                                       FontFamily="NunitoBold" FontSize="52"
+                                       TextColor="White"
                                        HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
                             
@@ -44,7 +45,6 @@
                                        TextColor="{StaticResource ColorTexto}"
                                        HorizontalOptions="Center" HorizontalTextAlignment="Center" />
                                 <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                                    <Label Text="&#xf1fd;" FontFamily="FASolid" FontSize="14" TextColor="{StaticResource ColorTextoSecundario}" VerticalOptions="Center"/>
                                     <Label Text="{Binding Perfil.TextoEdad}"
                                            FontFamily="NunitoSemiBold" FontSize="16"
                                            TextColor="{StaticResource ColorTextoSecundario}"
@@ -52,7 +52,7 @@
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
-                            <Button Text="&#xf304;  Editar Perfil"
+                            <Button Text="Editar Perfil"
                                     Command="{Binding ToggleEditCommand}"
                                     BackgroundColor="{StaticResource ColorPrimarioClaro}"
                                     TextColor="{StaticResource ColorPrimarioOscuro}"
@@ -67,7 +67,7 @@
                     <!-- Tarjeta de Información Médica -->
                     <Frame Style="{StaticResource FrameTarjetaSimple}" CornerRadius="24" Padding="24" HasShadow="True">
                         <VerticalStackLayout Spacing="20">
-                            <Label Text="&#xf0f1;  Información Médica"
+                            <Label Text="Información Médica"
                                    FontFamily="NunitoBold" FontSize="20"
                                    TextColor="{StaticResource ColorTexto}" />
                             
@@ -91,7 +91,7 @@
 
                             <!-- Alergias -->
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="&#xf06a;  Alergias Conocidas" Style="{StaticResource LabelPequeno}" />
+                                <Label Text="ℹ️  Alergias Conocidas" Style="{StaticResource LabelPequeno}" />
                                 <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12" HasShadow="False">
                                     <Editor Text="{Binding Perfil.Alergias}" Placeholder="Ninguna" AutoSize="TextChanges" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoRegular" />
                                 </Frame>
@@ -99,7 +99,7 @@
 
                             <!-- Condiciones -->
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="&#xf0f1;  Condiciones Médicas" Style="{StaticResource LabelPequeno}" />
+                                <Label Text="Condiciones Médicas" Style="{StaticResource LabelPequeno}" />
                                 <Frame BackgroundColor="{StaticResource ColorFondoSecundario}" CornerRadius="12" Padding="12" HasShadow="False">
                                     <Editor Text="{Binding Perfil.Condiciones}" Placeholder="Ninguna" AutoSize="TextChanges" IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolConverter}}" FontFamily="NunitoRegular" />
                                 </Frame>
@@ -109,7 +109,7 @@
 
                     <!-- Botones de Acción en Edición -->
                     <VerticalStackLayout Spacing="12" IsVisible="{Binding IsEditing}">
-                        <Button Text="&#xf0c7;  Guardar Cambios"
+                        <Button Text="💾  Guardar Cambios"
                                 Command="{Binding SaveCommand}"
                                 Style="{StaticResource BotonPrimario}"
                                 BackgroundColor="{StaticResource ColorExito}" />

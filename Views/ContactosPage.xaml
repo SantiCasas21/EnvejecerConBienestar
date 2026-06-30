@@ -24,13 +24,13 @@
                              BackgroundColor="{StaticResource ColorFondoTarjeta}">
             <Grid ColumnDefinitions="*, Auto">
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="&#xf0c0;  Mi Agenda" FontFamily="NunitoBold" FontSize="26"
+                    <Label Text="👥  Mi Agenda" FontFamily="NunitoBold" FontSize="26"
                            TextColor="{StaticResource ColorTexto}" />
                     <Label Text="{Binding TotalContactos, StringFormat='{0} contactos de confianza'}"
                            FontFamily="NunitoRegular" FontSize="15" TextColor="{StaticResource ColorTextoSecundario}" />
                 </VerticalStackLayout>
                 <!-- Importar de la agenda del teléfono -->
-                <Button Grid.Column="1" Text="&#xf2bb;  Importar"
+                <Button Grid.Column="1" Text="Importar"
                         Command="{Binding ImportarDesdeAgendaCommand}"
                         BackgroundColor="{StaticResource ColorSecundarioClaro}"
                         TextColor="{StaticResource ColorPrimario}"
@@ -48,7 +48,7 @@
                     <!-- ═══ EMERGENCIAS (SOS) ═══ -->
                     <VerticalStackLayout Spacing="10"
                                          IsVisible="{Binding Emergencias.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="&#xf071;  Emergencias" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="⚠️  Emergencias" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorEmergencia}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -93,7 +93,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar gigante -->
-                                            <Button Grid.Column="2" Text="&#xf095;"
+                                            <Button Grid.Column="2" Text="📞"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorEmergencia}"
@@ -113,7 +113,7 @@
                     <!-- ═══ FAVORITOS ═══ -->
                     <VerticalStackLayout Spacing="10"
                                          IsVisible="{Binding Favoritos.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="&#xf005;  Favoritos" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="⭐  Favoritos" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorPrimario}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -154,7 +154,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar -->
-                                            <Button Grid.Column="2" Text="&#xf095;"
+                                            <Button Grid.Column="2" Text="📞"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorPrimario}"
@@ -173,7 +173,7 @@
 
                     <!-- ═══ TODOS LOS CONTACTOS ═══ -->
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="&#xf0c0;  Todos los Contactos" FontFamily="NunitoBold" FontSize="18"
+                        <Label Text="👥  Todos los Contactos" FontFamily="NunitoBold" FontSize="18"
                                TextColor="{StaticResource ColorTextoSecundario}" />
 
                         <VerticalStackLayout Spacing="10"
@@ -214,7 +214,7 @@
                                             </VerticalStackLayout>
 
                                             <!-- Botón llamar -->
-                                            <Button Grid.Column="2" Text="&#xf095;"
+                                            <Button Grid.Column="2" Text="📞"
                                                     Clicked="OnLlamarClicked"
                                                     CommandParameter="{Binding .}"
                                                     BackgroundColor="{StaticResource ColorCompletado}"

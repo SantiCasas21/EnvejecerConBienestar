@@ -35,7 +35,7 @@
             ContentTemplate="{DataTemplate views:MedicamentosPage}"
             Route="medicamentos">
             <ShellContent.Icon>
-                <FontImageSource Glyph="&#xf484;"
+                <FontImageSource Glyph="&#x1F48A;"
                                  FontFamily="FASolid"
                                  Size="24" />
             </ShellContent.Icon>
@@ -47,7 +47,7 @@
             ContentTemplate="{DataTemplate views:JuegosPage}"
             Route="juegos">
             <ShellContent.Icon>
-                <FontImageSource Glyph="&#xf12e;"
+                <FontImageSource Glyph="&#x1F9E9;"
                                  FontFamily="FASolid"
                                  Size="24" />
             </ShellContent.Icon>
@@ -71,7 +71,7 @@
             ContentTemplate="{DataTemplate views:PerfilPage}"
             Route="perfil">
             <ShellContent.Icon>
-                <FontImageSource Glyph="&#xf2c2;"
+                <FontImageSource Glyph="&#x1FAAA;"
                                  FontFamily="FASolid"
                                  Size="24" />
             </ShellContent.Icon>

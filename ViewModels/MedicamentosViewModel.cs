@@ -34,11 +34,11 @@ public partial class MedicamentosViewModel : ObservableObject
     {
         Sugerencias = new ObservableCollection<Medicamento>
         {
-            new() { Nombre = "Acetaminofen", Icono = "\uf4a4", ColorIcono = "#0D9488", Miligramos = "500", Frecuencia = 6, Notas = "Para el dolor y la fiebre" },
-            new() { Nombre = "Ibuprofeno", Icono = "\uf484", ColorIcono = "#818CF8", Miligramos = "400", Frecuencia = 8, Notas = "Antiinflamatorio" },
+            new() { Nombre = "Acetaminofen", Icono = "\U0001F48A", ColorIcono = "#0D9488", Miligramos = "500", Frecuencia = 6, Notas = "Para el dolor y la fiebre" },
+            new() { Nombre = "Ibuprofeno", Icono = "\U0001F48A", ColorIcono = "#818CF8", Miligramos = "400", Frecuencia = 8, Notas = "Antiinflamatorio" },
             new() { Nombre = "Vitamina C", Icono = "\uf004", ColorIcono = "#22C55E", Miligramos = "500", Frecuencia = 24, Notas = "Suplemento diario" },
-            new() { Nombre = "Losartan", Icono = "\uf487", ColorIcono = "#0D9488", Miligramos = "50", Frecuencia = 24, Notas = "Presion arterial" },
-            new() { Nombre = "Metformina", Icono = "\uf484", ColorIcono = "#64748B", Miligramos = "850", Frecuencia = 12, Notas = "Control de azucar" }
+            new() { Nombre = "Losartan", Icono = "\U0001F48A", ColorIcono = "#0D9488", Miligramos = "50", Frecuencia = 24, Notas = "Presion arterial" },
+            new() { Nombre = "Metformina", Icono = "\U0001F48A", ColorIcono = "#64748B", Miligramos = "850", Frecuencia = 12, Notas = "Control de azucar" }
         };
     }
 
@@ -52,8 +52,8 @@ public partial class MedicamentosViewModel : ObservableObject
         {
             var demo = new List<Medicamento>
             {
-                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "\uf484", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
-                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "\uf487", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
+                new() { Nombre = "Metformina", Miligramos = "500", Frecuencia = 12, HoraAlarma = new TimeSpan(8,0,0), Icono = "\U0001F48A", ColorIcono = "#64748B", Notas = "Tomar con el desayuno", CantidadRestante = 30 },
+                new() { Nombre = "Losartan", Miligramos = "50", Frecuencia = 24, HoraAlarma = new TimeSpan(20,0,0), Icono = "\U0001F48A", ColorIcono = "#0D9488", Notas = "Tomar antes de dormir", CantidadRestante = 15 }
             };
             foreach (var m in demo) await _databaseService.SaveMedicamentoAsync(m);
             list = await _databaseService.GetMedicamentosAsync();

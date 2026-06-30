@@ -108,7 +108,7 @@
                 </VerticalStackLayout>
 
                 <!-- ═══ BOTON DE ACCION ═══ -->
-                <Button Text="&#xf005;  ¡Empecemos juntos!"
+                <Button Text="⭐  ¡Empecemos juntos!"
                         Clicked="OnComenzarClicked"
                         BackgroundColor="{StaticResource ColorPrimario}"
                         TextColor="{StaticResource ColorTextoInverso}"

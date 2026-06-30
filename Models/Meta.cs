@@ -10,7 +10,7 @@ public class Meta : IEntity
     [NotNull]
     public string Nombre { get; set; } = string.Empty;
 
-    public string Icono { get; set; } = ""; // fa-bullseye
+    public string Icono { get; set; } = "🎯"; // fa-bullseye
 
     public string ColorIcono { get; set; } = "#0D9488"; // ColorPrimario
 

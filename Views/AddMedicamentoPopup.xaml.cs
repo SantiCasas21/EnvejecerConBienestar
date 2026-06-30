@@ -16,14 +16,14 @@ public partial class AddMedicamentoPopup : Popup
 
         _sugerencias = new List<Sugerencia>
         {
-            new("\uf484", "Acetaminofén",  "500", 8, "#0D9488"),
-            new("\uf484", "Ibuprofeno",    "400", 8, "#818CF8"),
-            new("\uf484", "Metformina",    "500", 12, "#64748B"),
-            new("\uf487", "Losartán",      "50",  24, "#0D9488"),
-            new("\uf484", "Omeprazol",     "20",  24, "#818CF8"),
-            new("\uf48e", "Insulina",      "10",  12, "#E11D48"),
-            new("\uf484", "Atorvastatina", "10",  24, "#64748B"),
-            new("\uf484", "Levotiroxina",  "100", 24, "#818CF8"),
+            new("\U0001F48A", "Acetaminofén",  "500", 8, "#0D9488"),
+            new("\U0001F48A", "Ibuprofeno",    "400", 8, "#818CF8"),
+            new("\U0001F48A", "Metformina",    "500", 12, "#64748B"),
+            new("\U0001F48A", "Losartán",      "50",  24, "#0D9488"),
+            new("\U0001F48A", "Omeprazol",     "20",  24, "#818CF8"),
+            new("\U0001F489", "Insulina",      "10",  12, "#E11D48"),
+            new("\U0001F48A", "Atorvastatina", "10",  24, "#64748B"),
+            new("\U0001F48A", "Levotiroxina",  "100", 24, "#818CF8"),
         };
 
         ConstruirTarjetasSugerencias();
@@ -44,7 +44,6 @@ public partial class AddMedicamentoPopup : Popup
         {
             Text = sug.Icono,
             FontSize = 24,
-            FontFamily = "FASolid",
             TextColor = Color.FromArgb(sug.Color),
             HorizontalOptions = LayoutOptions.Center
         };
